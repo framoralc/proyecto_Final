@@ -6,6 +6,9 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <?php 
+        include("./navBar.php");
+    ?>
+    <p>ddwdw</p>
 </body>
 </html>
