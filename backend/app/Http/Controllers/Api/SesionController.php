@@ -11,14 +11,15 @@ use Illuminate\Support\Facades\Auth;
 
 class SesionController extends Controller
 {
-    public function registrarse(Request $request){
-        
+    public function registrarse(Request $request)
+    {
+
         $datos = $request->validate([
-        'nombre' => 'required',
-        'email' => 'required|email',
-        'password' => 'required',
-        'direccion'=> 'nullable',
-    ]);
+            'nombre' => 'required',
+            'email' => 'required|email',
+            'password' => 'required',
+            'direccion' => 'nullable',
+        ]);
 
         $usuario = \App\Models\User::create([
             'nombre' => $request->nombre,
@@ -31,7 +32,5 @@ class SesionController extends Controller
         return response()->json($usuario, 201);
     }
 
-    public function iniciar(Request $request){
-
-    }
+    public function iniciar(Request $request) {}
 }

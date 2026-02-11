@@ -1,17 +1,15 @@
 let formulario = document.querySelector("form");
 
-function Usuario(nombre, eMail, passwd, rol, direccion) {
-    this.nombre = nombre;
-    this.eMail = eMail;
-    this.passwd = passwd;
-    this.rol = rol;
-    this.direccion = direccion;
-}
+async function Registro(nombre, email, password, rol, direccion) {
+    debugger;
+    let usuario = {
 
-
-async function Registro(nombre, eMail, passwd, rol, direccion) {
-
-    let usuario = new Usuario(nombre, eMail, passwd, rol, direccion)
+        nombre: nombre,
+        email: email,
+        password: password,
+        rol: rol,
+        direccion: direccion
+    }
 
     try {
 
@@ -26,8 +24,8 @@ async function Registro(nombre, eMail, passwd, rol, direccion) {
 
         const respuesta = await fetch("http://127.0.0.1:8000/api/register", options)
 
-        if (respuesta.ok) {
-            const error = respuesta.json();
+        if (!respuesta.ok) {
+            const error = await respuesta.json();
             throw new Error("No se ha podido enviar." + error)
         }
 
