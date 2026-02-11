@@ -3,7 +3,12 @@
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">Navbar</a>
+        <?php
+
+        $url = "http://localhost/";
+
+        ?>
+        <a class="navbar-brand" href="<?php echo"{$url}index.php" ?>">Navbar</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -93,6 +98,9 @@
             </ul>
             <ul class="navbar-nav ms-auto">
                 <?php
+
+
+
                 switch ($rol) {
                     case "user":
                         echo "
@@ -120,8 +128,8 @@
                         break;
                     default:
                         echo "
-                            <a class='nav-link' href='./registrarse.php'>Registrarse</a>
-                            <a class='nav-link' href'#'>Iniciar Sesion</a>
+                            <a class='nav-link' href='{$url}sesion/registrarse.php'>Registrarse</a>
+                            <a class='nav-link' href='{$url}sesion/iniciarSesion.php'>Iniciar Sesion</a>
                         ";
                         break;
                 }
