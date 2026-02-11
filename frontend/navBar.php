@@ -11,7 +11,7 @@
             <ul class="navbar-nav">
                 <?php
 
-                $rol = "user";
+                $rol = "admin";
 
                 switch ($rol) {
 
@@ -80,21 +80,55 @@
                     default:
                         echo "
                             <li class='nav-item dropdown'>
-                                    <a class='nav-link dropdown-toggle' href='#' role='button' data-bs-toggle='dropdown' aria-expanded='false'>
-                                        Carta
-                                    </a>
-                                    <ul class='dropdown-menu'>
-                                        <li><a class='dropdown-item' href='#'>Marisco</a></li>
-                                        <li><a class='dropdown-item' href='#'></a></li>
-                                        <li><a class='dropdown-item' href='#'>Pasta</a></li>
-                                    </ul>
-                                </li>
+                                <a class='nav-link dropdown-toggle' href='#' role='button' data-bs-toggle='dropdown' aria-expanded='false'>
+                                    Carta
+                                </a>
+                                <ul class='dropdown-menu'>
+                                    <li><a class='dropdown-item' href='#'>Marisco</a></li>
+                                    <li><a class='dropdown-item' href='#'></a></li>
+                                    <li><a class='dropdown-item' href='#'>Pasta</a></li>
+                                </ul>
+                            </li>
                             ";
                         break;
                 }
-
                 ?>
-
+            </ul>
+            <ul class="navbar-nav ms-auto">
+                <?php
+                switch ($rol) {
+                    case "user":
+                        echo "
+                            <a class='nav-link' href='#'>Mis Datos</a>
+                            <a class='nav-link' href'#'>Cerrar Sesión</a>
+                        ";
+                        break;
+                    case "admin":
+                        echo "
+                            <a class='nav-link' href='#'>Mis Datos</a>
+                            <a class='nav-link' href'#'>Cerrar Sesión</a>
+                        ";
+                        break;
+                    case "repartidor":
+                        echo "
+                            <a class='nav-link' href='#'>Mis Datos</a>
+                            <a class='nav-link' href'#'>Cerrar Sesión</a>
+                        ";
+                        break;
+                    case "cocinero":
+                        echo "
+                            <a class='nav-link' href='#'>Mis Datos</a>
+                            <a class='nav-link' href'#'>Cerrar Sesión</a>
+                        ";
+                        break;
+                    default:
+                        echo "
+                            <a class='nav-link' href='#'>Registrarse</a>
+                            <a class='nav-link' href'#'>Iniciar Sesion</a>
+                        ";
+                        break;
+                }
+                ?>
             </ul>
         </div>
     </div>
