@@ -3,7 +3,7 @@
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Navbar</a>
+        <a class="navbar-brand" href="">Navbar</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -11,15 +11,12 @@
             <ul class="navbar-nav">
                 <?php
 
-                $rol = "admin";
+                $rol = "";
 
                 switch ($rol) {
 
                     case "user":
                         echo "
-                            <li class='nav-item'>
-                                <a class='nav-link active' aria-current='page' href='#'>Inicio</a>
-                            </li>
                             <li class='nav-item dropdown'>
                                 <a class='nav-link dropdown-toggle' href='#' role='button' data-bs-toggle='dropdown' aria-expanded='false'>
                                     Carta
@@ -123,7 +120,7 @@
                         break;
                     default:
                         echo "
-                            <a class='nav-link' href='#'>Registrarse</a>
+                            <a class='nav-link' href='./registrarse.php'>Registrarse</a>
                             <a class='nav-link' href'#'>Iniciar Sesion</a>
                         ";
                         break;
