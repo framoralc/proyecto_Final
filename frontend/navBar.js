@@ -30,6 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     cargarNavBar();
 
+    let cerrar = document.getElementById("cerrar");
+    cerrar.addEventListener('click', cerrarSesion)
+
 })
 
 function cargarNavBar() {
@@ -61,7 +64,7 @@ function cargarNavBar() {
             `;
             navIzq.innerHTML = `
             <a class='nav-link' href='#'>Mis Datos</a>
-            <a class='nav-link' href'#'>Cerrar Sesión</a>
+            <button class='nav-link' id="cerrar">Cerrar Sesión</button>
             `;
             break;
         case "admin":
@@ -81,7 +84,7 @@ function cargarNavBar() {
             `;
             navIzq.innerHTML = `
             <a class='nav-link' href='#'>Mis Datos</a>
-            <a class='nav-link' href'#'>Cerrar Sesión</a>
+            <button class='nav-link' id="cerrar">Cerrar Sesión</button>
             `;
             break;
         case "repartidor":
@@ -92,7 +95,7 @@ function cargarNavBar() {
             `;
             navIzq.innerHTML = `
             <a class='nav-link' href='#'>Mis Datos</a>
-            <a class='nav-link' href'#'>Cerrar Sesión</a>
+            <button class='nav-link' id="cerrar">Cerrar Sesión</button>
             `;
             break;
         case "cocinero":
@@ -109,7 +112,7 @@ function cargarNavBar() {
             `;
             navIzq.innerHTML = `
             <a class='nav-link' href='#'>Mis Datos</a>
-            <a class='nav-link' href'#'>Cerrar Sesión</a>
+            <button class='nav-link' id="cerrar">Cerrar Sesión</button>
             `;
             break;
         default:
@@ -132,6 +135,8 @@ function cargarNavBar() {
     }
 
 };
+
+
 
 function cerrarSesion() {
     sessionStorage.clear();
