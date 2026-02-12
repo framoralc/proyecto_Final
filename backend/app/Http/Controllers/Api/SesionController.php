@@ -32,5 +32,25 @@ class SesionController extends Controller
         return response()->json($usuario, 201);
     }
 
-    public function iniciar(Request $request) {}
+    public function iniciar(Request $request)
+    {
+
+        $usuario = \App\Models\User::where('nombre', $request->nombre)->first();
+
+        if (!$usuario) {
+            return response()->json(["No existe el usuario"], 404);
+        }
+
+        if (Hash::check($request->password, $usuario->password)) {
+            return response()->json([
+                "mensaje" => "Acceso correcto",
+                "usuario" => $usuario->nombre,
+                "rol" => $usuario->rol,
+                "direccion" => $usuario->direccion,
+                "email" => $usuario->email
+            ], 200);
+        } else {
+            return response()->json(["error" => "Contraseña incorrecta"], 401);
+        }
+    }
 }
