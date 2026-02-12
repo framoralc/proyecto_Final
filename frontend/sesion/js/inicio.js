@@ -31,6 +31,7 @@ async function iniciar(nombre, password) {
             sessionStorage.setItem('user_name', data.usuario);
             sessionStorage.setItem('user_direccion', data.direccion);
             sessionStorage.setItem('user_email', data.email);
+            window.location.href = "http://localhost/index.php";
         }
 
     }catch(err){
@@ -48,6 +49,7 @@ formulario.addEventListener('submit', (event) => {
 
     if(nombre.value != null || password.value != null){
         iniciar(nombre.value, password.value);
+        
     }
     else{
         nombre.classList.add("is-invalid");

@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <?php 
+        include("../bootstrap.php");
+    ?>
 </head>
 <body>
-    <?php
-    include("../navBar.php");
-    ?>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary" id="navBar"></nav>
 
     <form id="inicio">
 
@@ -25,5 +26,6 @@
 
     </form>
     <script type="module" src="./js/inicio.js"></script>
+    <script type="module" src="../navBar.js"></script>
 </body>
 </html>

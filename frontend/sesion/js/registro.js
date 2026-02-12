@@ -28,6 +28,9 @@ async function Registro(nombre, email, password, rol, direccion) {
             const error = await respuesta.json();
             throw new Error("No se ha podido enviar." + error)
         }
+        else{
+            window.location.href = "http://localhost/index.php";
+        }
 
     }
     catch (err) {
@@ -57,6 +60,7 @@ formulario.addEventListener('submit', (event) => {
 
         Registro(nombre.value, eMail.value, passwd.value, rol, direccion)
 
+        
     }
     else {
         passwd.classList.add("is-invalid");
@@ -64,8 +68,4 @@ formulario.addEventListener('submit', (event) => {
         passwd.classList.remove("is-valid");
         repPasswd.classList.remove("is-valid");
     }
-
-
-
 })
-
