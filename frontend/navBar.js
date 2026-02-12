@@ -31,8 +31,10 @@ document.addEventListener('DOMContentLoaded', () => {
     cargarNavBar();
 
     let cerrar = document.getElementById("cerrar");
-    cerrar.addEventListener('click', cerrarSesion)
 
+    if(cerrar){
+        cerrar.addEventListener('click', cerrarSesion)
+    }
 })
 
 function cargarNavBar() {
