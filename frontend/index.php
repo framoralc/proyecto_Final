@@ -12,8 +12,8 @@
 
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary" id="navBar"></nav>
-    <p>ddwdw</p>
+    <h1 id="titulo"></h1>
 </body>
 <script type="module" src="./navBar.js"></script>
-
+<script type="module" src="./index.js"></script>
 </html>

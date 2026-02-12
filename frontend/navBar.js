@@ -55,12 +55,6 @@ function cargarNavBar() {
             <li class='nav-item'>
                 <a class='nav-link' href='#'>Mis Pedidos</a>
             </li>
-            <li class='nav-item'>
-                <a class='nav-link' href='#'>Mis Datos</a>
-            </li>
-            <li class='nav-item'>
-                <a class='nav-link disabled' aria-disabled='true'>Disabled</a>
-            </li>
             `;
             navIzq.innerHTML = `
             <a class='nav-link' href='#'>Mis Datos</a>
