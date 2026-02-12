@@ -27,9 +27,6 @@ async function iniciar(nombre, password) {
             throw new Error("No se ha podido enviar." + error)
         }
         else{
-            console.log(data);
-            console.log("Login exitoso");
-
             sessionStorage.setItem('user_rol', data.rol);
             sessionStorage.setItem('user_name', data.usuario);
             sessionStorage.setItem('user_direccion', data.direccion);
@@ -42,7 +39,7 @@ async function iniciar(nombre, password) {
 
 }
 
-formulario.addEventListener('click', (event) => {
+formulario.addEventListener('submit', (event) => {
 
     event.preventDefault();
 
