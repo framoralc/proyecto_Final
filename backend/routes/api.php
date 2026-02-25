@@ -13,3 +13,5 @@ Route::get('/user', function (Request $request) {
 Route::post('/register', [SesionController::class, 'registrarse']);
 
 Route::post('/iniciar', [SesionController::class,'iniciar']);
+
+Route::post('/actualizarPerfil', [SesionController::class,'actualizarPerfil']);

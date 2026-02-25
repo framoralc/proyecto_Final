@@ -59,7 +59,7 @@ function cargarNavBar() {
             </li>
             `;
             navIzq.innerHTML = `
-            <a class='nav-link' href='#'>Mis Datos</a>
+            <a class='nav-link' href='${url}sesion/MisDatos.php'>Mis Datos</a>
             <button class='nav-link' id="cerrar">Cerrar Sesión</button>
             `;
             break;
@@ -79,7 +79,7 @@ function cargarNavBar() {
             </li>
             `;
             navIzq.innerHTML = `
-            <a class='nav-link' href='#'>Mis Datos</a>
+            <a class='nav-link' href='${url}sesion/MisDatos.php'>Mis Datos</a>
             <button class='nav-link' id="cerrar">Cerrar Sesión</button>
             `;
             break;
@@ -90,7 +90,7 @@ function cargarNavBar() {
             </li>
             `;
             navIzq.innerHTML = `
-            <a class='nav-link' href='#'>Mis Datos</a>
+            <a class='nav-link' href='${url}sesion/MisDatos.php'>Mis Datos</a>
             <button class='nav-link' id="cerrar">Cerrar Sesión</button>
             `;
             break;
@@ -107,7 +107,7 @@ function cargarNavBar() {
             </li>
             `;
             navIzq.innerHTML = `
-            <a class='nav-link' href='#'>Mis Datos</a>
+            <a class='nav-link' href='${url}sesion/MisDatos.php'>Mis Datos</a>
             <button class='nav-link' id="cerrar">Cerrar Sesión</button>
             `;
             break;

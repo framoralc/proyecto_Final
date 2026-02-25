@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
+use function Laravel\Prompts\error;
 
 class SesionController extends Controller
 {
@@ -44,6 +45,7 @@ class SesionController extends Controller
         if (Hash::check($request->password, $usuario->password)) {
             return response()->json([
                 "mensaje" => "Acceso correcto",
+                "id" => $usuario->id,
                 "usuario" => $usuario->nombre,
                 "rol" => $usuario->rol,
                 "direccion" => $usuario->direccion,
@@ -51,6 +53,46 @@ class SesionController extends Controller
             ], 200);
         } else {
             return response()->json(["error" => "Contraseña incorrecta"], 401);
+        }
+    }
+
+    public function actualizarPerfil(Request $request)
+    {
+
+        $usuario = User::find($request->id);
+
+        if ($usuario) {
+            $usuario->nombre = $request->nombre;
+            $usuario->email = $request->email;
+            $usuario->direccion = $request->direccion;
+            $usuario->save();
+
+            return response()->json([
+                "mensaje" => "Perfil actualizado",
+                "id" => $usuario->id,
+                "usuario" => $usuario->nombre,
+                "rol" => $usuario->rol,
+                "direccion" => $usuario->direccion,
+                "email" => $usuario->email
+            ], 200);
+        } else {
+            return response()->json(["error" => "Perfil no encontrado"], 404);
+        }
+    }
+
+    public function actualizarPassword(Request $request)
+    {
+        $usuario = User::find($request->id);
+
+        if ($usuario) {
+            $usuario->password = Hash::make($request->password);
+            $usuario->save();
+
+            return response()->json([
+                "mensaje"=> "Contraseña Actualizada",
+            ], 200);
+        } else {
+            return response()->json(["error" => "Perfil no encontrado"], 404);
         }
     }
 }

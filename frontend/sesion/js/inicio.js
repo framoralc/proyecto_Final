@@ -8,6 +8,7 @@ async function iniciar(nombre, password) {
     }
 
     try {
+        debugger;
 
         const options = {
             method: "POST",
@@ -26,7 +27,8 @@ async function iniciar(nombre, password) {
             const error = await respuesta.json();
             throw new Error("No se ha podido enviar." + error)
         }
-        else{
+        else {
+            sessionStorage.setItem('user_id', data.id);
             sessionStorage.setItem('user_rol', data.rol);
             sessionStorage.setItem('user_name', data.usuario);
             sessionStorage.setItem('user_direccion', data.direccion);
@@ -34,7 +36,7 @@ async function iniciar(nombre, password) {
             window.location.href = "http://localhost/index.php";
         }
 
-    }catch(err){
+    } catch (err) {
         console.error(err);
     }
 
@@ -47,11 +49,11 @@ formulario.addEventListener('submit', (event) => {
     let nombre = formulario.elements["name"];
     let password = formulario.elements["passw"];
 
-    if(nombre.value != null || password.value != null){
+    if (nombre.value != null || password.value != null) {
         iniciar(nombre.value, password.value);
-        
+
     }
-    else{
+    else {
         nombre.classList.add("is-invalid");
         password.classList.add("is-invalid");
     }
