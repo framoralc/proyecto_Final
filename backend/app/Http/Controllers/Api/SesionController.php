@@ -25,8 +25,7 @@ class SesionController extends Controller
         if ($request->nombre == \App\Models\User::where('nombre', $request->usuario)->first()) {
 
             return response()->json("El usuario ya existe", 409);
-        }
-        else{
+        } else {
             $usuario = \App\Models\User::create([
                 'nombre' => $request->nombre,
                 'email' => $request->email,
@@ -64,25 +63,30 @@ class SesionController extends Controller
 
     public function actualizarPerfil(Request $request)
     {
+        if (User::where('nombre', $request->nombre)->first()) {
 
-        $usuario = User::find($request->id);
+        return response()->json(["error" => "Ya existe un perfil con el mismo nombre"], 409);
 
-        if ($usuario) {
-            $usuario->nombre = $request->nombre;
-            $usuario->email = $request->email;
-            $usuario->direccion = $request->direccion;
-            $usuario->save();
-
-            return response()->json([
-                "mensaje" => "Perfil actualizado",
-                "id" => $usuario->id,
-                "usuario" => $usuario->nombre,
-                "rol" => $usuario->rol,
-                "direccion" => $usuario->direccion,
-                "email" => $usuario->email
-            ], 200);
         } else {
-            return response()->json(["error" => "Perfil no encontrado"], 404);
+            $usuario = User::find($request->id);
+
+            if ($usuario) {
+                $usuario->nombre = $request->nombre;
+                $usuario->email = $request->email;
+                $usuario->direccion = $request->direccion;
+                $usuario->save();
+
+                return response()->json([
+                    "mensaje" => "Perfil actualizado",
+                    "id" => $usuario->id,
+                    "usuario" => $usuario->nombre,
+                    "rol" => $usuario->rol,
+                    "direccion" => $usuario->direccion,
+                    "email" => $usuario->email
+                ], 200);
+            } else {
+                return response()->json(["error" => "Perfil no encontrado"], 404);
+            }
         }
     }
 
