@@ -46,11 +46,17 @@
                 <form id="formCambiarCont">
                     <div class="mb-3 w-100">
                         <label for="passwd" class="form-label">Contraseña</label>
-                        <input type="email" class="form-control" id="passwd" name="passwd" disabled="true">
+                        <input type="password" class="form-control" id="passwd" name="passwd" disabled="true">
+                        <div id="passwd" class="invalid-feedback">
+                            No coincide la contraseña.
+                        </div>
                     </div>
                     <div class="mb-3 w-100">
                         <label for="rePasswd" class="form-label">Repetir contraseña</label>
-                        <input type="text" class="form-control" id="rePasswd" name="rePasswd" disabled="true">
+                        <input type="password" class="form-control" id="rePasswd" name="rePasswd" disabled="true">
+                        <div id="rePasswd" class="invalid-feedback">
+                            No coincide la contraseña.
+                        </div>
                     </div>
                     <button style="display: none;" type="submit" class="btn btn-primary" id="ActuaCont">Submit</button>
                 </form>

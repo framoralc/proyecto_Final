@@ -22,15 +22,21 @@ class SesionController extends Controller
             'direccion' => 'nullable',
         ]);
 
-        $usuario = \App\Models\User::create([
-            'nombre' => $request->nombre,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'rol' => $request->rol,
-            'direccion' => $request->direccion,
-        ]);
+        if ($request->nombre == \App\Models\User::where('nombre', $request->usuario)->first()) {
 
-        return response()->json($usuario, 201);
+            return response()->json("El usuario ya existe", 409);
+        }
+        else{
+            $usuario = \App\Models\User::create([
+                'nombre' => $request->nombre,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'rol' => $request->rol,
+                'direccion' => $request->direccion,
+            ]);
+
+            return response()->json($usuario, 201);
+        }
     }
 
     public function iniciar(Request $request)
@@ -89,7 +95,7 @@ class SesionController extends Controller
             $usuario->save();
 
             return response()->json([
-                "mensaje"=> "Contraseña Actualizada",
+                "mensaje" => "Contraseña Actualizada",
             ], 200);
         } else {
             return response()->json(["error" => "Perfil no encontrado"], 404);

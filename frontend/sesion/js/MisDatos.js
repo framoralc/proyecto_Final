@@ -1,63 +1,23 @@
 let editableUser = false;
 let editableCam = false;
 
-let formDat = document.getElementById("formMisDatos");
-let formCon = document.getElementById("formCambiarCont");
+let formDatos = document.getElementById("formMisDatos");
+let formContrasenya = document.getElementById("formCambiarCont");
 
 function cargarInformacion() {
 
-    formDat.elements["name"].value = sessionStorage.getItem("user_name");
-    formDat.elements["eMail"].value = sessionStorage.getItem("user_email");
+    formDatos.elements["name"].value = sessionStorage.getItem("user_name");
+    formDatos.elements["eMail"].value = sessionStorage.getItem("user_email");
 
     if (sessionStorage.getItem("user_direccion") == "null") {
-        formDat.elements["direccion"].value = "";
+        formDatos.elements["direccion"].value = "";
     }
     else {
-        formDat.elements["direccion"].value = sessionStorage.getItem("user_direccion");
+        formDatos.elements["direccion"].value = sessionStorage.getItem("user_direccion");
     }
 }
 
-let btnEdit = document.getElementById("editar");
-btnEdit.addEventListener('click', (event) => {
-    event.preventDefault();
-
-    let btnSubmit = document.getElementById("editarForm");
-
-    if (editableUser == false) {
-        formDat.elements["name"].disabled = false;
-        formDat.elements["eMail"].disabled = false;
-        formDat.elements["direccion"].disabled = false;
-        editableUser = true;
-        btnSubmit.style.display = "block";
-    }
-    else {
-        formDat.elements["name"].disabled = true;
-        formDat.elements["eMail"].disabled = true;
-        formDat.elements["direccion"].disabled = true;
-        editableUser = false;
-        btnSubmit.style.display = "none";
-    }
-
-})
-
-let btnCam = document.getElementById("cambiar");
-btnCam.addEventListener('click', (event) => {
-    event.preventDefault();
-
-    if(editableCam == false){
-        editableCam = true;
-        formCon.elements["passwd"].disabled = false;
-        formCon.elements["rePasswd"].disabled = false;
-    }
-    else{
-        editableCam = false;
-        formCon.elements["passwd"].disabled = true;
-        formCon.elements["rePasswd"].disabled = true;
-    }
-})
-
-async function actualizar(perfil) {
-    debugger;
+async function actualizarPerfil(perfil) {
 
     try {
         let options = {
@@ -91,13 +51,85 @@ async function actualizar(perfil) {
     }
 }
 
-formDat.addEventListener('submit', (event) => {
+async function actualizarContraseña(perfil) {
+    debugger;
+
+    try {
+        const options = {
+            method: "POST",
+            headers: {
+                'Content-type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(perfil)
+        }
+
+        const respuesta = await fetch("http://127.0.0.1:8000/api/actualizarPassword", options);
+
+        if (!respuesta.ok) {
+            const error = await respuesta.json();
+            throw new Error("No se ha podido enviar." + error)
+        }
+        else{
+            window.location.href = "http://localhost/index.php";
+        }
+
+    }
+    catch (err) {
+        console.error(err);
+    }
+}
+
+let btnEdit = document.getElementById("editar");
+btnEdit.addEventListener('click', (event) => {
+    event.preventDefault();
+
+    let btnSubmit = document.getElementById("editarForm");
+
+    if (editableUser == false) {
+        formDatos.elements["name"].disabled = false;
+        formDatos.elements["eMail"].disabled = false;
+        formDatos.elements["direccion"].disabled = false;
+        editableUser = true;
+        btnSubmit.style.display = "block";
+    }
+    else {
+        formDatos.elements["name"].disabled = true;
+        formDatos.elements["eMail"].disabled = true;
+        formDatos.elements["direccion"].disabled = true;
+        editableUser = false;
+        btnSubmit.style.display = "none";
+    }
+
+})
+
+let btnCam = document.getElementById("cambiar");
+btnCam.addEventListener('click', (event) => {
+    event.preventDefault();
+
+    let btnSubmit = document.getElementById("ActuaCont");
+
+    if (editableCam == false) {
+        editableCam = true;
+        formContrasenya.elements["passwd"].disabled = false;
+        formContrasenya.elements["rePasswd"].disabled = false;
+        btnSubmit.style.display = "block";
+    }
+    else {
+        editableCam = false;
+        formContrasenya.elements["passwd"].disabled = true;
+        formContrasenya.elements["rePasswd"].disabled = true;
+        btnSubmit.style.display = "none";
+    }
+})
+
+formDatos.addEventListener('submit', (event) => {
     event.preventDefault();
 
     let id = sessionStorage.getItem('user_id');
-    let nombre = formDat.elements["name"].value;
-    let email = formDat.elements["eMail"].value;
-    let direccion = formDat.elements["direccion"].value;
+    let nombre = formDatos.elements["name"].value;
+    let email = formDatos.elements["eMail"].value;
+    let direccion = formDatos.elements["direccion"].value;
 
     let perfil = {
         id: id,
@@ -108,43 +140,40 @@ formDat.addEventListener('submit', (event) => {
 
     console.log(perfil);
 
-    actualizar(perfil);
+    actualizarPerfil(perfil);
 
 })
 
-formCon.addEventListener('click', (event) => {
+formContrasenya.addEventListener('submit', (event) => {
     event.preventDefault();
 
     if (confirm("¿Seguro que quieres actualizar la contraseña?")) {
 
         let id = sessionStorage.getItem('user_id');
 
-        let passw = formCon.elements["passwd"].value
+        let passwd = formContrasenya.elements["passwd"];
+        let repPasswd = formContrasenya.elements["rePasswd"];
 
-        let usuario={
-            id: id,
-            password: passw
+        if (passwd.value == repPasswd.value) {
+            passwd.classList.add("is-valid");
+            repPasswd.classList.add("is-valid");
+            passwd.classList.remove("is-invalid");
+            repPasswd.classList.remove("is-invalid");
+
+            let usuario = {
+                id: id,
+                password: passwd.value
+            }
+
+            actualizarContraseña(usuario);
         }
-
-        const options={
-            method: "POST",
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: json.stringify(usuario)
+        else {
+            passwd.classList.add("is-invalid");
+            repPasswd.classList.add("is-invalid");
+            passwd.classList.remove("is-valid");
+            repPasswd.classList.remove("is-valid");
         }
     }
 })
-
-async function actualizarContraseña(){
-
-    try{
-
-    }
-    catch(err){
-        console.error(err);
-    }
-
-}
 
 cargarInformacion();

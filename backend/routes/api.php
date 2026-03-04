@@ -10,8 +10,12 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+//Sesiones
+
 Route::post('/register', [SesionController::class, 'registrarse']);
 
 Route::post('/iniciar', [SesionController::class,'iniciar']);
 
 Route::post('/actualizarPerfil', [SesionController::class,'actualizarPerfil']);
+
+Route::post('/actualizarPassword', [SesionController::class,'actualizarPassword']);
