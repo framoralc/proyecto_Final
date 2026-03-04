@@ -24,8 +24,7 @@ async function iniciar(nombre, password) {
         const data = await respuesta.json();
 
         if (!respuesta.ok) {
-            const error = await respuesta.json();
-            throw new Error("No se ha podido enviar." + error)
+            throw new Error("No se ha podido enviar." + data.message)
         }
         else {
             sessionStorage.setItem('user_id', data.id);

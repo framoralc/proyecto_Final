@@ -19,3 +19,5 @@ Route::post('/iniciar', [SesionController::class,'iniciar']);
 Route::post('/actualizarPerfil', [SesionController::class,'actualizarPerfil']);
 
 Route::post('/actualizarPassword', [SesionController::class,'actualizarPassword']);
+
+Route::post('/eliminarUsuario', [SesionController::class,'eliminarUsuario']);

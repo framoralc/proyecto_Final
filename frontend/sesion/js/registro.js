@@ -24,9 +24,10 @@ async function Registro(nombre, email, password, rol, direccion) {
 
         const respuesta = await fetch("http://127.0.0.1:8000/api/register", options)
 
+        const data = await respuesta.json();
+
         if (!respuesta.ok) {
-            const error = await respuesta.json();
-            throw new Error("No se ha podido enviar." + error)
+            throw new Error("No se ha podido enviar." + data.message)
         }
         else{
             window.location.href = "http://localhost/index.php";
@@ -35,6 +36,10 @@ async function Registro(nombre, email, password, rol, direccion) {
     }
     catch (err) {
         console.error("error: " + err)
+        let alert = formulario.getElementsByClassName("alert")[0];
+        if(alert){
+            alert.style.display = "block";
+        }
     }
 
 }

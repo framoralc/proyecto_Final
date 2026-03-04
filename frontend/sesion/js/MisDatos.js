@@ -4,6 +4,8 @@ let editableCam = false;
 let formDatos = document.getElementById("formMisDatos");
 let formContrasenya = document.getElementById("formCambiarCont");
 
+let userError = document.getElementById("userError");
+
 function cargarInformacion() {
 
     formDatos.elements["name"].value = sessionStorage.getItem("user_name");
@@ -34,8 +36,7 @@ async function actualizarPerfil(perfil) {
         const data = await respuesta.json();
 
         if (!respuesta.ok) {
-            const error = await respuesta.json();
-            throw new Error("No se ha podido enviar." + error)
+            throw new Error("No se ha podido enviar." + data.message);
         }
         else {
             sessionStorage.setItem('user_id', data.id);
@@ -47,7 +48,11 @@ async function actualizarPerfil(perfil) {
         }
     }
     catch (err) {
-        console.error(err);
+        console.error("Error:" + err);
+        let alert = formDatos.getElementsByClassName("alert")[0];
+        if(alert){
+            alert.style.display = "block";
+        }
     }
 }
 
@@ -97,6 +102,8 @@ btnEdit.addEventListener('click', (event) => {
         formDatos.elements["name"].disabled = true;
         formDatos.elements["eMail"].disabled = true;
         formDatos.elements["direccion"].disabled = true;
+        userError.classList.add("none")
+        userError.classList.remove("block");
         editableUser = false;
         btnSubmit.style.display = "none";
     }

@@ -36,6 +36,9 @@
                         <label for="direccion" class="form-label">Dirección</label>
                         <input type="text" class="form-control" id="direccion" name="direccion" disabled="true">
                     </div>
+                    <div class="alert alert-danger" role="alert" id="userError" style="display: none;">
+                        El nombre ya existe
+                    </div>
                     <button style="display: none;" type="submit" class="btn btn-primary" id="editarForm">Submit</button>
                 </form>
 

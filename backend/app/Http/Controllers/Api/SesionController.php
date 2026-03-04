@@ -15,18 +15,11 @@ class SesionController extends Controller
     public function registrarse(Request $request)
     {
 
-        $datos = $request->validate([
-            'nombre' => 'required',
-            'email' => 'required|email',
-            'password' => 'required',
-            'direccion' => 'nullable',
-        ]);
-
-        if ($request->nombre == \App\Models\User::where('nombre', $request->usuario)->first()) {
+        if (User::where('nombre', $request->usuario)->first()) {
 
             return response()->json("El usuario ya existe", 409);
         } else {
-            $usuario = \App\Models\User::create([
+            $usuario = User::create([
                 'nombre' => $request->nombre,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
@@ -41,7 +34,7 @@ class SesionController extends Controller
     public function iniciar(Request $request)
     {
 
-        $usuario = \App\Models\User::where('nombre', $request->nombre)->first();
+        $usuario = User::where('nombre', $request->nombre)->first();
 
         if (!$usuario) {
             return response()->json(["No existe el usuario"], 404);
@@ -65,8 +58,7 @@ class SesionController extends Controller
     {
         if (User::where('nombre', $request->nombre)->first()) {
 
-        return response()->json(["error" => "Ya existe un perfil con el mismo nombre"], 409);
-
+            return response()->json(["error" => "Ya existe un perfil con el mismo nombre"], 409);
         } else {
             $usuario = User::find($request->id);
 
@@ -104,5 +96,12 @@ class SesionController extends Controller
         } else {
             return response()->json(["error" => "Perfil no encontrado"], 404);
         }
+    }
+
+    public function eliminarUsuario(Request $request)
+    {
+        $usuario = User::find($request->id);
+        $usuario->delete();
+        return response()->json(['message' => 'Usuario eliminado'], 201);
     }
 }
