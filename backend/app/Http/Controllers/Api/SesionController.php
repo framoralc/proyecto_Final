@@ -104,4 +104,16 @@ class SesionController extends Controller
         $usuario->delete();
         return response()->json(['message' => 'Usuario eliminado'], 201);
     }
+
+    public function contarUsuarios(){
+        $totalUsuarios = User::count();
+
+        return response()->json(['count' => $totalUsuarios], 200);
+    }
+
+    public function mostrarUsuarios(Request $request){
+        $usuario = User::where('nombre')->limit($request->limit)->offset($request->page);
+
+        return response()->json(['usuarios'=> $usuario], 200);
+    }
 }

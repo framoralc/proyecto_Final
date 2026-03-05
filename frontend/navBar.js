@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     nav.innerHTML = `
         <div class="container-fluid">
-            <a class="navbar-brand" href="${url}index.php">Flashfood</a>
+            <a class="navbar-brand" href="/index.php">Flashfood</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -59,14 +59,14 @@ function cargarNavBar() {
             </li>
             `;
             navIzq.innerHTML = `
-            <a class='nav-link' href='${url}sesion/MisDatos.php'>Mis Datos</a>
+            <a class='nav-link' href='/sesion/MisDatos.php'>Mis Datos</a>
             <button class='nav-link' id="cerrar">Cerrar Sesión</button>
             `;
             break;
         case "admin":
             navDer.innerHTML = `
             <li class='nav-item'>
-                <a class='nav-link' href='#'>Administrar Empleados</a>
+                <a class='nav-link' href='/sesion/AdministrarEmpleados.php'>Administrar Empleados</a>
             </li>
             <li class='nav-item'>
                 <a class='nav-link' href='#'>Administrar Platos</a>
@@ -79,7 +79,7 @@ function cargarNavBar() {
             </li>
             `;
             navIzq.innerHTML = `
-            <a class='nav-link' href='${url}sesion/MisDatos.php'>Mis Datos</a>
+            <a class='nav-link' href='/sesion/MisDatos.php'>Mis Datos</a>
             <button class='nav-link' id="cerrar">Cerrar Sesión</button>
             `;
             break;
@@ -90,7 +90,7 @@ function cargarNavBar() {
             </li>
             `;
             navIzq.innerHTML = `
-            <a class='nav-link' href='${url}sesion/MisDatos.php'>Mis Datos</a>
+            <a class='nav-link' href='/sesion/MisDatos.php'>Mis Datos</a>
             <button class='nav-link' id="cerrar">Cerrar Sesión</button>
             `;
             break;
@@ -107,7 +107,7 @@ function cargarNavBar() {
             </li>
             `;
             navIzq.innerHTML = `
-            <a class='nav-link' href='${url}sesion/MisDatos.php'>Mis Datos</a>
+            <a class='nav-link' href='/sesion/MisDatos.php'>Mis Datos</a>
             <button class='nav-link' id="cerrar">Cerrar Sesión</button>
             `;
             break;
@@ -125,8 +125,8 @@ function cargarNavBar() {
             </li>
             `;
             navIzq.innerHTML = `
-            <a class='nav-link' href='${url}sesion/registrarse.php'>Registrarse</a>
-            <a class='nav-link' href='${url}sesion/iniciarSesion.php'>Iniciar Sesion</a>
+            <a class='nav-link' href='/sesion/registrarse.php'>Registrarse</a>
+            <a class='nav-link' href='/sesion/iniciarSesion.php'>Iniciar Sesion</a>
             `;
     }
 

@@ -9,7 +9,6 @@
     include("../bootstrap.php");
     ?>
 </head>
-
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary" id="navBar"></nav>
 
