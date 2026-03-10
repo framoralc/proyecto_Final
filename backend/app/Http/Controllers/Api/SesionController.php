@@ -112,7 +112,7 @@ class SesionController extends Controller
     }
 
     public function mostrarUsuarios(Request $request){
-        $usuario = User::where('nombre')->limit($request->limit)->offset($request->page);
+        $usuario = User::orderBy('id', 'asc')->limit($request->limit)->offset($request->offset)->get()->makeHidden('password');
 
         return response()->json(['usuarios'=> $usuario], 200);
     }

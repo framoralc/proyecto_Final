@@ -24,4 +24,4 @@ Route::post('/eliminarUsuario', [SesionController::class,'eliminarUsuario']);
 
 Route::get('/contarUsuarios', [SesionController::class,'contarUsuarios']);
 
-Route::post('/mostrarUsuarios', [SesionController::class,'mostrarUsuarios']);
+Route::get('/mostrarUsuarios', [SesionController::class,'mostrarUsuarios']);
