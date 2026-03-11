@@ -20,7 +20,7 @@ Route::post('/actualizarPerfil', [SesionController::class,'actualizarPerfil']);
 
 Route::post('/actualizarPassword', [SesionController::class,'actualizarPassword']);
 
-Route::post('/eliminarUsuario', [SesionController::class,'eliminarUsuario']);
+Route::delete('/eliminarUsuario/{id}', [SesionController::class,'eliminarUsuario']);
 
 Route::get('/contarUsuarios', [SesionController::class,'contarUsuarios']);
 

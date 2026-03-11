@@ -50,7 +50,7 @@ async function actualizarPerfil(perfil) {
     catch (err) {
         console.error("Error:" + err);
         let alert = formDatos.getElementsByClassName("alert")[0];
-        if(alert){
+        if (alert) {
             alert.style.display = "block";
         }
     }
@@ -75,13 +75,47 @@ async function actualizarContraseña(perfil) {
             const error = await respuesta.json();
             throw new Error("No se ha podido enviar." + error)
         }
-        else{
+        else {
             window.location.href = "http://localhost/index.php";
         }
 
     }
     catch (err) {
         console.error(err);
+    }
+}
+
+async function eliminarPerfil(id) {
+    debugger;
+
+    try {
+        const options = {
+            method: "DELETE",
+            Headers: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+            },
+        }
+
+        console.log(options);
+
+        const respuesta = await fetch(`http://127.0.0.1:8000/api/eliminarUsuario/${id}`, options)
+
+        if (!respuesta.ok) {
+            const errorHtml = await respuesta.text();
+            console.error("EL SERVIDOR RESPONDIÓ CON HTML:");
+
+            // TRUCO: Abre el error en una pestaña nueva para leerlo bien
+            const win = window.open();
+            win.document.write(errorHtml);
+            return;
+        }
+
+        console.log(resultado.result);
+
+    }
+    catch (err) {
+        console.log(err)
     }
 }
 
@@ -181,6 +215,17 @@ formContrasenya.addEventListener('submit', (event) => {
             repPasswd.classList.remove("is-valid");
         }
     }
+})
+
+let btnEliminar = document.getElementById("eliminar");
+
+btnEliminar.addEventListener('click', async () => {
+
+    await eliminarPerfil(sessionStorage.getItem('user_id'));
+
+    sessionStorage.clear();
+    window.location.href = "http://localhost/index.php";
+
 })
 
 cargarInformacion();

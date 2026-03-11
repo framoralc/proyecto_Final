@@ -136,5 +136,5 @@ function cargarNavBar() {
 
 function cerrarSesion() {
     sessionStorage.clear();
-    window.location.href = url + "index.php";
+    window.location.href = "/index.php";
 }

@@ -98,22 +98,30 @@ class SesionController extends Controller
         }
     }
 
-    public function eliminarUsuario(Request $request)
+    public function eliminarUsuario($id)
     {
-        $usuario = User::find($request->id);
-        $usuario->delete();
-        return response()->json(['message' => 'Usuario eliminado'], 201);
+        $usuario = User::find($id);
+
+        if(!$usuario){
+            return response()->json(['message' => 'no se ha encontrado'], 404);
+        }
+        else{
+            $usuario->delete();
+            return response()->json(['message' => 'se ha eliminado correctamente'], 200);
+        }
     }
 
-    public function contarUsuarios(){
+    public function contarUsuarios()
+    {
         $totalUsuarios = User::count();
 
         return response()->json(['count' => $totalUsuarios], 200);
     }
 
-    public function mostrarUsuarios(Request $request){
+    public function mostrarUsuarios(Request $request)
+    {
         $usuario = User::orderBy('id', 'asc')->limit($request->limit)->offset($request->offset)->get()->makeHidden('password');
 
-        return response()->json(['usuarios'=> $usuario], 200);
+        return response()->json(['usuarios' => $usuario], 200);
     }
 }

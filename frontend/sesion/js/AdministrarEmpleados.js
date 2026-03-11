@@ -10,7 +10,9 @@ async function ContadorUsuarios() {
 
         const respuesta = await fetch('http://127.0.0.1:8000/api/contarUsuarios', options);
 
-        const resultado = await respuesta;
+        const resultado = await respuesta.json();
+
+        console.log(resultado.count)
 
         return resultado;
 
@@ -49,13 +51,16 @@ async function recogerDatos(config) {
 async function deleteUsuario(id){
 
     const options ={
-        method: "POST",
-        body: JSON.stringify(id)
+        method: "DELETE",
+        Headers:{
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
     };
 
-    const respuesta = await fetch('http://127.0.0.1:8000/api/eliminarUsuario', options);
+    const respuesta = await fetch(`http://127.0.0.1:8000/api/eliminarUsuario/${id}`, options);
 
-    const resultado = await respuesta;
+    const resultado = await respuesta.json();
 
 }
 
@@ -97,8 +102,8 @@ async function mostrarLista() {
         usuarioDireccion.textContent = usuario.direccion;
 
         let btnDelete = tablaUsuario.querySelector("#eliminar");
-        btnDelete.addEventListener('click', () => {
-            
+        btnDelete.addEventListener('click', async function() {
+            await deleteUsuario(usuario.id);
         })
 
         tablaUsuarios.append(tablaUsuario);
@@ -108,4 +113,13 @@ async function mostrarLista() {
     });
 }
 
+async function paginacion(){
+
+    let count = await ContadorUsuarios();
+
+
+
+}
+
 mostrarLista();
+

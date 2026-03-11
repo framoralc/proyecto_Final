@@ -69,6 +69,7 @@
         <section>
             <button class="btn btn-primary" id="editar">Editar Perfil</button>
             <button class="btn btn-primary" id="cambiar">Cambiar contraseña</button>
+            <button class="btn btn-danger" id="eliminar">Eliminar Perfil</button>
         </section>
     </section>
 

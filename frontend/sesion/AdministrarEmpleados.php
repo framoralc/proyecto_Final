@@ -60,7 +60,7 @@
                     <th scope="col">eMail</th>
                     <th scope="col">Rol</th>
                     <th scope="col">Dirección</th>
-                    <th scope="col"></th>
+                    <th scope="col">opciones</th>
                 </tr>
             </thead>
             <tbody id="informacionUsuarios">
@@ -83,7 +83,7 @@
         <tr>
             <td id="id"></td>
             <td id="nombre"></td>
-            <td id="email"></td>
+            <td class="w-25" id="email"></td>
             <td id="rol"></td>
             <td id="direccion"></td>
             <td style="display:flex;">
