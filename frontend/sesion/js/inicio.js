@@ -20,13 +20,13 @@ async function iniciar(nombre, password) {
 
         const respuesta = await fetch("http://127.0.0.1:8000/api/iniciar", options)
 
-        const data = await respuesta.json();
+       const data = await respuesta.json();
 
         if (!respuesta.ok) {
-            const error = await respuesta.json();
-            throw new Error("No se ha podido enviar." + error)
+            throw new Error("No se ha podido enviar." + data.message) // usa data directamente
         }
         else{
+            console.log(data);
             sessionStorage.setItem('user_rol', data.rol);
             sessionStorage.setItem('user_name', data.usuario);
             sessionStorage.setItem('user_direccion', data.direccion);

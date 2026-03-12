@@ -2,7 +2,6 @@ let rol = sessionStorage.getItem("user_rol") || "";
 
 const url = "http://localhost/";
 
-
 document.addEventListener('DOMContentLoaded', () => {
 
     if (!rol) {
@@ -69,10 +68,10 @@ function cargarNavBar() {
                 <a class='nav-link' href='#'>Administrar Empleados</a>
             </li>
             <li class='nav-item'>
-                <a class='nav-link' href='#'>Administrar Platos</a>
+                <a class='nav-link' href='${url}platos/administrarPlatos.php'>Administrar Platos</a>
             </li>
             <li class='nav-item'>
-                <a class='nav-link' href='#'>Administrar Ingredientes</a>
+                <a class='nav-link' href='${url}ingredientes/administrarIngredientes.php'>Administrar Ingredientes</a>
             </li>
             <li class='nav-item'>
                 <a class='nav-link' href='#'>Administrar Horario De los Empleados</a>
@@ -97,13 +96,13 @@ function cargarNavBar() {
         case "cocinero":
             navDer.innerHTML = `
             <li class='nav-item'>
-                <a class='nav-link' href='#'>Administrar Platos</a>
+                <a class='nav-link' href='${url}platos/administrarPlatos.php'>Administrar Platos</a>
             </li>
             <li class='nav-item'>
-                <a class='nav-link' href='#'>Administrar Ingredientes</a>
+                <a class='nav-link' href='${url}ingredientes/administrarIngredientes.php'>Administrar Ingredientes</a>
             </li>
             <li class='nav-item'>
-                <a class='nav-link' href='#'>Pedidos</a>
+                <a class='nav-link' href='platos/pedidos'>Pedidos</a>
             </li>
             `;
             navIzq.innerHTML = `
@@ -131,8 +130,6 @@ function cargarNavBar() {
     }
 
 };
-
-
 
 function cerrarSesion() {
     sessionStorage.clear();
