@@ -14,7 +14,7 @@ async function ContadorUsuarios() {
 
         console.log(resultado.count)
 
-        return resultado;
+        return resultado.count;
 
     }
     catch (err) {
@@ -28,8 +28,8 @@ async function recogerDatos(config) {
     try {
 
         const options = {
-            method: "GET",
-            Headers: {
+            method: "POST",
+            headers: {
                 'Content-type': 'application/json',
                 'accept': 'application/json'
             },
@@ -40,6 +40,8 @@ async function recogerDatos(config) {
 
         const resultado = await respuesta.json();
 
+        console.log(resultado);
+
         return resultado;
 
     }
@@ -48,20 +50,17 @@ async function recogerDatos(config) {
     }
 }
 
-async function deleteUsuario(id){
+async function deleteUsuario(id) {
 
-    const options ={
+    const options = {
         method: "DELETE",
-        Headers:{
+        headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         }
     };
 
-    const respuesta = await fetch(`http://127.0.0.1:8000/api/eliminarUsuario/${id}`, options);
-
-    const resultado = await respuesta.json();
-
+    await fetch(`http://127.0.0.1:8000/api/eliminarUsuario/${id}`, options);
 }
 
 async function TotalUsuarios() {
@@ -74,11 +73,11 @@ async function TotalUsuarios() {
 
 }
 
-async function mostrarLista() {
+async function mostrarLista(config) {
 
-    let informacionUsuarios = await recogerDatos();
+    eliminarContenido();
 
-    console.log(informacionUsuarios);
+    let informacionUsuarios = await recogerDatos(config);
 
     let tablaUsuarios = document.getElementById("informacionUsuarios");
 
@@ -102,24 +101,73 @@ async function mostrarLista() {
         usuarioDireccion.textContent = usuario.direccion;
 
         let btnDelete = tablaUsuario.querySelector("#eliminar");
-        btnDelete.addEventListener('click', async function() {
+        btnDelete.addEventListener('click', async function () {
             await deleteUsuario(usuario.id);
         })
 
         tablaUsuarios.append(tablaUsuario);
 
-        console.log(usuario.nombre);
-
     });
 }
 
-async function paginacion(){
+async function paginacion(limit) {
 
-    let count = await ContadorUsuarios();
+    let cantidadUsuariosTotales = await ContadorUsuarios();
 
+    let pCount = document.getElementById("count");
+    let paginas = document.getElementById("paginas");
 
+    if (cantidadUsuariosTotales == 0) {
+        pCount.textContent = "No hay usuarios.";
+    }
+    else if (cantidadUsuariosTotales == 1) {
+        pCount.textContent = `Hay ${cantidadUsuariosTotales} usuario.`
+    }
+    else {
+        pCount.textContent = `Hay ${cantidadUsuariosTotales} usuarios.`
+    }
+
+    let count = cantidadUsuariosTotales;
+    let pagina = 1;
+
+    do{
+
+        let pageLi = document.createElement("li");
+        pageLi.classList.add("page-item");
+        pageLi.id = pagina;
+
+        let pageButton = document.createElement("button")
+        pageButton.classList.add("page-link");
+        pageButton.textContent = pagina;
+
+        pageLi.append(pageButton);
+        paginas.append(pageLi);
+
+        pagina++;
+
+        count = count - limit;
+
+    }while(count > -1);
+}
+
+function eliminarContenido() {
+
+    let tablaUsuarios = document.getElementById("informacionUsuarios");
+
+    tablaUsuarios.innerHTML = "";
 
 }
 
-mostrarLista();
+function init() {
 
+    let config ={
+        limit: 10,
+        offset: 0
+    };
+
+    mostrarLista(config);
+
+    paginacion(10);
+}
+
+init();

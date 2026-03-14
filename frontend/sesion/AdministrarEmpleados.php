@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administrar Empleados</title>
+    <title>Flashfood - Administrar Empleados</title>
     <?php
     include("../bootstrap.php");
     ?>
@@ -51,8 +51,9 @@
             </div>
         </section>
     </div>
-    <div id="lista">
-        <table class="table">
+    <section class="table-responsive-sm m-5" id="lista" style="margin-left:0px;">
+        <p id="count"></p>
+        <table class="table table-hover table-bordered">
             <thead>
                 <tr>
                     <th scope="col">id</th>
@@ -63,18 +64,16 @@
                     <th scope="col">opciones</th>
                 </tr>
             </thead>
-            <tbody id="informacionUsuarios">
+            <tbody class="table-group-divider" id="informacionUsuarios">
             </tbody>
         </table>
-    </div>
+    </section>
 
     <nav aria-label="Page navigation example">
-        <ul class="pagination">
-            <li class="page-item"><button class="page-link" href="#">Previous</button></li>
-            <li class="page-item"><button class="page-link" href="#">1</button></li>
-            <li class="page-item"><button class="page-link" href="#">2</button></li>
-            <li class="page-item"><button class="page-link" href="#">3</button></li>
-            <li class="page-item"><button class="page-link" href="#">Next</button></li>
+        <ul class="pagination" id="paginas">
+            <!-- <li class="page-item"><button class="page-link" href="#">Previous</button></li> -->
+
+            <!-- <li class="page-item"><button class="page-link" href="#">Next</button></li> -->
         </ul>
     </nav>
 

@@ -13,7 +13,7 @@
 
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary" id="navBar"></nav>
-    <h1 id="titulo">Detalles</h1>
+    <h1 id="titulo">Flashfood - Detalles</h1>
 
     <section class="menu">
 
