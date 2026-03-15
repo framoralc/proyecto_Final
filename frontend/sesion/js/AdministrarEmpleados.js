@@ -106,32 +106,20 @@ async function mostrarLista(config) {
         })
 
         tablaUsuarios.append(tablaUsuario);
-
     });
 }
 
-async function paginacion(limit) {
+async function paginacion(limit, cantidadUsuariosTotales) {
 
-    let cantidadUsuariosTotales = await ContadorUsuarios();
+    debugger;
 
-    let pCount = document.getElementById("count");
     let paginas = document.getElementById("paginas");
-
-    if (cantidadUsuariosTotales == 0) {
-        pCount.textContent = "No hay usuarios.";
-    }
-    else if (cantidadUsuariosTotales == 1) {
-        pCount.textContent = `Hay ${cantidadUsuariosTotales} usuario.`
-    }
-    else {
-        pCount.textContent = `Hay ${cantidadUsuariosTotales} usuarios.`
-    }
 
     let count = cantidadUsuariosTotales;
     let pagina = 1;
     let offset = 0;
 
-    do{
+    do {
 
         debugger;
 
@@ -164,7 +152,23 @@ async function paginacion(limit) {
 
         count = count - limit;
 
-    }while(count > -1);
+    } while (count > -1);
+}
+
+function mostrarTotalUsuarios(cantidadUsuariosTotales) {
+
+    let pCount = document.getElementById("count");
+
+    if (cantidadUsuariosTotales == 0) {
+        pCount.textContent = "No hay usuarios.";
+    }
+    else if (cantidadUsuariosTotales == 1) {
+        pCount.textContent = `Hay ${cantidadUsuariosTotales} usuario.`
+    }
+    else {
+        pCount.textContent = `Hay ${cantidadUsuariosTotales} usuarios.`
+    }
+
 }
 
 function eliminarContenido() {
@@ -175,16 +179,22 @@ function eliminarContenido() {
 
 }
 
-function init() {
+async function init() {
 
-    let config ={
+    let cantidadUsuariosTotales = await ContadorUsuarios();
+
+    let config = {
         limit: 10,
         offset: 0
     };
 
+    mostrarTotalUsuarios(cantidadUsuariosTotales);
+
+    console.log(cantidadUsuariosTotales);
+
     mostrarLista(config);
 
-    paginacion(10);
+    paginacion(10, cantidadUsuariosTotales);
 }
 
 init();
