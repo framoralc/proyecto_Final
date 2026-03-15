@@ -129,8 +129,11 @@ async function paginacion(limit) {
 
     let count = cantidadUsuariosTotales;
     let pagina = 1;
+    let offset = 0;
 
     do{
+
+        debugger;
 
         let pageLi = document.createElement("li");
         pageLi.classList.add("page-item");
@@ -139,11 +142,25 @@ async function paginacion(limit) {
         let pageButton = document.createElement("button")
         pageButton.classList.add("page-link");
         pageButton.textContent = pagina;
+        pageButton.id = offset;
+        pageButton.addEventListener('click', (event) => {
+            debugger;
+            event.preventDefault();
+
+            let config = {
+                limit: 10,
+                offset: pageButton.id
+            };
+
+            mostrarLista(config);
+        })
 
         pageLi.append(pageButton);
         paginas.append(pageLi);
 
         pagina++;
+
+        offset = offset + limit;
 
         count = count - limit;
 
