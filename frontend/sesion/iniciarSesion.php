@@ -14,8 +14,8 @@
     <form id="inicio">
 
     <div class="form-floating mb-3 w-25">
-        <input class="form-control" type="text" name="name" id="name" placeholder="name">
-        <label for="name">Nombre</label>
+        <input class="form-control" type="email" name="eMail" id="email" placeholder="Email">
+        <label for="email">Email</label>
     </div>
     <div class="form-floating mb-3 w-25">
         <input class="form-control" type="password" name="passw" id="passw" placeholder="password">
@@ -25,7 +25,7 @@
     <button type="submit" class="btn btn-primary mb-3">Iniciar Sesión</button>
 
     </form>
-    <script type="module" src="./js/inicio.js"></script>
+    <script type="module" src="./js/iniciarSesion.js"></script>
     <script type="module" src="../navBar.js"></script>
 </body>
 </html>

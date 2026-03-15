@@ -22,7 +22,7 @@ async function Registro(nombre, email, password, rol, direccion) {
             body: JSON.stringify(usuario)
         }
 
-        const respuesta = await fetch("http://127.0.0.1:8000/api/register", options)
+        const respuesta = await fetch("http://127.0.0.1:8000/api/registrarUsuario", options)
 
         const data = await respuesta.json();
 

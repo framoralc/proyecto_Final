@@ -1,9 +1,9 @@
 let formulario = document.querySelector("form");
 
-async function iniciar(nombre, password) {
+async function iniciar(email, password) {
 
     let usuario = {
-        nombre: nombre,
+        email: email,
         password: password
     }
 
@@ -19,7 +19,7 @@ async function iniciar(nombre, password) {
             body: JSON.stringify(usuario)
         }
 
-        const respuesta = await fetch("http://127.0.0.1:8000/api/iniciar", options)
+        const respuesta = await fetch("http://127.0.0.1:8000/api/iniciarSesion", options)
 
         const data = await respuesta.json();
 
@@ -45,15 +45,15 @@ formulario.addEventListener('submit', (event) => {
 
     event.preventDefault();
 
-    let nombre = formulario.elements["name"];
+    let email = formulario.elements["eMail"];
     let password = formulario.elements["passw"];
 
-    if (nombre.value != null || password.value != null) {
-        iniciar(nombre.value, password.value);
+    if (email.value != null || password.value != null) {
+        iniciar(email.value, password.value);
 
     }
     else {
-        nombre.classList.add("is-invalid");
+        email.classList.add("is-invalid");
         password.classList.add("is-invalid");
     }
 })

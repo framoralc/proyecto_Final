@@ -12,7 +12,7 @@ use function Laravel\Prompts\error;
 
 class SesionController extends Controller
 {
-    public function registrarse(Request $request)
+    public function registrarUsuario(Request $request)
     {
 
         if (User::where('nombre', $request->usuario)->first()) {
@@ -31,10 +31,10 @@ class SesionController extends Controller
         }
     }
 
-    public function iniciar(Request $request)
+    public function iniciarSesion(Request $request)
     {
 
-        $usuario = User::where('nombre', $request->nombre)->first();
+        $usuario = User::where('email', $request->email)->first();
 
         if (!$usuario) {
             return response()->json(["No existe el usuario"], 404);
@@ -56,7 +56,7 @@ class SesionController extends Controller
 
     public function actualizarPerfil(Request $request)
     {
-        if (User::where('nombre', $request->nombre)->first()) {
+        if (User::where('email', $request->email)->first()) {
 
             return response()->json(["error" => "Ya existe un perfil con el mismo nombre"], 409);
         } else {

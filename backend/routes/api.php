@@ -12,9 +12,9 @@ Route::get('/user', function (Request $request) {
 
 //Sesiones
 
-Route::post('/register', [SesionController::class, 'registrarse']);
+Route::post('/registrarUsuario', [SesionController::class, 'registrarUsuario']);
 
-Route::post('/iniciar', [SesionController::class,'iniciar']);
+Route::post('/iniciarSesion', [SesionController::class,'iniciarSesion']);
 
 Route::post('/actualizarPerfil', [SesionController::class,'actualizarPerfil']);
 
