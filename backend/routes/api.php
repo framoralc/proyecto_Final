@@ -14,14 +14,24 @@ Route::get('/user', function (Request $request) {
 
 Route::post('/registrarUsuario', [SesionController::class, 'registrarUsuario']);
 
-Route::post('/iniciarSesion', [SesionController::class,'iniciarSesion']);
+Route::post('/iniciarSesion', [SesionController::class, 'iniciarSesion']);
 
-Route::post('/actualizarPerfil', [SesionController::class,'actualizarPerfil']);
+// actualizar información del perfil
 
-Route::post('/actualizarPassword', [SesionController::class,'actualizarPassword']);
+Route::post('/actualizarPassword', [SesionController::class, 'actualizarPassword']);
 
-Route::delete('/eliminarUsuario/{id}', [SesionController::class,'eliminarUsuario']);
+Route::post('/actualizarNombre', [SesionController::class, 'actualizarNombre']);
 
-Route::get('/contarUsuarios', [SesionController::class,'contarUsuarios']);
+Route::post('/actualizarEmail', [SesionController::class, 'actualizarEmail']);
 
-Route::post('/mostrarUsuarios', [SesionController::class,'mostrarUsuarios']);
+// Recoger información
+
+Route::get('/recogerInformacion', [SesionController::class, 'recogerInformacion']);
+
+Route::delete('/eliminarUsuario/{id}', [SesionController::class, 'eliminarUsuario']);
+
+Route::get('/contarUsuarios', [SesionController::class, 'contarUsuarios']);
+
+Route::post('/mostrarUsuarios', [SesionController::class, 'mostrarUsuarios']);
+
+

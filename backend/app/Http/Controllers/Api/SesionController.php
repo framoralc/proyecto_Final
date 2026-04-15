@@ -54,31 +54,20 @@ class SesionController extends Controller
         }
     }
 
-    public function actualizarPerfil(Request $request)
+    // Actualizar información del perfil
+
+        public function actualizarNombre(Request $request) 
     {
-        if (User::where('email', $request->email)->first()) {
+        $usuario = User::find($request->id);
 
-            return response()->json(["error" => "Ya existe un perfil con el mismo nombre"], 409);
-        } else {
-            $usuario = User::find($request->id);
+        if($usuario){
+            $usuario->nombre = $request->nombre;
+            $usuario->save();
 
-            if ($usuario) {
-                $usuario->nombre = $request->nombre;
-                $usuario->email = $request->email;
-                $usuario->direccion = $request->direccion;
-                $usuario->save();
-
-                return response()->json([
-                    "mensaje" => "Perfil actualizado",
-                    "id" => $usuario->id,
-                    "usuario" => $usuario->nombre,
-                    "rol" => $usuario->rol,
-                    "direccion" => $usuario->direccion,
-                    "email" => $usuario->email
-                ], 200);
-            } else {
-                return response()->json(["error" => "Perfil no encontrado"], 404);
-            }
+            return response()->json(["mensaje" => "El nombre se ha actualizado"], 200);
+        }
+        else{
+            return response()->json(["error" => "Perfil no encontrado"], 404);
         }
     }
 
@@ -91,25 +80,60 @@ class SesionController extends Controller
             $usuario->save();
 
             return response()->json([
-                "mensaje" => "Contraseña Actualizada",
+                "mensaje" => "Contraseña Actualizada"
             ], 200);
         } else {
             return response()->json(["error" => "Perfil no encontrado"], 404);
         }
     }
 
+    public function actualizarEmail(Request $request)
+    {
+        $usuario = User::find($request->id);
+
+        if ($usuario){
+            $usuario->email = $request->email;
+            $usuario->save();
+
+            return response()->json(["mensaje" => "Se ha cambiado correctamente"], 200);
+        } else {
+            return response()->json(["error" => "Perfil no encontrado"], 404);
+        }
+
+    }
+
     public function eliminarUsuario($id)
     {
         $usuario = User::find($id);
 
-        if(!$usuario){
+        if (!$usuario) {
             return response()->json(['message' => 'no se ha encontrado'], 404);
-        }
-        else{
+        } else {
             $usuario->delete();
             return response()->json(['message' => 'se ha eliminado correctamente'], 200);
         }
     }
+
+    // Recoger datos de usuarios
+
+    public function recogerInformacion(Request $request){
+
+        $usuario = User::find($request->id);
+
+        if($usuario){
+            return response()->json(['message' => 'se ha recogido correctamente',
+                                    'usuario' => $usuario->nombre,
+                                    'rol' => $usuario->rol,
+                                    'direccion' => $usuario->direccion,
+                                    'email' => $usuario->email
+                                    ], 200);
+        }
+        else{
+            return response()->json(['error' => 'no se ha encontrado'], 404);
+        }
+    }
+
+    // Lista de usuarios
 
     public function contarUsuarios()
     {
@@ -120,7 +144,11 @@ class SesionController extends Controller
 
     public function mostrarUsuarios(Request $request)
     {
-        $result = User::orderBy('id', 'asc')->limit($request->limit)->offset($request->offset)->get()->makeHidden('password');
+        if (count($request->rol) == 1) {
+            $result = User::orderBy('id', 'asc')->limit($request->limit)->offset($request->offset)->get()->makeHidden('password')->where('rol', $request->rol);
+        } else {
+            $result = User::orderBy('id', 'asc')->limit($request->limit)->offset($request->offset)->get()->makeHidden('password')->whereIn('rol', $request->rol);
+        }
 
         return response()->json(['usuarios' => $result], 200);
     }

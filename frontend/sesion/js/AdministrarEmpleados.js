@@ -73,15 +73,29 @@ async function TotalUsuarios() {
 
 }
 
+function mostrarFormulario(usuario){
+    debugger;
+    console.log(usuario.id)
+    let trEdit = document.getElementById(`collapse-user-${usuario.id}`);
+
+    let formEdit = document.getElementById("formEdit").content.cloneNode(true);
+    let formulario = formEdit.querySelector("form");
+
+    formulario.elements["rol"].value = usuario.rol;
+
+    trEdit.append(formulario);
+
+}
+
 async function mostrarLista(config) {
+    debugger;
 
-    eliminarContenido();
-
-    let informacionUsuarios = await recogerDatos(config);
-
+    let datosUsuarios = await recogerDatos(config);
     let tablaUsuarios = document.getElementById("informacionUsuarios");
 
-    informacionUsuarios.usuarios.forEach((usuario) => {
+    tablaUsuarios.innerHTML = "";
+
+    datosUsuarios.usuarios.forEach((usuario) => {
 
         let tablaUsuario = document.getElementById("tablaUsuario").content.cloneNode(true);
 
@@ -105,15 +119,32 @@ async function mostrarLista(config) {
             await deleteUsuario(usuario.id);
         })
 
+        let btnEditar = tablaUsuario.querySelector("#editar");
+        btnEditar.id = "edit" + usuario.id;
+        btnEditar.setAttribute("data-bs-toggle", "collapse");
+        btnEditar.setAttribute("data-bs-target",`#collapse-user-${usuario.id}`)
+        btnEditar.setAttribute("aria-expanded", "false");
+        btnEditar.setAttribute("aria-controls", `collapse-user-${usuario.id}`)
+        btnEditar.addEventListener('click', () => {
+            mostrarFormulario(usuario);
+        })
+
+        let trEdit = tablaUsuario.querySelector("tr.collapse");
+        trEdit.id = `collapse-user-${usuario.id}`;
+
         tablaUsuarios.append(tablaUsuario);
     });
 }
+
+let formFiltro = document.getElementById("formFiltro");
 
 async function paginacion(limit, cantidadUsuariosTotales) {
 
     debugger;
 
     let paginas = document.getElementById("paginas");
+    let filtroLimite = formFiltro.elements["limit"].value;
+    let rol = revelarRol();
 
     let count = cantidadUsuariosTotales;
     let pagina = 1;
@@ -136,9 +167,14 @@ async function paginacion(limit, cantidadUsuariosTotales) {
             event.preventDefault();
 
             let config = {
-                limit: 10,
+                rol: rol,
+                limit: filtroLimite,
                 offset: pageButton.id
             };
+
+            let tablaUsuarios = document.getElementById("informacionUsuarios");
+
+            eliminarContenido(tablaUsuarios)
 
             mostrarLista(config);
         })
@@ -171,19 +207,19 @@ function mostrarTotalUsuarios(cantidadUsuariosTotales) {
 
 }
 
-function eliminarContenido() {
+function eliminarContenido(contenido) {
 
-    let tablaUsuarios = document.getElementById("informacionUsuarios");
-
-    tablaUsuarios.innerHTML = "";
+    contenido.innerHTML = "";
 
 }
 
 async function init() {
+    debugger;
 
     let cantidadUsuariosTotales = await ContadorUsuarios();
 
     let config = {
+        rol: ['user', 'admin', 'cocinero', 'repartidor'],
         limit: 10,
         offset: 0
     };
@@ -198,3 +234,59 @@ async function init() {
 }
 
 init();
+
+function eliminarTodo() {
+
+    let tablaUsuarios = document.getElementById("informacionUsuarios");
+    let paginas = document.getElementById("paginas");
+
+    eliminarContenido(tablaUsuarios);
+    eliminarContenido(paginas);
+}
+
+function revelarRol(){
+
+    let filtroRol = formFiltro.elements["rol"].value;
+
+    switch(filtroRol){
+        case "all":
+            return ['user', 'admin', 'cocinero', 'repartidor']
+        case "user":
+            return ['user']
+        case "empleados":
+            return ['cocinero', 'repartidor']
+        case "cocinero":
+            return ['cocinero']
+        case "repartidor":
+            return ['repartidor']
+        case "admin":
+            return ['admin']
+    }
+
+}
+
+formFiltro.addEventListener("submit", async (event) => {
+
+    event.preventDefault();
+
+    let filtroLimite = formFiltro.elements["limit"].value;
+
+    eliminarTodo();
+
+    let rol = revelarRol();
+
+    let cantidadUsuariosTotales = await ContadorUsuarios();
+
+    let config = {
+        limit: filtroLimite,
+        rol: rol,
+        offset: 0
+    };
+
+    mostrarTotalUsuarios(cantidadUsuariosTotales);
+
+    mostrarLista(config);
+
+    paginacion(filtroLimite, cantidadUsuariosTotales);
+
+})

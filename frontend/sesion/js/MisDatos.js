@@ -1,59 +1,84 @@
 let editableUser = false;
 let editableCam = false;
 
-let formDatos = document.getElementById("formMisDatos");
+// formularios para cambiar la información del perfil
+
+let formCambiarNombre = document.getElementById("formCambiarNombre");
+let formCambiarEmail = document.getElementById("formCambiarEmail");
+let formCambiarDireccion = document.getElementById("formCambiarDireccion");
+
 let formContrasenya = document.getElementById("formCambiarCont");
 
 let userError = document.getElementById("userError");
 
 function cargarInformacion() {
 
-    formDatos.elements["name"].value = sessionStorage.getItem("user_name");
-    formDatos.elements["eMail"].value = sessionStorage.getItem("user_email");
+    let nameInfo = document.getElementById("NameInfo");
+    let eMailInfo = document.getElementById("EmailInfo");
+    let dirInfo = document.getElementById("DirInfo");
 
-    if (sessionStorage.getItem("user_direccion") == "null") {
-        formDatos.elements["direccion"].value = "";
-    }
-    else {
-        formDatos.elements["direccion"].value = sessionStorage.getItem("user_direccion");
-    }
+    nameInfo.textContent = sessionStorage.getItem("user_name");
+    eMailInfo.textContent = sessionStorage.getItem("user_email");
+    dirInfo.textContent = sessionStorage.getItem("user_direccion");
 }
 
-async function actualizarPerfil(perfil) {
+// actualizar informcación del perfil
 
+async function actualizarNombre(perfil) {
+    debugger;
     try {
-        let options = {
+
+        const options = {
             method: "POST",
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Content-type': 'application/json',
+                'accept': 'application/json'
             },
             body: JSON.stringify(perfil)
         }
 
-        const respuesta = await fetch("http://127.0.0.1:8000/api/actualizarPerfil", options);
+        const response = await fetch("http://127.0.0.1:8000/api/actualizarNombre", options)
 
-        const data = await respuesta.json();
-
-        if (!respuesta.ok) {
-            throw new Error("No se ha podido enviar." + data.message);
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error("No se ha podido enviar." + error)
         }
         else {
-            sessionStorage.setItem('user_id', data.id);
-            sessionStorage.setItem('user_rol', data.rol);
-            sessionStorage.setItem('user_name', data.usuario);
-            sessionStorage.setItem('user_direccion', data.direccion);
-            sessionStorage.setItem('user_email', data.email);
-            window.location.href = "http://localhost/index.php";
+            await RecogerInformacion(perfil.id);
         }
+
     }
     catch (err) {
-        console.error("Error:" + err);
-        let alert = formDatos.getElementsByClassName("alert")[0];
-        if (alert) {
-            alert.style.display = "block";
+        console.error(err);
+    }
+}
+
+async function actualizarEmail(perfil) {
+
+    try {
+        const options = {
+            method: "POST",
+            headers: {
+                'Content-type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(perfil)
+        };
+
+        const respuesta = await fetch("http://127.0.0.1:8000/api/actualizarEmail", options);
+
+        if (!respuesta.ok) {
+            const error = await respuesta.json();
+            throw new Error("No se ha podido enviar" + error)
+        }
+        else{
+            await RecogerInformacion(perfil.id)
         }
     }
+    catch(err){
+        console.error(err);
+    }
+
 }
 
 async function actualizarContraseña(perfil) {
@@ -84,6 +109,40 @@ async function actualizarContraseña(perfil) {
         console.error(err);
     }
 }
+
+async function RecogerInformacion(id){
+    debugger;
+    try{
+        const options = {
+            method: "GET",
+            headers:{
+                'Content-type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(id)
+        };
+
+        const respuesta = await fetch("http://127.0.0.1:8000/api/recogerInformacion", options);
+
+        const data = await respuesta.json();
+
+        if (!respuesta.ok) {
+            throw new Error("No se ha podido enviar." + data.message)
+        }
+        else{
+            sessionStorage.setItem("user_name", data.nombre);
+            sessionStorage.setItem("user_email", data.email);
+            sessionStorage.setItem("user_direccion", data.direccion);
+            sessionStorage.setItem("user_rol", data.rol);
+            window.location.reload();
+        }
+    }
+    catch(err){
+        console.error(err);
+    }
+}
+
+// Eliminar el perfil
 
 async function eliminarPerfil(id) {
     debugger;
@@ -119,70 +178,30 @@ async function eliminarPerfil(id) {
     }
 }
 
-let btnEdit = document.getElementById("editar");
-btnEdit.addEventListener('click', (event) => {
+formCambiarNombre.addEventListener('submit', (event) => {
     event.preventDefault();
 
-    let btnSubmit = document.getElementById("editarForm");
-
-    if (editableUser == false) {
-        formDatos.elements["name"].disabled = false;
-        formDatos.elements["eMail"].disabled = false;
-        formDatos.elements["direccion"].disabled = false;
-        editableUser = true;
-        btnSubmit.style.display = "block";
-    }
-    else {
-        formDatos.elements["name"].disabled = true;
-        formDatos.elements["eMail"].disabled = true;
-        formDatos.elements["direccion"].disabled = true;
-        userError.classList.add("none")
-        userError.classList.remove("block");
-        editableUser = false;
-        btnSubmit.style.display = "none";
-    }
-
-})
-
-let btnCam = document.getElementById("cambiar");
-btnCam.addEventListener('click', (event) => {
-    event.preventDefault();
-
-    let btnSubmit = document.getElementById("ActuaCont");
-
-    if (editableCam == false) {
-        editableCam = true;
-        formContrasenya.elements["passwd"].disabled = false;
-        formContrasenya.elements["rePasswd"].disabled = false;
-        btnSubmit.style.display = "block";
-    }
-    else {
-        editableCam = false;
-        formContrasenya.elements["passwd"].disabled = true;
-        formContrasenya.elements["rePasswd"].disabled = true;
-        btnSubmit.style.display = "none";
-    }
-})
-
-formDatos.addEventListener('submit', (event) => {
-    event.preventDefault();
-
-    let id = sessionStorage.getItem('user_id');
-    let nombre = formDatos.elements["name"].value;
-    let email = formDatos.elements["eMail"].value;
-    let direccion = formDatos.elements["direccion"].value;
+    let nombre = formCambiarNombre.elements["name"].value;
 
     let perfil = {
-        id: id,
-        nombre: nombre,
-        email: email,
-        direccion: direccion
-    }
+        id: sessionStorage.getItem('user_id'),
+        nombre: nombre
+    };
 
-    console.log(perfil);
+    actualizarNombre(perfil);
+})
 
-    actualizarPerfil(perfil);
+formCambiarEmail.addEventListener('submit', (event) => {
+    event.preventDefault();
 
+    let email = formCambiarEmail.elements["eMail"].value;
+
+    let perfil = {
+        id: sessionStorage.getItem('user_id'),
+        email: email
+    };
+
+    actualizarEmail(perfil);
 })
 
 formContrasenya.addEventListener('submit', (event) => {
@@ -228,4 +247,8 @@ btnEliminar.addEventListener('click', async () => {
 
 })
 
-cargarInformacion();
+function init() {
+    cargarInformacion();
+}
+
+init();

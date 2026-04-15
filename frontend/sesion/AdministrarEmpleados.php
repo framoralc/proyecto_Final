@@ -38,14 +38,14 @@
                     <section class="form-control w-25">
                         <label class="form-label" for="rol">rol</label>
                         <select class="form-select" name="rol" id="rol">
-                            <option value="user">usuario</option>
-                            <option value="cocinero">cocinero</option>
-                            <option value="repartidor">repartidor</option>
-                            <option value="admin">administrador</option>
+                            <option value="all" selected>Todos</option>
+                            <option value="user">usuarios</option>
+                            <option value="empleados">Solo empleados</option>
+                            <option value="cocinero">cocineros</option>
+                            <option value="repartidor">repartidores</option>
+                            <option value="admin">administradores</option>
                         </select>
                     </section>
-
-
                     <button class="btn btn-primary" type="submit">Filtrar</button>
                 </form>
             </div>
@@ -65,6 +65,7 @@
                 </tr>
             </thead>
             <tbody class="table-group-divider" id="informacionUsuarios">
+                
             </tbody>
         </table>
     </section>
@@ -78,18 +79,30 @@
     </nav>
 
     <template id="tablaUsuario">
-
         <tr>
             <td id="id"></td>
             <td id="nombre"></td>
             <td class="w-25" id="email"></td>
             <td id="rol"></td>
             <td id="direccion"></td>
-            <td style="display:flex;">
+            <td class="opciones">
+                <button class="btn btn-warning" id="editar">Editar</button>
                 <button class="btn btn-danger" id="eliminar">Eliminar</button>
             </td>
         </tr>
+        <tr class="collapse">
+            
+        </tr>
+    </template>
 
+    <template id="formEdit">
+        <form>
+            <div class="form-floating">
+                <input class="form-control" type="text" name="rol">
+                <label for="rol">Rol</label>
+            </div>
+            <button type="submit">Enviar</button>
+        </form>
     </template>
 
     <script type="module" src="./js/AdministrarEmpleados.js"></script>
