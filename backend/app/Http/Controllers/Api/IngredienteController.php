@@ -6,27 +6,27 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Ingrediente;
 
-class IngredienteContoller extends Controller
+class IngredienteController extends Controller
 {
-   public function index()
+    public function listarIngredientes()
     {
         return response()->json(Ingrediente::all(), 200);
     }
 
-    public function store(Request $request)
+    public function crearIngrediente(Request $request)
     {
         $ingrediente = Ingrediente::create($request->all());
         return response()->json($ingrediente, 201);
     }
 
-    public function show($id)
+    public function verIngrediente($id)
     {
         $ingrediente = Ingrediente::find($id);
         if (!$ingrediente) return response()->json(['error' => 'No encontrado'], 404);
         return response()->json($ingrediente, 200);
     }
 
-    public function update(Request $request, $id)
+    public function actualizarIngrediente(Request $request, $id)
     {
         $ingrediente = Ingrediente::find($id);
         if (!$ingrediente) return response()->json(['error' => 'No encontrado'], 404);
@@ -35,7 +35,7 @@ class IngredienteContoller extends Controller
         return response()->json($ingrediente, 200);
     }
 
-    public function destroy($id)
+    public function borrarIngrediente($id)
     {
         $ingrediente = Ingrediente::find($id);
         if (!$ingrediente) return response()->json(['error' => 'No encontrado'], 404);

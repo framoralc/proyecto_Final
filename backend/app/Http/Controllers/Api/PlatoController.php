@@ -6,14 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Plato;
 
-class PlatoContoller extends Controller
+class PlatoController extends Controller
 {
-    public function index()
+    public function listarPlatos()
     {
         return response()->json(Plato::with('ingredientes')->get(), 200);
     }
 
-    public function store(Request $request)
+    public function crearPlato(Request $request)
     {
         $plato = Plato::create($request->all());
 
@@ -24,14 +24,14 @@ class PlatoContoller extends Controller
         return response()->json($plato->load('ingredientes'), 201);
     }
 
-    public function show($id)
+    public function verPlato($id)
     {
         $plato = Plato::with('ingredientes')->find($id);
         if (!$plato) return response()->json(['error' => 'No encontrado'], 404);
         return response()->json($plato, 200);
     }
 
-    public function update(Request $request, $id)
+    public function actualizarPlato(Request $request, $id)
     {
         $plato = Plato::find($id);
         if (!$plato) return response()->json(['error' => 'No encontrado'], 404);
@@ -45,7 +45,7 @@ class PlatoContoller extends Controller
         return response()->json($plato->load('ingredientes'), 200);
     }
 
-    public function destroy($id)
+    public function borrarPlato($id)
     {
         $plato = Plato::find($id);
         if (!$plato) return response()->json(['error' => 'No encontrado'], 404);
