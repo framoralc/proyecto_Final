@@ -2,7 +2,6 @@ let rol = sessionStorage.getItem("user_rol") || "";
 
 const url = "http://localhost/";
 
-
 document.addEventListener('DOMContentLoaded', () => {
 
     if (!rol) {
@@ -64,20 +63,6 @@ function cargarNavBar() {
             `;
             break;
         case "admin":
-            navDer.innerHTML = `
-            <li class='nav-item'>
-                <a class='nav-link' href='/sesion/AdministrarEmpleados.php'>Administrar Empleados</a>
-            </li>
-            <li class='nav-item'>
-                <a class='nav-link' href='#'>Administrar Platos</a>
-            </li>
-            <li class='nav-item'>
-                <a class='nav-link' href='#'>Administrar Ingredientes</a>
-            </li>
-            <li class='nav-item'>
-                <a class='nav-link' href='#'>Administrar Horario De los Empleados</a>
-            </li>
-            `;
             navIzq.innerHTML = `
             <a class='nav-link' href='/sesion/MisDatos.php'>Mis Datos</a>
             <button class='nav-link' id="cerrar">Cerrar Sesión</button>
