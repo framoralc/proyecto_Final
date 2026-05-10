@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 use function Laravel\Prompts\error;
 
@@ -56,17 +57,40 @@ class SesionController extends Controller
 
     // Actualizar información del perfil
 
-        public function actualizarNombre(Request $request) 
+    public function actualizarUsuario(Request $request){
+        $usuario = User::find($request->id);
+        
+        if($usuario){
+            $usuario->username = $request->username;
+            $usuario->nombre = $request->nombre;
+            $usuario->apellidos = $request->apellidos;
+            $usuario->telefono = $request->telefono;
+            $usuario->ciudad = $request->ciudad;
+            $usuario->calle = $request->calle;
+            $usuario->numero = $request->numero;
+            $usuario->piso = $request->piso;
+            $usuario->puerta = $request->puerta;
+            $usuario->codPostal = $request->codPostal;
+            $usuario->save();
+
+            return response()->json(["mensaje"=>"el perfil a sido actualizado"], 200);
+        }
+        else{
+            return response()->json(["error","Perfil no encontrado"], 404);
+        }
+
+    }
+
+    public function actualizarNombre(Request $request)
     {
         $usuario = User::find($request->id);
 
-        if($usuario){
+        if ($usuario) {
             $usuario->nombre = $request->nombre;
             $usuario->save();
 
             return response()->json(["mensaje" => "El nombre se ha actualizado"], 200);
-        }
-        else{
+        } else {
             return response()->json(["error" => "Perfil no encontrado"], 404);
         }
     }
@@ -91,7 +115,7 @@ class SesionController extends Controller
     {
         $usuario = User::find($request->id);
 
-        if ($usuario){
+        if ($usuario) {
             $usuario->email = $request->email;
             $usuario->save();
 
@@ -99,7 +123,6 @@ class SesionController extends Controller
         } else {
             return response()->json(["error" => "Perfil no encontrado"], 404);
         }
-
     }
 
     public function eliminarUsuario($id)
@@ -116,39 +139,68 @@ class SesionController extends Controller
 
     // Recoger datos de usuarios
 
-    public function recogerInformacion(Request $request){
+    public function recogerInformacion(Request $request)
+    {
 
         $usuario = User::find($request->id);
 
-        if($usuario){
-            return response()->json(['message' => 'se ha recogido correctamente',
-                                    'usuario' => $usuario->nombre,
-                                    'rol' => $usuario->rol,
-                                    'direccion' => $usuario->direccion,
-                                    'email' => $usuario->email
-                                    ], 200);
-        }
-        else{
+        if ($usuario) {
+            return response()->json([
+                'message' => 'se ha recogido correctamente',
+                'usuario' => $usuario->nombre,
+                'rol' => $usuario->rol,
+                'direccion' => $usuario->direccion,
+                'email' => $usuario->email
+            ], 200);
+        } else {
             return response()->json(['error' => 'no se ha encontrado'], 404);
         }
     }
 
     // Lista de usuarios
 
-    public function contarUsuarios()
+    public function contarUsuarios(Request $request)
     {
-        $totalUsuarios = User::count();
+        $totalEmpleados = User::whereIn('rol', ['admin','repartidor','cocinero'])->count();
+        $totalUsuarios = User::where('rol', 'user')->count();
+
+        Log::info('Empleados totales', ['total' => $totalEmpleados]);
+        Log::info('usuarios totales', ['total' => $totalUsuarios]);
+
+        return response()->json([
+            'count' => [
+                'usuarios' => $totalUsuarios,
+                'empleados' => $totalEmpleados
+            ] 
+        ], 200);
+    }
+
+    // Lista de empleados
+
+    public function contarEmpleados(){
+        
+        $totalUsuarios = User::whereIn('rol', ['admin','repartidor','cocinero'])->count();
+
+        
 
         return response()->json(['count' => $totalUsuarios], 200);
     }
 
     public function mostrarUsuarios(Request $request)
     {
-        if (count($request->rol) == 1) {
-            $result = User::orderBy('id', 'asc')->limit($request->limit)->offset($request->offset)->get()->makeHidden('password')->where('rol', $request->rol);
-        } else {
-            $result = User::orderBy('id', 'asc')->limit($request->limit)->offset($request->offset)->get()->makeHidden('password')->whereIn('rol', $request->rol);
-        }
+        // if (count($request->rol) == 1) {
+        //     $result = User::orderBy('id', 'asc')->limit($request->limit)->offset($request->offset)->get()->makeHidden('password')->where('rol', $request->rol);
+        // } else {
+        //     $result = User::orderBy('id', 'asc')->limit($request->limit)->offset($request->offset)->get()->makeHidden('password')->whereIn('rol', $request->rol);
+        // }
+
+        $query = User::whereIn('rol', $request->rol);
+
+        $result = $query->orderBy('id', 'asc')
+                    ->offset($request->offset)
+                    ->limit($request->limit)
+                    ->get()
+                    ->makeHidden('password');
 
         return response()->json(['usuarios' => $result], 200);
     }

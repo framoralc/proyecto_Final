@@ -32,6 +32,8 @@ Route::delete('/eliminarUsuario/{id}', [SesionController::class, 'eliminarUsuari
 
 Route::get('/contarUsuarios', [SesionController::class, 'contarUsuarios']);
 
+Route::get('/contarEmpleados', [SesionController::class, 'contarEmpleados']);
+
 Route::post('/mostrarUsuarios', [SesionController::class, 'mostrarUsuarios']);
 
 
