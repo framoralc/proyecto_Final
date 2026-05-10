@@ -1,13 +1,14 @@
 let formulario = document.querySelector("form");
 
-async function iniciar(nombre, password) {
+async function iniciar(email, password) {
 
     let usuario = {
-        nombre: nombre,
+        email: email,
         password: password
     }
 
     try {
+        debugger;
 
         const options = {
             method: "POST",
@@ -18,15 +19,15 @@ async function iniciar(nombre, password) {
             body: JSON.stringify(usuario)
         }
 
-        const respuesta = await fetch("http://127.0.0.1:8000/api/iniciar", options)
+        const respuesta = await fetch("http://127.0.0.1:8000/api/iniciarSesion", options)
 
         const data = await respuesta.json();
 
         if (!respuesta.ok) {
-            const error = await respuesta.json();
-            throw new Error("No se ha podido enviar." + error)
+            throw new Error("No se ha podido enviar." + data.message)
         }
-        else{
+        else {
+            sessionStorage.setItem('user_id', data.id);
             sessionStorage.setItem('user_rol', data.rol);
             sessionStorage.setItem('user_name', data.usuario);
             sessionStorage.setItem('user_direccion', data.direccion);
@@ -34,7 +35,7 @@ async function iniciar(nombre, password) {
             window.location.href = "http://localhost/index.php";
         }
 
-    }catch(err){
+    } catch (err) {
         console.error(err);
     }
 
@@ -44,15 +45,15 @@ formulario.addEventListener('submit', (event) => {
 
     event.preventDefault();
 
-    let nombre = formulario.elements["name"];
+    let email = formulario.elements["eMail"];
     let password = formulario.elements["passw"];
 
-    if(nombre.value != null || password.value != null){
-        iniciar(nombre.value, password.value);
-        
+    if (email.value != null || password.value != null) {
+        iniciar(email.value, password.value);
+
     }
-    else{
-        nombre.classList.add("is-invalid");
+    else {
+        email.classList.add("is-invalid");
         password.classList.add("is-invalid");
     }
 })

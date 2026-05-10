@@ -1,0 +1,9 @@
+.table{
+    margin-left: 0px;
+}
+
+.opciones{
+    display: flex;
+    column-gap: 1vw;
+}
+

@@ -4,12 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>registrarse</title>
-    <?php 
-        include("../bootstrap.php");
+    <title>Flashfood - registrarse</title>
+    <?php
+    include("../bootstrap.php");
     ?>
 </head>
-
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary" id="navBar"></nav>
 
@@ -36,6 +35,10 @@
                 No coincide la contraseña.
             </div>
         </div>
+        <div class="alert alert-danger" role="alert" style="display:none;">
+            El usuario ya existe
+        </div>
+
 
         <button type="submit" class="btn btn-primary mb-3">Registrarse</button>
 

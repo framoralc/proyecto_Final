@@ -10,6 +10,30 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::post('/register', [SesionController::class, 'registrarse']);
+//Sesiones
 
-Route::post('/iniciar', [SesionController::class,'iniciar']);
+Route::post('/registrarUsuario', [SesionController::class, 'registrarUsuario']);
+
+Route::post('/iniciarSesion', [SesionController::class, 'iniciarSesion']);
+
+// actualizar información del perfil
+
+Route::post('/actualizarPassword', [SesionController::class, 'actualizarPassword']);
+
+Route::post('/actualizarNombre', [SesionController::class, 'actualizarNombre']);
+
+Route::post('/actualizarEmail', [SesionController::class, 'actualizarEmail']);
+
+// Recoger información
+
+Route::get('/recogerInformacion', [SesionController::class, 'recogerInformacion']);
+
+Route::delete('/eliminarUsuario/{id}', [SesionController::class, 'eliminarUsuario']);
+
+Route::get('/contarUsuarios', [SesionController::class, 'contarUsuarios']);
+
+Route::get('/contarEmpleados', [SesionController::class, 'contarEmpleados']);
+
+Route::post('/mostrarUsuarios', [SesionController::class, 'mostrarUsuarios']);
+
+
