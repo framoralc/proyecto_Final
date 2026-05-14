@@ -51,9 +51,9 @@ async function CargarPlatos(carrito) {
 
     for (const elementoCarrito of carrito) {
 
-        console.log(elementoCarrito.idProducto)
+        console.log(elementoCarrito.idPlato)
 
-        let plato = await CargarPlato(elementoCarrito.idProducto)
+        let plato = await CargarPlato(elementoCarrito.idPlato)
         console.log(plato);
 
         let cardContentPlato = document.createElement("li");
@@ -137,10 +137,10 @@ async function ObtenerRepartidor() {
     }
 }
 
-btnCrearPedido.addEventListener('click', () => {
+// btnCrearPedido.addEventListener('click', () => {
 
-    let repartidor = await ObtenerRepartidor();
+//     let repartidor = await ObtenerRepartidor();
 
     
 
-})
+// })
