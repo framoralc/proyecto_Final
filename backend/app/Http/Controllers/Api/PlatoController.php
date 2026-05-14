@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\api;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -10,15 +10,19 @@ class PlatoController extends Controller
 {
     public function listarPlatos()
     {
-        return response()->json(Plato::with('ingredientes')->get(), 200);
+        return response()->json(Plato::with('ingredientes')->orderBy('id', 'asc')->get(), 200);
     }
 
     public function crearPlato(Request $request)
     {
-        $plato = Plato::create($request->all());
+        $plato = Plato::create($request->only(['nombre', 'descripcion', 'precio', 'imagen_url', 'disponible']));
 
         if ($request->has('ingredientes')) {
-            $plato->ingredientes()->sync($request->ingredientes);
+            $sync = [];
+            foreach ($request->ingredientes as $ing) {
+                $sync[$ing['id']] = ['cantidad_necesaria' => $ing['cantidad_necesaria'] ?? 1];
+            }
+            $plato->ingredientes()->sync($sync);
         }
 
         return response()->json($plato->load('ingredientes'), 201);
@@ -36,10 +40,14 @@ class PlatoController extends Controller
         $plato = Plato::find($id);
         if (!$plato) return response()->json(['error' => 'No encontrado'], 404);
 
-        $plato->update($request->all());
+        $plato->update($request->only(['nombre', 'descripcion', 'precio', 'imagen_url', 'disponible']));
 
         if ($request->has('ingredientes')) {
-            $plato->ingredientes()->sync($request->ingredientes);
+            $sync = [];
+            foreach ($request->ingredientes as $ing) {
+                $sync[$ing['id']] = ['cantidad_necesaria' => $ing['cantidad_necesaria'] ?? 1];
+            }
+            $plato->ingredientes()->sync($sync);
         }
 
         return response()->json($plato->load('ingredientes'), 200);

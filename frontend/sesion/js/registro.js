@@ -23,14 +23,13 @@ async function Registro(nombre, email, password, rol, direccion) {
         }
 
         const respuesta = await fetch("http://127.0.0.1:8000/api/register", options)
+const data = await respuesta.json() // ← leer UNA sola vez
 
-        if (!respuesta.ok) {
-            const error = await respuesta.json();
-            throw new Error("No se ha podido enviar." + error)
-        }
-        else{
-            window.location.href = "http://localhost/index.php";
-        }
+if (!respuesta.ok) {
+    throw new Error("No se ha podido enviar. " + JSON.stringify(data))
+}
+
+window.location.href = "http://localhost/index.php"
 
     }
     catch (err) {
