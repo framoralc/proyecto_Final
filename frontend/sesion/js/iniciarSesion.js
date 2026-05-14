@@ -19,7 +19,7 @@ async function iniciar(nombre, password) {
             body: JSON.stringify(usuario)
         }
 
-        const respuesta = await fetch("http://127.0.0.1:8000/api/iniciar", options)
+        const respuesta = await fetch("http://127.0.0.1:8000/api/iniciarSesion", options)
         const data = await respuesta.json()
 
         if (!respuesta.ok) {
@@ -41,7 +41,7 @@ formulario.addEventListener('submit', (event) => {
 
     event.preventDefault();
 
-    let email = formulario.elements["eMail"];
+    let nombre = formulario.elements["nombre"];
     let password = formulario.elements["passw"];
 
     if(nombre.value != null || password.value != null){

@@ -48,7 +48,7 @@ class SesionController extends Controller
                 "usuario" => $usuario->nombre,
                 "rol" => $usuario->rol,
                 "direccion" => $usuario->direccion,
-                "email" => $usuario->email
+                "nombre" => $usuario->nombre
             ], 200);
         } else {
             return response()->json(["error" => "Contraseña incorrecta"], 401);
@@ -154,7 +154,7 @@ class SesionController extends Controller
                 'usuario' => $usuario->nombre,
                 'rol' => $usuario->rol,
                 'direccion' => $usuario->direccion,
-                'email' => $usuario->email
+                'nombre' => $usuario->nombre
             ], 200);
         } else {
             return response()->json(['error' => 'no se ha encontrado'], 404);

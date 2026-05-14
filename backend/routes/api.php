@@ -46,7 +46,6 @@ Route::get('/recogerCarrito/{idUsuario}', [CarritoController::class, 'getCarrito
 
 // Platos 
 
-Route::get('/cargarPlato/{idPlato}', [PlatoContoller::class, 'getPlato']);
 
 // pedido
 

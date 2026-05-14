@@ -14,8 +14,8 @@
     <form id="inicio">
 
     <div class="form-floating mb-3 w-25">
-        <input class="form-control" type="email" name="eMail" id="email" placeholder="Email">
-        <label for="email">Email</label>
+        <input class="form-control" type="text" name="nombre" id="nombre" placeholder="nombre">
+        <label for="nombre">Nombre</label>
     </div>
     <div class="form-floating mb-3 w-25">
         <input class="form-control" type="password" name="passw" id="passw" placeholder="password">
