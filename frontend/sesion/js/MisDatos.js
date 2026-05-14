@@ -196,16 +196,6 @@ async function eliminarPerfil(id) {
 
         const respuesta = await fetch(`http://127.0.0.1:8000/api/eliminarUsuario/${id}`, options)
 
-        if (!respuesta.ok) {
-            const errorHtml = await respuesta.text();
-            console.error("EL SERVIDOR RESPONDIÓ CON HTML:");
-
-            // TRUCO: Abre el error en una pestaña nueva para leerlo bien
-            const win = window.open();
-            win.document.write(errorHtml);
-            return;
-        }
-
         console.log(resultado.result);
 
     }

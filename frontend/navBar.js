@@ -58,12 +58,16 @@ function cargarNavBar() {
             </li>
             `;
             navIzq.innerHTML = `
+            <a class='nav-link' href='/pedidos/VerMisPedidos.php'>Mis Pedidos</a>
+            <a class='nav-link' href='/carrito/VerMiCarrito.php'>Carrito</a>
             <a class='nav-link' href='/sesion/MisDatos.php'>Mis Datos</a>
             <button class='nav-link' id="cerrar">Cerrar Sesión</button>
             `;
             break;
         case "admin":
             navIzq.innerHTML = `
+            <a class='nav-link' href='/pedidos/VerMisPedidos.php'>Mis Pedidos</a>
+            <a class='nav-link' href='/carrito/VerMiCarrito.php'>Carrito</a>
             <a class='nav-link' href='/sesion/MisDatos.php'>Mis Datos</a>
             <button class='nav-link' id="cerrar">Cerrar Sesión</button>
             `;

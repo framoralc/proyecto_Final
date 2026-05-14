@@ -44,6 +44,15 @@
                             </section>
                         </section>
                     </section>
+
+                    <section class="card" style="width: 18rem;">
+                        <section class="card-body">
+                            <header clasS="d-flex justify-content-between">
+                                <h3>Pedidos</h3>
+                                <h4 id="pedidoCount"></h4>
+                            </header>
+                        </section>
+                    </section>
                 </section>
             </section>
         </section>

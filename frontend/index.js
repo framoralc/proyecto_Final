@@ -14,9 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 })
 
-async function contarUsuarios(){
-
-    debugger;
+async function contarUsuarios(rol){
 
     try {
 
@@ -28,7 +26,7 @@ async function contarUsuarios(){
             }
         }
 
-        const respuesta = await fetch('http://127.0.0.1:8000/api/contarUsuarios', options);
+        const respuesta = await fetch(`http://127.0.0.1:8000/api/contarUsuarios/${rol}`, options);
 
         const resultado = await respuesta.json();
 
@@ -47,13 +45,15 @@ async function init(){
 
     if (rol == "admin") {
         
-        let usuariosTotales = await contarUsuarios();
+        let usuariosTotales = await contarUsuarios("usuario");
+
+        let empleadosTotales = await contarUsuarios("empleado");
 
         console.log(usuariosTotales);
 
         usuarioCount.textContent = usuariosTotales.usuarios;
 
-        empleadoCount.textContent = usuariosTotales.empleados;
+        empleadoCount.textContent = empleadosTotales.empleados;
     }
     else {
         if (nombre) {

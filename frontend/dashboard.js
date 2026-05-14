@@ -3,7 +3,8 @@ let dashboardContent = `
         <a class='btn' href='/sesion/AdministrarUsuarios.php'>Administrar Usuarios</a> <br>
         <a class='btn' href='#'>Administrar Platos</a> <br>
         <a class='btn' href='#'>Administrar Ingredientes</a> <br>
-        <a class='btn' href='#'>Administrar Horario De los Empleados</a>
+        <a class='btn' href='#'>Administrar Horario De los Empleados</a> <br>
+        <a class='btn' href='/pedidos/VerPedidos.php'>Administrar Pedidos</a>
     `;
 
 let dashboard = document.getElementById("dashboard");

@@ -125,6 +125,10 @@ class SesionController extends Controller
         }
     }
 
+    public function actualizarDireccion(Request $request){
+
+    }
+
     public function eliminarUsuario($id)
     {
         $usuario = User::find($id);
@@ -159,40 +163,22 @@ class SesionController extends Controller
 
     // Lista de usuarios
 
-    public function contarUsuarios(Request $request)
+    public function contarUsuarios($rol)
     {
-        $totalEmpleados = User::whereIn('rol', ['admin','repartidor','cocinero'])->count();
-        $totalUsuarios = User::where('rol', 'user')->count();
-
-        Log::info('Empleados totales', ['total' => $totalEmpleados]);
-        Log::info('usuarios totales', ['total' => $totalUsuarios]);
-
-        return response()->json([
-            'count' => [
-                'usuarios' => $totalUsuarios,
-                'empleados' => $totalEmpleados
-            ] 
-        ], 200);
-    }
-
-    // Lista de empleados
-
-    public function contarEmpleados(){
-        
-        $totalUsuarios = User::whereIn('rol', ['admin','repartidor','cocinero'])->count();
-
-        
-
-        return response()->json(['count' => $totalUsuarios], 200);
+        switch($rol){
+            case "usuario":
+                $totalUsuarios = User::where('rol', 'user')->count();
+                Log::info('usuarios totales', ['total' => $totalUsuarios]);
+                return response()->json(['count' => ['usuarios' => $totalUsuarios], 200]);
+            case "empleado":
+                $totalEmpleados = User::whereIn('rol', ['admin','repartidor','cocinero'])->count();
+                Log::info('Empleados totales', ['total' => $totalEmpleados]);
+                return response()->json(['count' => ['empleados' => $totalEmpleados], 200]);
+        }
     }
 
     public function mostrarUsuarios(Request $request)
     {
-        // if (count($request->rol) == 1) {
-        //     $result = User::orderBy('id', 'asc')->limit($request->limit)->offset($request->offset)->get()->makeHidden('password')->where('rol', $request->rol);
-        // } else {
-        //     $result = User::orderBy('id', 'asc')->limit($request->limit)->offset($request->offset)->get()->makeHidden('password')->whereIn('rol', $request->rol);
-        // }
 
         $query = User::whereIn('rol', $request->rol);
 
@@ -204,4 +190,17 @@ class SesionController extends Controller
 
         return response()->json(['usuarios' => $result], 200);
     }
+
+    public function obtenerRepartidor(){
+
+        $repartidores = User::whereIn('rol', 'repartidor')->get();
+
+        if ($repartidores->isEmpty()) {
+            return null;
+        }
+
+        return $repartidores->random()->id;
+    }
 }
+
+

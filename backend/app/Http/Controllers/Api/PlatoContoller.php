@@ -24,9 +24,10 @@ class PlatoContoller extends Controller
         return response()->json($plato->load('ingredientes'), 201);
     }
 
-    public function show($id)
+    public function getPlato($id)
     {
-        $plato = Plato::with('ingredientes')->find($id);
+        $plato = Plato::find($id);
+        
         if (!$plato) return response()->json(['error' => 'No encontrado'], 404);
         return response()->json($plato, 200);
     }
