@@ -35,7 +35,7 @@ class SesionController extends Controller
     public function iniciarSesion(Request $request)
     {
 
-        $usuario = User::where('email', $request->email)->first();
+        $usuario = User::where('nombre', $request->nombre)->first();
 
         if (!$usuario) {
             return response()->json(["No existe el usuario"], 404);

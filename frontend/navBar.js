@@ -65,6 +65,20 @@ function cargarNavBar() {
             `;
             break;
         case "admin":
+            navDer.innerHTML = `
+            <li class='nav-item'>
+                <a class='nav-link' href='#'>Administrar Empleados</a>
+            </li>
+            <li class='nav-item'>
+                <a class='nav-link' href='${url}platos/administrarPlatos.php'>Administrar Platos</a>
+            </li>
+            <li class='nav-item'>
+                <a class='nav-link' href='${url}ingredientes/administrarIngredientes.php'>Administrar Ingredientes</a>
+            </li>
+            <li class='nav-item'>
+                <a class='nav-link' href='#'>Administrar Horario De los Empleados</a>
+            </li>
+            `;
             navIzq.innerHTML = `
             <a class='nav-link' href='/pedidos/VerMisPedidos.php'>Mis Pedidos</a>
             <a class='nav-link' href='/carrito/VerMiCarrito.php'>Carrito</a>
@@ -86,13 +100,13 @@ function cargarNavBar() {
         case "cocinero":
             navDer.innerHTML = `
             <li class='nav-item'>
-                <a class='nav-link' href='#'>Administrar Platos</a>
+                <a class='nav-link' href='${url}platos/administrarPlatos.php'>Administrar Platos</a>
             </li>
             <li class='nav-item'>
-                <a class='nav-link' href='#'>Administrar Ingredientes</a>
+                <a class='nav-link' href='${url}ingredientes/administrarIngredientes.php'>Administrar Ingredientes</a>
             </li>
             <li class='nav-item'>
-                <a class='nav-link' href='#'>Pedidos</a>
+                <a class='nav-link' href='platos/pedidos'>Pedidos</a>
             </li>
             `;
             navIzq.innerHTML = `
@@ -123,5 +137,5 @@ function cargarNavBar() {
 
 function cerrarSesion() {
     sessionStorage.clear();
-    window.location.href = "/index.php";
+    window.location.href = url + "index.php";
 }

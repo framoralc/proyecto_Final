@@ -10,5 +10,5 @@ class Ingrediente extends Model
     use HasFactory;
     public $timestamps = false;
 
-    protected $fillable = ['nombre', 'stock', 'unidad_medida'];
+    protected $fillable = ['nombre', 'stock_actual', 'unidad_medida'];
 }
