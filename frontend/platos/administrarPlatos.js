@@ -138,7 +138,6 @@ async function guardarPlato(evento) {
 
     const id = document.getElementById('platoId').value;
 
-    // Recoger ingredientes marcados
     const ingredientes = [];
     document.querySelectorAll('.ing-check:checked').forEach(checkbox => {
         const ingId = parseInt(checkbox.value);
@@ -147,11 +146,13 @@ async function guardarPlato(evento) {
     });
 
     const datos = {
-        nombre: document.getElementById('nombrePlato').value.trim(),
-        descripcion: document.getElementById('descripcionPlato').value.trim(),
-        precio: parseFloat(document.getElementById('precioPlato').value),
-        disponible: document.getElementById('disponiblePlato').checked,
-        ingredientes: ingredientes
+    nombre: document.getElementById('nombrePlato').value.trim(),
+    categoria: document.getElementById('categoriaPlato').value,
+    descripcion: document.getElementById('descripcionPlato').value.trim(),
+    precio: parseFloat(document.getElementById('precioPlato').value),
+    disponible: document.getElementById('disponiblePlato').checked,
+    imagen_url: 'http://localhost/PROYECTO_FINAL/frontend/imagenes/' + document.getElementById('imagenPlato').value.trim(),
+    ingredientes: ingredientes
     };
 
     const metodo = id ? 'PUT' : 'POST';

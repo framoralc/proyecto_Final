@@ -38,25 +38,27 @@ async function cargarIngredientes() {
 }
 
 function renderTabla() {
-    const tbody = document.getElementById('tablaIngredientes');
-    const inicio = (paginaActual - 1) * POR_PAGINA;
-    const fin = inicio + POR_PAGINA;
-    const pagina = todosLosIngredientes.slice(inicio, fin);
+    const tbody = document.getElementById('tablaPlatos');
+    const inicio = (paginaActual - 1) * PLATOS_POR_PAGINA;
+    const fin = inicio + PLATOS_POR_PAGINA;
+    const platosPagina = todosLosPlatos.slice(inicio, fin);
 
-    if (pagina.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="5" class="text-center">No hay ingredientes</td></tr>';
+    if (platosPagina.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" class="text-center">No hay platos</td></tr>';
         return;
     }
 
-    tbody.innerHTML = pagina.map(ing => `
+    tbody.innerHTML = platosPagina.map(plato => `
         <tr>
-            <td>${ing.id}</td>
-            <td>${ing.nombre}</td>
-            <td>${parseFloat(ing.stock_actual).toFixed(2)}</td>
-            <td>${ing.unidad_medida ?? '-'}</td>
+            <td>${plato.id}</td>
+            <td>${plato.nombre}</td>
+            <td>${plato.categoria || '-'}</td>
+            <td>${plato.descripcion || '-'}</td>
+            <td>${parseFloat(plato.precio).toFixed(2)} €</td>
+            <td><span class="badge ${plato.disponible ? 'bg-success' : 'bg-danger'}">${plato.disponible ? 'Sí' : 'No'}</span></td>
             <td>
-                <button class="btn btn-sm btn-warning me-1" onclick="abrirEditar(${ing.id})">Editar</button>
-                <button class="btn btn-sm btn-danger" onclick="borrarIngrediente(${ing.id})">Borrar</button>
+                <button class="btn btn-sm btn-warning me-1" onclick="abrirEditar(${plato.id})">Editar</button>
+                <button class="btn btn-sm btn-danger" onclick="borrarPlato(${plato.id})">Borrar</button>
             </td>
         </tr>
     `).join('');
@@ -89,6 +91,8 @@ window.abrirEditar = function(id) {
 
     document.getElementById('ingredienteId').value = ing.id;
     document.getElementById('nombreIngrediente').value = ing.nombre;
+    document.getElementById('categoriaPlato').value = plato.categoria || '';
+    document.getElementById('imagenPlato').value = plato.imagen_url || '';
     document.getElementById('stockIngrediente').value = ing.stock_actual;
     document.getElementById('unidadIngrediente').value = ing.unidad_medida ?? '';
     document.getElementById('tituloModal').innerText = 'Editar Ingrediente';
