@@ -1,3 +1,7 @@
+import config from "../../config/config.json" with { type: "json" };
+
+const url = config.apiURL;
+
 async function ContadorUsuarios() {
 
     try {
@@ -10,7 +14,7 @@ async function ContadorUsuarios() {
             }
         }
 
-        const respuesta = await fetch('http://127.0.0.1:8000/api/contarUsuarios', options);
+        const respuesta = await fetch(`${url}/contarUsuarios`, options);
 
         const resultado = await respuesta.json();
 
@@ -38,7 +42,7 @@ async function recogerDatos(config) {
             body: JSON.stringify(config)
         };
 
-        const respuesta = await fetch('http://127.0.0.1:8000/api/mostrarUsuarios', options)
+        const respuesta = await fetch(`${url}/mostrarUsuarios`, options)
 
         const resultado = await respuesta.json();
 
@@ -62,7 +66,7 @@ async function deleteUsuario(id) {
         }
     };
 
-    await fetch(`http://127.0.0.1:8000/api/eliminarUsuario/${id}`, options);
+    await fetch(`${url}/eliminarUsuario/${id}`, options);
 }
 
 async function TotalUsuarios() {

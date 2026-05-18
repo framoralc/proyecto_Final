@@ -21,30 +21,19 @@
                 <div id="controles">
                     <section class="collapse" id="collapseFiltro">
                         <div class="card card-body">
-                            <form id="formFiltro">
-                                <section class="form-control w-25">
-                                    <label class="form-label" for="limit">limite de las paginas</label>
-                                    <select class="form-select" name="limit">
-                                        <option value="10" selected>10</option>
-                                        <option value="20">20</option>
-                                        <option value="30">30</option>
-                                        <option value="max">max</option>
-                                    </select>
-                                </section>
-                                <button class="btn btn-primary" type="submit">Filtrar</button>
-                            </form>
+
                         </div>
                     </section>
                 </div>
                 <section class="table-responsive-sm m-2 gap-3">
                     <section class="d-flex gap-3">
                         <p id="count"></p>
-                        <button class="btn btn-primary" id="btnFiltros" data-bs-toggle="collapse" data-bs-target="#collapseFiltro" aria-expanded="false" aria-controls="collapseFiltro">Mostrar Filtros</button>
+                        <button class="btn btn-primary" id="btnFiltros" data-bs-toggle="modal" data-bs-target="#modalFiltro">Mostrar Filtros</button>
                     </section>
                     <section class="d-flex column-gap-3 justify-content-lg-center" id="lista">
                         <section>
-                            <table class="table table-hover table-bordered">
-                                <thead>
+                            <table class="table table-hover table-striped table-bordered">
+                                <thead class="table-dark">
                                     <tr>
                                         <th scope="col">id</th>
                                         <th scope="col">Nombre</th>
@@ -70,6 +59,33 @@
                 </section>
             </section>
         </section>
+
+        <div class="modal fade" id="modalFiltro" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="tituloModal">Filtros</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="alertaModal" class="alert d-none"></div>
+                        <form id="formFiltro">
+                            <section class="form-control w-25">
+                                <label class="form-label" for="limit">limite de las paginas</label>
+                                <select class="form-select" name="limit">
+                                    <option value="10" selected>10</option>
+                                    <option value="20">20</option>
+                                    <option value="30">30</option>
+                                    <option value="max">max</option>
+                                </select>
+                            </section>
+                            <button class="btn btn-primary" type="submit">Filtrar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </section>
 
     <template id="tablaUsuario">

@@ -1,3 +1,8 @@
+import config from "../../config/config.json" with { type: "json" };
+
+const url = config.apiURL;
+const web = config.URLWeb;
+
 let editableUser = false;
 let editableCam = false;
 
@@ -45,7 +50,7 @@ async function actualizarPerfil(perfil) {
             body: JSON.stringify(perfil)
         };
 
-        const response = await fetch("http://127.0.0.1:8000/api/actualizarPerfil", options)
+        const response = await fetch(`${url}/actualizarPerfil`, options)
 
         if(!response.ok){
             const error = await response.json();
@@ -73,7 +78,7 @@ async function actualizarNombre(perfil) {
             body: JSON.stringify(perfil)
         }
 
-        const response = await fetch("http://127.0.0.1:8000/api/actualizarNombre", options)
+        const response = await fetch(`${url}/actualizarNombre`, options)
 
         if (!response.ok) {
             const error = await response.json();
@@ -101,7 +106,7 @@ async function actualizarEmail(perfil) {
             body: JSON.stringify(perfil)
         };
 
-        const respuesta = await fetch("http://127.0.0.1:8000/api/actualizarEmail", options);
+        const respuesta = await fetch(`${url}/actualizarEmail`, options);
 
         if (!respuesta.ok) {
             const error = await respuesta.json();
@@ -130,14 +135,14 @@ async function actualizarContraseña(perfil) {
             body: JSON.stringify(perfil)
         }
 
-        const respuesta = await fetch("http://127.0.0.1:8000/api/actualizarPassword", options);
+        const respuesta = await fetch(`${url}/actualizarPassword`, options);
 
         if (!respuesta.ok) {
             const error = await respuesta.json();
             throw new Error("No se ha podido enviar." + error)
         }
         else {
-            window.location.href = "http://localhost/index.php";
+            window.location.href = `${web}/index.php`;
         }
 
     }
@@ -158,7 +163,7 @@ async function RecogerInformacion(id) {
             body: JSON.stringify(id)
         };
 
-        const respuesta = await fetch("http://127.0.0.1:8000/api/recogerInformacion", options);
+        const respuesta = await fetch(`${url}/recogerInformacion`, options);
 
         const data = await respuesta.json();
 
@@ -194,7 +199,7 @@ async function eliminarPerfil(id) {
 
         console.log(options);
 
-        const respuesta = await fetch(`http://127.0.0.1:8000/api/eliminarUsuario/${id}`, options)
+        const respuesta = await fetch(`${url}/eliminarUsuario/${id}`, options)
 
         console.log(resultado.result);
 
@@ -282,7 +287,7 @@ btnEliminar.addEventListener('click', async () => {
     await eliminarPerfil(sessionStorage.getItem('user_id'));
 
     sessionStorage.clear();
-    window.location.href = "http://localhost/index.php";
+    window.location.href = `${web}/index.php`;
 
 })
 
@@ -303,7 +308,8 @@ function init() {
     document.getElementById("btnPerfil").addEventListener("click", () => {
         menuPerfil.classList.remove("d-none");
         menuSeguridad.classList.add("d-none");
-        secPass.style.display = "none";             
+        secPass.style.display = "none";
+        secEliminarCuenta.style.display = "none";
     });
 
     document.getElementById("btnSeguridad").addEventListener("click",() => {

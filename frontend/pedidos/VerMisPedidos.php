@@ -15,15 +15,10 @@
     <nav class="navbar navbar-expand-lg bg-body-tertiary" id="navBar"></nav>
     <section class="dashboard">
         <aside id="dashboard" class="menuVert"></aside>
-        <section class="d-flex gap-3">
-            <section class="card">
+        <section class="container-fluid py-4">
+            <section class="card row gap-4 align-items-start">
                 <section class="card-body" id="pedidosList">
-
-                </section>
-            </section>
-            <section class="card">
-                <section class="card-body">
-                    <p>Total: tanto</p>
+                    
                 </section>
             </section>
         </section>

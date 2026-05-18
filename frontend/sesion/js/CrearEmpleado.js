@@ -57,14 +57,13 @@ formulario.addEventListener('submit', (event) => {
     let eMail = formulario.elements["eMail"];
     let passwd = formulario.elements["passwd"];
     let repPasswd = formulario.elements["repPasswd"];
+    let rol = formulario.elements["selectedRol"];
 
     if (passwd.value == repPasswd.value) {
         passwd.classList.add("is-valid");
         repPasswd.classList.add("is-valid");
         passwd.classList.remove("is-invalid");
         repPasswd.classList.remove("is-invalid");
-
-        let rol = "user";
 
         let direccion = null;
 

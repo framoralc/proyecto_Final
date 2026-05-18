@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\api\CarritoController;
 use App\Http\Controllers\api\PedidoController;
-use App\Http\Controllers\api\PlatoContoller;
 use App\Http\Controllers\Api\SesionController;
 use App\Http\Controllers\Api\PlatoController;
 use App\Http\Controllers\Api\IngredienteController; // Importamos el nuevo controlador
@@ -33,32 +32,42 @@ Route::get('/recogerInformacion', [SesionController::class, 'recogerInformacion'
 
 Route::delete('/eliminarUsuario/{id}', [SesionController::class, 'eliminarUsuario']);
 
-Route::get('/contarUsuarios/{rol}', [SesionController::class, 'contarUsuarios']);
 
-Route::get('/contarEmpleados', [SesionController::class, 'contarEmpleados']);
 
 Route::post('/mostrarUsuarios', [SesionController::class, 'mostrarUsuarios']);
 
-Route::post('/seleccionarRepartidor', [SesionController::class, 'obtenerRepartidor']);
+Route::get('/seleccionarRepartidor', [SesionController::class, 'obtenerRepartidor']);
 // Recoger información Carrito
 
 Route::get('/recogerCarrito/{idUsuario}', [CarritoController::class, 'getCarritosUsuario']);
 
-// Platos 
+Route::delete('/carrito/{id}', [CarritoController::class, 'eliminarCarrito']);
 
+// Contadores
 
-// pedido
+Route::get('/contarUsuarios/{rol}', [SesionController::class, 'contarUsuarios']);
 
+Route::get('/contarEmpleados', [SesionController::class, 'contarEmpleados']);
 
+Route::get('/contarPedidos', [PedidoController::class, 'contarPedidos']);
 
+Route::get('/contarPlatos',[PlatoController::class, 'contarPlatos']);
 
-Route::post('/crearPedido', [PedidoController::class, 'crearPedido']);
+// Pedido
+
+Route::post('/pedido', [PedidoController::class, 'crearPedido']);
+Route::get('/pedido', [PedidoController::class, 'verPedidos']);
+Route::get('/pedido/{id}', [PedidoController::class, 'verPedido']);
+
+// Platos
 
 Route::get('/platos', [PlatoController::class, 'listarPlatos']);
 Route::post('/platos', [PlatoController::class, 'crearPlato']);
 Route::get('/platos/{id}', [PlatoController::class, 'verPlato']);
 Route::put('/platos/{id}', [PlatoController::class, 'actualizarPlato']);
 Route::delete('/platos/{id}', [PlatoController::class, 'borrarPlato']);
+
+// Ingredientes
 
 Route::get('/ingredientes', [IngredienteController::class, 'listarIngredientes']);
 Route::post('/ingredientes', [IngredienteController::class, 'crearIngrediente']);

@@ -61,4 +61,9 @@ class PlatoController extends Controller
         $plato->delete();
         return response()->json(['mensaje' => 'Borrado correctamente'], 200);
     }
+
+    public function contarPlatos(){
+        $totalPlatos = Plato::count();
+        return response()->json(['count' =>  $totalPlatos, 200]);
+    }
 }

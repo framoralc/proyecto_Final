@@ -39,37 +39,37 @@
 
                 <ul class="nav nav-pills nav-fill">
                     <li class="nav-item">
-                        <button id="btnSeguridad" type="button" class="nav-link">Ver Seguridad</button>
+                        <button id="btnSeguridad" type="button" class="nav-link">Seguridad</button>
                     </li>
                     <li class="nav-item">
-                        <button id="btnPerfil" type="button" class="nav-link">Ver Perfil</button>
-                    </li>
-                </ul>
-
-                <ul class="nav nav-pills nav-fill d-none" id="menuPerfil">
-                    <li class="nav-item">
-                        <button id="btnCambiarNombre" type="button" class="nav-link">Cambiar Nombre</button>
-                    </li>
-                    <li class="nav-item">
-                        <button id="btnCambiarEmail" type="button" class="nav-link">Cambiar Email</button>
-                    </li>
-                    <li class="nav-item">
-                        <button id="btnCambiarDireccion" type="button" class="nav-link">Cambiar Dirección</button>
+                        <button id="btnPerfil" type="button" class="nav-link">Perfil</button>
                     </li>
                 </ul>
 
-                <ul class="nav nav-pills nav-fill d-none" id="menuSeguridad">
+                <ul class="nav nav-pills nav-fill d-none justify-content-evenly" id="menuPerfil">
                     <li class="nav-item">
-                        <button id="btnCambiarPass" type="button" class="nav-link">Cambiar Contraseña</button>
+                        <button id="btnCambiarNombre" type="button" class="nav-link">Nombre</button>
+                    </li>
+                    <li class="nav-item">
+                        <button id="btnCambiarEmail" type="button" class="nav-link">Email</button>
+                    </li>
+                    <li class="nav-item">
+                        <button id="btnCambiarDireccion" type="button" class="nav-link">Dirección</button>
+                    </li>
+                </ul>
+
+                <ul class="nav nav-pills nav-fill d-none justify-content-evenly" id="menuSeguridad">
+                    <li class="nav-item">
+                        <button id="btnCambiarPass" type="button" class="nav-link">Contraseña</button>
                     </li>
                     <li class="nac-item">
                         <button id="btnEliminarCuenta" type="button" class="nav-link">Eliminar Cuenta</button>
                     </li>
                 </ul>
 
-                <section>
+                <section style="width: 50vw;">
                     <section style="display: none;" class="cambiarNombre">
-                        <h2>Cambiar nombre del perfil</h2>
+                        <h2>Nombre del perfil</h2>
                         <form class="w-50" id="formCambiarUsername">
                             <div class="form-floating mb-3 w-100">
                                 <input type="text" class="form-control" id="username" name="username" placeholder="Nombre del Perfil">
@@ -77,21 +77,23 @@
                             </div>
                             <button type="submit" class="btn btn-primary" id="editarForm">Actualizar</button>
                         </form>
-                        <h2>Cambiar Nombre y apellidos</h2>
+                        <h2>Nombre y apellidos</h2>
                         <form class="w-50" id="formCambiarNombreApellidos">
-                            <div class="form-floating mb-3 w-100">
-                                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre">
-                                <label for="nombre" class="form-label">Nombre</label>
-                            </div>
-                            <div class="form-floating mb-3 w-100">
-                                <input type="text" class="form-control" id="apellidos" name="apellidos" placeholder="apellidos">
-                                <label for="apellidos" class="form-label">Apellidos</label>
+                            <div class="d-flex" style="width: 50vw;">
+                                <div class="form-floating mb-3 w-100">
+                                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre">
+                                    <label for="nombre" class="form-label">Nombre</label>
+                                </div>
+                                <div class="form-floating mb-3 w-100">
+                                    <input type="text" class="form-control" id="apellidos" name="apellidos" placeholder="apellidos">
+                                    <label for="apellidos" class="form-label">Apellidos</label>
+                                </div>
                             </div>
                             <button type="submit" class="btn btn-primary" id="editarForm">Actualizar</button>
                         </form>
                     </section>
                     <section style="display: none;" class="cambiarCorreoElectronico">
-                        <h2>Cambiar Correo Electrónico</h2>
+                        <h2>Correo Electrónico</h2>
                         <form class="w-50" id="formCambiarEmail">
                             <div class="form-floating mb-3 w-100">
                                 <input type="email" class="form-control" id="eMail" name="eMail" placeholder="nombre@email.com">
@@ -104,7 +106,7 @@
                         </form>
                     </section>
                     <section style="display: none;" class="cambiarDireccion">
-                        <h2>Cambiar Dirección</h2>
+                        <h2>Dirección</h2>
                         <form class="w-50" id="formCambiarDireccion">
                             <div class="form-floating mb-3 w-100">
                                 <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Direccion">
@@ -115,7 +117,7 @@
                     </section>
 
                     <section style="display: none;" class="cambiarContrasenya">
-                        <h2>Cambiar la contraseña</h2>
+                        <h2>Contraseña</h2>
                         <form id="formCambiarCont">
                             <div class="form-floating mb-3 w-100">
                                 <input type="password" class="form-control" id="passwd" name="passwd" placeholder="Contraseña">

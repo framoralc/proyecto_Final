@@ -1,3 +1,7 @@
+import config from "../../config/config.json" with { type: "json" };
+
+const url = config.apiURL;
+
 let listaCarrito = document.getElementById("listaCarrito");
 
 let btnCrearPedido = document.getElementById("btnCrearPedido");
@@ -30,48 +34,43 @@ async function CargarCarrito(idUser) {
             }
         }
 
-        const response = await fetch(`http://127.0.0.1:8000/api/recogerCarrito/${idUser}`, options)
+        const response = await fetch(`${url}/recogerCarrito/${idUser}`, options)
 
         const result = await response.json();
 
-        console.log(result[0])
+        console.log(result)
 
-        return result[0];
+        return result;
     }
     catch (err) {
         console.error(err);
+        return [];
     }
 }
 
 async function CargarPlatos(carrito) {
 
-    let cardPlato = document.createElement("ul");
-    cardPlato.classList.add("list-group");
-    cardPlato.classList.add("list-group-flush");
+    const template = document.getElementById("ContentPlato");
 
     for (const elementoCarrito of carrito) {
 
-        console.log(elementoCarrito.idPlato)
+        console.log(elementoCarrito);
 
-        let plato = await CargarPlato(elementoCarrito.idPlato)
-        console.log(plato);
+        const plato = await CargarPlato(elementoCarrito.idPlato);
 
-        let cardContentPlato = document.createElement("li");
-        cardContentPlato.classList.add("list-group-item");
-        cardContentPlato.classList.add("d-flex");
+        const contentPlato = template.content.cloneNode(true);
 
-        let contentPlato = document.createElement("p");
-        contentPlato.textContent = plato.nombre + " " + plato.precio;
+        contentPlato.querySelector(".nombrePlato").textContent = plato.nombre;
+        contentPlato.querySelector(".precioPlato").textContent = plato.precio + "€";
+        contentPlato.querySelector(".cantidadPlato").textContent = elementoCarrito.cantidad;
 
-        let opcionesPlato = document.createElement("section");
+        contentPlato.querySelector("button").addEventListener("click", () => {
+            EliminarDelCarrito(elementoCarrito.idPlato);
+        });
 
-        cardContentPlato.append(contentPlato);
-        cardContentPlato.append(opcionesPlato);
+        listaCarrito.append(contentPlato);
 
-        cardPlato.append(cardContentPlato);
-        listaCarrito.append(cardPlato);
-
-        CalcularPrecio(plato.precio)
+        CalcularPrecio(plato.precio);
     }
 }
 
@@ -89,7 +88,7 @@ async function CargarPlato(plato) {
             }
         }
 
-        const response = await fetch(`http://127.0.0.1:8000/api/cargarPlato/${plato}`, options);
+        const response = await fetch(`${url}/platos/${plato}`, options);
 
         const result = await response.json();
 
@@ -99,6 +98,7 @@ async function CargarPlato(plato) {
     }
     catch (err) {
         console.error(err);
+        return null;
     }
 
 }
@@ -111,36 +111,54 @@ function CalcularPrecio(precioPlato) {
 
     precioTotal.innerHTML = "";
 
-    precioTotal.textContent = "Total: " + precio;
+    precioTotal.textContent = "Total: " + precio + "€";
 
 }
 
-async function ObtenerRepartidor() {
+async function EliminarDelCarrito(id) {
 
     try {
+
         const options = {
-            method: "GET",
+            method: "DELETE"
+        }
+
+        await fetch(`${url}/carrito/${id}`, options)
+    }
+    catch (err) {
+        console.error(err);
+    }
+}
+
+async function crearPedido() {
+
+    try {
+
+        const options = {
+            method: "POST",
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
-            }
+            },
+            body: JSON.stringify({
+                idUsuario: idUser,
+                estado: "pendiente",
+                total: precio,
+                carrito: carrito
+            })
         }
 
-        const response = await fetch('http://127.0.0.1:8000/api/seleccionarRepartidor', options)
-
-        const result = await response.json();
-
-        return result;
+        const response = await fetch(`${url}/pedido`, options);
+        const data = await response.json();
+        console.log(data);
     }
     catch (err) {
-        console.error(err)
+        console.error(err);
     }
 }
 
-// btnCrearPedido.addEventListener('click', () => {
+btnCrearPedido.addEventListener('click', async () => {
 
-//     let repartidor = await ObtenerRepartidor();
+    await crearPedido();
 
-    
-
-// })
+})

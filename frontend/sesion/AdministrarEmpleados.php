@@ -51,14 +51,15 @@
                 </section>
                 <section class="d-flex column-gap-3 justify-content-lg-center" id="lista">
                     <section>
-                        <table class="table table-hover table-bordered">
-                            <thead>
+                        <table class="table table-hover table-striped table-bordered">
+                            <thead class="table-dark">
                                 <tr>
                                     <th scope="col">id</th>
                                     <th scope="col">Nombre</th>
                                     <th scope="col">eMail</th>
                                     <th scope="col">Rol</th>
                                     <th scope="col">Dirección</th>
+                                    <th scope="col">Turno</th>
                                     <th scope="col">opciones</th>
                                 </tr>
                             </thead>
@@ -98,6 +99,7 @@
             <td class="w-25" id="email"></td>
             <td id="rol"></td>
             <td id="direccion"></td>
+            <td id="turno"></td>
             <td class="opciones">
                 <button class="btn btn-warning" id="editar">Editar</button>
                 <button class="btn btn-danger" id="eliminar">Eliminar</button>

@@ -1,3 +1,8 @@
+import config from "../../config/config.json" with { type: "json" };
+
+const url = config.apiURL;
+const web = config.URLWeb;
+
 let formulario = document.querySelector("form");
 
 async function iniciar(nombre, password) {
@@ -19,8 +24,10 @@ async function iniciar(nombre, password) {
             body: JSON.stringify(usuario)
         }
 
-        const respuesta = await fetch("http://127.0.0.1:8000/api/iniciarSesion", options)
+        const respuesta = await fetch(`${url}/iniciarSesion`, options)
         const data = await respuesta.json()
+
+        console.log(data)
 
         if (!respuesta.ok) {
             throw new Error("No se ha podido enviar. " + JSON.stringify(data))
@@ -30,7 +37,8 @@ async function iniciar(nombre, password) {
         sessionStorage.setItem('user_name', data.usuario)
         sessionStorage.setItem('user_direccion', data.direccion)
         sessionStorage.setItem('user_email', data.email)
-        window.location.href = "http://localhost/index.php"
+        sessionStorage.setItem('user_id', data.id)
+        window.location.href = `${web}/index.php`;
 
     } catch(err) {
         console.error(err)

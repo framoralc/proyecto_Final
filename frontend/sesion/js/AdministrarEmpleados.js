@@ -1,3 +1,7 @@
+import config from "../../config/config.json" with { type: "json" };
+
+const url = config.apiURL;
+
 let lista = document.getElementById("lista");
 
 async function ContadorUsuarios() {
@@ -8,7 +12,7 @@ async function ContadorUsuarios() {
             method: "GET"
         }
 
-        const respuesta = await fetch('http://127.0.0.1:8000/api/contarEmpleados', options);
+        const respuesta = await fetch(`${url}/contarEmpleados`, options);
 
         const resultado = await respuesta.json();
 
@@ -35,7 +39,7 @@ async function recogerDatos(config) {
             body: JSON.stringify(config)
         };
 
-        const respuesta = await fetch('http://127.0.0.1:8000/api/mostrarUsuarios', options)
+        const respuesta = await fetch(`${url}/mostrarUsuarios`, options)
 
         const resultado = await respuesta.json();
 
@@ -59,7 +63,7 @@ async function deleteUsuario(id) {
         }
     };
 
-    await fetch(`http://127.0.0.1:8000/api/eliminarUsuario/${id}`, options);
+    await fetch(`${url}/eliminarUsuario/${id}`, options);
 }
 
 async function TotalUsuarios() {
@@ -109,6 +113,9 @@ async function mostrarLista(config) {
 
         let usuarioDireccion = tablaUsuario.querySelector("#direccion");
         usuarioDireccion.textContent = usuario.direccion;
+
+        let usuarioTurno = tablaUsuario.querySelector("#turno");
+        usuarioTurno.textContent = usuario.turno;
 
         let btnDelete = tablaUsuario.querySelector("#eliminar");
         btnDelete.addEventListener('click', async function () {
