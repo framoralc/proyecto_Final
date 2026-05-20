@@ -59,10 +59,11 @@
                             <label class="form-label">Categoría</label>
                             <select class="form-select" id="categoriaPlato">
                                 <option value="">Sin categoría</option>
-                                <option value="Entrante">Entrante</option>
-                                <option value="Conpescado">Con Pescado</option>
+                                <option value="Pasta">Pasta</option>
+                                <option value="Marisco">Marisco</option>
                                 <option value="Picante">Picante</option>
-                                <option value="Bebida">Bebida</option>
+                                <option value="Carnes">Carnes</option>
+                                <option value="Entrante">Entrante</option>
                             </select>
                         </div>
                         <div class="mb-3">

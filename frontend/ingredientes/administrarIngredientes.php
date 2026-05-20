@@ -28,7 +28,7 @@
                 </tr>
             </thead>
             <tbody id="tablaIngredientes">
-                <tr><td colspan="5" class="text-center">Cargando...</td></tr>
+                <tr><td colspan="4" class="text-center">Cargando...</td></tr>
             </tbody>
         </table>
 
@@ -37,7 +37,6 @@
         </nav>
     </div>
 
-    <!-- Modal añadir/editar -->
     <div class="modal fade" id="modalIngrediente" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
