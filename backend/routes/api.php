@@ -20,6 +20,8 @@ Route::post('/iniciarSesion', [SesionController::class, 'iniciarSesion']);
 
 // actualizar información del perfil
 
+Route::put('/usuario', [SesionController::class, 'actualizarUsuario']);
+
 Route::post('/actualizarPassword', [SesionController::class, 'actualizarPassword']);
 
 Route::post('/actualizarNombre', [SesionController::class, 'actualizarNombre']);
@@ -28,7 +30,7 @@ Route::post('/actualizarEmail', [SesionController::class, 'actualizarEmail']);
 
 // Recoger información usuarios y empleados
 
-Route::get('/recogerInformacion', [SesionController::class, 'recogerInformacion']);
+Route::get('/recogerInformacion/{id}', [SesionController::class, 'recogerInformacion']);
 
 Route::delete('/eliminarUsuario/{id}', [SesionController::class, 'eliminarUsuario']);
 
@@ -57,6 +59,7 @@ Route::get('/contarPlatos',[PlatoController::class, 'contarPlatos']);
 
 Route::post('/pedido', [PedidoController::class, 'crearPedido']);
 Route::get('/pedido', [PedidoController::class, 'verPedidos']);
+Route::get('/lineaPedido/{id}', [PedidoController::class, 'verLineaPedido']);
 Route::get('/pedido/{id}', [PedidoController::class, 'verPedido']);
 
 // Platos

@@ -16,7 +16,7 @@ class SesionController extends Controller
     public function registrarUsuario(Request $request)
     {
 
-        if (User::where('nombre', $request->usuario)->first()) {
+        if (User::where('nombre', $request->nombre)->first()) {
 
             return response()->json("El usuario ya existe", 409);
         } else {
@@ -47,8 +47,22 @@ class SesionController extends Controller
                 "id" => $usuario->id,
                 "usuario" => $usuario->nombre,
                 "rol" => $usuario->rol,
-                "direccion" => $usuario->direccion,
-                "nombre" => $usuario->nombre
+                "nombre" => $usuario->nombre,
+                "email" => $usuario->email,
+
+                "ciudadEntrega" => $usuario->ciudad,
+                "calleEntrega" => $usuario->calle,
+                "pisoEntrega" => $usuario->piso,
+                "numeroEntrega" => $usuario->numero,
+                "puertaEntrega" => $usuario->puerta,
+                "codPostalEntrega" => $usuario->codpostal,
+
+                "ciudadFac" => $usuario->ciudadFac,
+                "calleFac" => $usuario->calleFac,
+                "pisoFac" => $usuario->pisoFac,
+                "numeroFac" => $usuario->numeroFac,
+                "puertaFac" => $usuario->puertaFac,
+                "codPostalFac" => $usuario->codpostalFac
             ], 200);
         } else {
             return response()->json(["error" => "Contraseña incorrecta"], 401);
@@ -61,22 +75,19 @@ class SesionController extends Controller
         $usuario = User::find($request->id);
         
         if($usuario){
-            $usuario->username = $request->username;
-            $usuario->nombre = $request->nombre;
-            $usuario->apellidos = $request->apellidos;
-            $usuario->telefono = $request->telefono;
-            $usuario->ciudad = $request->ciudad;
-            $usuario->calle = $request->calle;
-            $usuario->numero = $request->numero;
-            $usuario->piso = $request->piso;
-            $usuario->puerta = $request->puerta;
-            $usuario->codPostal = $request->codPostal;
+
+            $usuario->fill($request->except(['id', 'password']));
+
+            if($request->has('password')){
+                $usuario->password = Hash::make($request->password);
+            }
+            
             $usuario->save();
 
             return response()->json(["mensaje"=>"el perfil a sido actualizado"], 200);
         }
         else{
-            return response()->json(["error","Perfil no encontrado"], 404);
+            return response()->json(["error" =>"Perfil no encontrado"], 404);
         }
 
     }
@@ -169,11 +180,11 @@ class SesionController extends Controller
             case "usuario":
                 $totalUsuarios = User::where('rol', 'user')->count();
                 Log::info('usuarios totales', ['total' => $totalUsuarios]);
-                return response()->json(['count' => ['usuarios' => $totalUsuarios], 200]);
+                return response()->json(['count' => ['usuarios' => $totalUsuarios]], 200);
             case "empleado":
                 $totalEmpleados = User::whereIn('rol', ['admin','repartidor','cocinero'])->count();
                 Log::info('Empleados totales', ['total' => $totalEmpleados]);
-                return response()->json(['count' => ['empleados' => $totalEmpleados], 200]);
+                return response()->json(['count' => ['empleados' => $totalEmpleados]], 200);
         }
     }
 
@@ -189,17 +200,6 @@ class SesionController extends Controller
                     ->makeHidden('password');
 
         return response()->json(['usuarios' => $result], 200);
-    }
-
-    public function obtenerRepartidor(){
-
-        $repartidores = User::whereIn('rol', 'repartidor')->get();
-
-        if ($repartidores->isEmpty()) {
-            return null;
-        }
-
-        return $repartidores->random()->id;
     }
 }
 

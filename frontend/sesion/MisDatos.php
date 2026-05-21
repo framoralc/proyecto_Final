@@ -20,16 +20,31 @@
             <h1 id="titulo">Flashfood - Detalles</h1>
 
             <section class="menu">
-
                 <section class="w-50">
-
                     <section class="info">
-
                         <h2>Información del perfil</h2>
-
                         <p>Nombre: <span id="NameInfo"></span></p>
                         <p>Correo Electronico: <span id="EmailInfo"></span></p>
-                        <p>Dirección: <span id="DirInfo"></span></p>
+                        <section class="d-flex">
+                            <section>
+                                <p>Dirección de entrega</p>
+                                <p>Ciudad: <span id="infoCiudadEntrega"></span></p>
+                                <p>Calle: <span id="infoCalleEntrega"></span></p>
+                                <p>Numero: <span id="infoNumeroEntrega"></span></p>
+                                <p>Piso: <span id="infoPisoEntrega"></span></p>
+                                <p>Puerta: <span id="infoPuertaEntrega"></span></p>
+                                <p>Código Postal: <span id="infoCodPostalEntrega"></span></p>
+                            </section>
+                            <section>
+                                <p>Dirección de Facturación:</p>
+                                <p>Ciudad: <span id="infoCiudadFac"></span></p>
+                                <p>Calle: <span id="infoCalleFac"></span></p>
+                                <p>Numero: <span id="infoNumeroFac"></span></p>
+                                <p>Piso: <span id="infoPisoFac"></span></p>
+                                <p>Puerta: <span id="infoPuertaFac"></span></p>
+                                <p>Código Postal: <span id="infoCodPostalFac"></span></p>
+                            </section>
+                        </section>
                     </section>
                 </section>
 
@@ -106,16 +121,70 @@
                         </form>
                     </section>
                     <section style="display: none;" class="cambiarDireccion">
-                        <h2>Dirección</h2>
-                        <form class="w-50" id="formCambiarDireccion">
-                            <div class="form-floating mb-3 w-100">
-                                <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Direccion">
-                                <label for="direccion" class="form-label">Dirección</label>
-                            </div>
-                        </form>
-                        <button type="submit" class="btn btn-primary" id="editarForm">Submit</button>
+                        <section class="d-flex gap-2">
+                            <section style="width: 50vw;">
+                                <h2>Dirección de Entrega</h2>
+                                <form class="w-50" id="formCambiarDireccion">
+                                    <!-- ciudad, calle, numero, piso, puerta, codPostal (lo mismo con facturación) -->
+                                    <div class="form-floating mb-3 w-100">
+                                        <input type="text" class="form-control" id="ciudad" name="ciudad" placeholder="ciudad">
+                                        <label for="ciudad" class="form-label">Ciudad</label>
+                                    </div>
+                                    <div class="form-floating mb-3 w-100">
+                                        <input type="text" class="form-control" id="calle" name="calle" placeholder="calle">
+                                        <label for="calle" class="form-label">Calle</label>
+                                    </div>
+                                    <div class="form-floating mb-3 w-100">
+                                        <input type="text" class="form-control" id="numero" name="numero" placeholder="numero">
+                                        <label for="numero" class="form-label">Numero</label>
+                                    </div>
+                                    <div class="form-floating mb-3 w-100">
+                                        <input type="text" class="form-control" id="piso" name="piso" placeholder="piso">
+                                        <label for="piso" class="form-label">Piso</label>
+                                    </div>
+                                    <div class="form-floating mb-3 w-100">
+                                        <input type="text" class="form-control" id="puerta" name="puerta" placeholder="puerta">
+                                        <label for="puerta" class="form-label">Puerta</label>
+                                    </div>
+                                    <div class="form-floating mb-3 w-100">
+                                        <input type="text" class="form-control" id="codPostal" name="codPostal" placeholder="codPostal">
+                                        <label for="codPostal" class="form-label">Código Postal</label>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary" id="editarForm">Submit</button>
+                                </form>
+                            </section>
+                            <section style="width: 50vw;">
+                                <h2>Dirección de Facturación</h2>
+                                <form class="w-50" id="formCambiarDireccionFac">
+                                    <div class="form-floating mb-3 w-100">
+                                        <input type="text" class="form-control" id="ciudadFac" name="ciudadFac" placeholder="ciudadFac">
+                                        <label for="ciudadFac" class="form-label">Ciudad</label>
+                                    </div>
+                                    <div class="form-floating mb-3 w-100">
+                                        <input type="text" class="form-control" id="calleFac" name="calleFac" placeholder="calleFac">
+                                        <label for="calleFac" class="form-label">Calle</label>
+                                    </div>
+                                    <div class="form-floating mb-3 w-100">
+                                        <input type="text" class="form-control" id="numeroFac" name="numeroFac" placeholder="numeroFac">
+                                        <label for="numeroFac" class="form-label">Numero</label>
+                                    </div>
+                                    <div class="form-floating mb-3 w-100">
+                                        <input type="text" class="form-control" id="pisoFac" name="pisoFac" placeholder="pisoFac">
+                                        <label for="pisoFac" class="form-label">Piso</label>
+                                    </div>
+                                    <div class="form-floating mb-3 w-100">
+                                        <input type="text" class="form-control" id="puertaFac" name="puertaFac" placeholder="puertaFac">
+                                        <label for="puertaFac" class="form-label">Puerta</label>
+                                    </div>
+                                    <div class="form-floating mb-3 w-100">
+                                        <input type="text" class="form-control" id="codPostalFac" name="codPostalFac" placeholder="codPostalFac">
+                                        <label for="codPostalFac" class="form-label">Código Postal</label>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary" id="editarForm">Submit</button>
+                                </form>
+                            </section>
+                        </section>
                     </section>
-
                     <section style="display: none;" class="cambiarContrasenya">
                         <h2>Contraseña</h2>
                         <form id="formCambiarCont">

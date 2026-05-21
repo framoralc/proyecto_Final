@@ -11,6 +11,7 @@ let editableCam = false;
 let formCambiarNombre = document.getElementById("formCambiarNombre");
 let formCambiarEmail = document.getElementById("formCambiarEmail");
 let formCambiarDireccion = document.getElementById("formCambiarDireccion");
+let formCambiarDireccionFac = document.getElementById("formCambiarDireccionFac");
 
 // Secciones de los formularios
 
@@ -29,18 +30,46 @@ function cargarInformacion() {
 
     let nameInfo = document.getElementById("NameInfo");
     let eMailInfo = document.getElementById("EmailInfo");
-    let dirInfo = document.getElementById("DirInfo");
+
+    let infoCiudadEntrega = document.getElementById("infoCiudadEntrega");
+    let infoCalleEntrega = document.getElementById("infoCalleEntrega");
+    let infoNumeroEntrega = document.getElementById("infoNumeroEntrega");
+    let infoPisoEntrega = document.getElementById("infoPisoEntrega");
+    let infoPuertaEntrega = document.getElementById("infoPuertaEntrega");
+    let infoCodPostalEntrega = document.getElementById("infoCodPostalEntrega");
+
+    let infoCiudadFac = document.getElementById("infoCiudadFac");
+    let infoCalleFac = document.getElementById("infoCalleFac");
+    let infoNumeroFac = document.getElementById("infoNumeroFac");
+    let infoPisoFac = document.getElementById("infoPisoFac");
+    let infoPuertaFac = document.getElementById("infoPuertaFac");
+    let infoCodPostalFac = document.getElementById("infoCodPostalFac");
 
     nameInfo.textContent = sessionStorage.getItem("user_name");
     eMailInfo.textContent = sessionStorage.getItem("user_email");
-    dirInfo.textContent = sessionStorage.getItem("user_direccion");
-}
+    
+    infoCiudadEntrega.textContent = sessionStorage.getItem("user_ciudadEntrega");
+    infoCalleEntrega.textContent = sessionStorage.getItem("user_calleEntrega");
+    infoNumeroEntrega.textContent = sessionStorage.getItem("user_numeroEntrega");
+    infoPisoEntrega.textContent = sessionStorage.getItem("user_pisoEntrega");
+    infoPuertaEntrega.textContent = sessionStorage.getItem("user_puertaEntrega")
+    infoCodPostalEntrega.textContent = sessionStorage.getItem("user_codPostalEntrega");
+
+    infoCiudadFac.textContent = sessionStorage.getItem("user_ciudadFac");
+    infoCalleFac.textContent = sessionStorage.getItem("user_calleFac");
+    infoNumeroFac.textContent = sessionStorage.getItem("user_numeroFac");
+    infoPisoFac.textContent = sessionStorage.getItem("user_pisoFac");
+    infoPuertaFac.textContent = sessionStorage.getItem("user_puertaFac");
+    infoCodPostalFac.textContent = sessionStorage.getItem("user_codPostalFac");
+};
 
 // actualizar informcación del perfil
 
 async function actualizarPerfil(perfil) {
     try{
+        debugger;
 
+        console.log(perfil);
         const options = {
             method: "PUT",
             headers: {
@@ -50,7 +79,7 @@ async function actualizarPerfil(perfil) {
             body: JSON.stringify(perfil)
         };
 
-        const response = await fetch(`${url}/actualizarPerfil`, options)
+        const response = await fetch(`${url}/usuario`, options)
 
         if(!response.ok){
             const error = await response.json();
@@ -63,14 +92,14 @@ async function actualizarPerfil(perfil) {
     catch(err){
         console.error(err);
     }
-}
+};
 
 async function actualizarNombre(perfil) {
     debugger;
     try {
 
         const options = {
-            method: "POST",
+            method: "PUT",
             headers: {
                 'Content-type': 'application/json',
                 'accept': 'application/json'
@@ -78,7 +107,7 @@ async function actualizarNombre(perfil) {
             body: JSON.stringify(perfil)
         }
 
-        const response = await fetch(`${url}/actualizarNombre`, options)
+        const response = await fetch(`${url}/usuario`, options)
 
         if (!response.ok) {
             const error = await response.json();
@@ -92,13 +121,13 @@ async function actualizarNombre(perfil) {
     catch (err) {
         console.error(err);
     }
-}
+};
 
 async function actualizarEmail(perfil) {
 
     try {
         const options = {
-            method: "POST",
+            method: "PUT",
             headers: {
                 'Content-type': 'application/json',
                 'Accept': 'application/json'
@@ -106,7 +135,7 @@ async function actualizarEmail(perfil) {
             body: JSON.stringify(perfil)
         };
 
-        const respuesta = await fetch(`${url}/actualizarEmail`, options);
+        const respuesta = await fetch(`${url}/usuario`, options);
 
         if (!respuesta.ok) {
             const error = await respuesta.json();
@@ -119,8 +148,7 @@ async function actualizarEmail(perfil) {
     catch (err) {
         console.error(err);
     }
-
-}
+};
 
 async function actualizarContraseña(perfil) {
     debugger;
@@ -149,7 +177,7 @@ async function actualizarContraseña(perfil) {
     catch (err) {
         console.error(err);
     }
-}
+};
 
 async function RecogerInformacion(id) {
     debugger;
@@ -159,11 +187,10 @@ async function RecogerInformacion(id) {
             headers: {
                 'Content-type': 'application/json',
                 'Accept': 'application/json'
-            },
-            body: JSON.stringify(id)
+            }
         };
 
-        const respuesta = await fetch(`${url}/recogerInformacion`, options);
+        const respuesta = await fetch(`${url}/recogerInformacion/${id}`, options);
 
         const data = await respuesta.json();
 
@@ -173,7 +200,21 @@ async function RecogerInformacion(id) {
         else {
             sessionStorage.setItem("user_name", data.nombre);
             sessionStorage.setItem("user_email", data.email);
-            sessionStorage.setItem("user_direccion", data.direccion);
+
+            sessionStorage.setItem("user_ciudadEntrega", data.ciudadEntrega);
+            sessionStorage.setItem("user_calleEntrega",data.calleEntrega);
+            sessionStorage.setItem("user_numeroEntrega",data.numeroEntrega);
+            sessionStorage.setItem("user_pisoEntrega",data.pisoEntrega);
+            sessionStorage.setItem("user_puertaEntrega",data.puertaEntrega);
+            sessionStorage.setItem("user_codPostalEntrega",data.codPostalEntrega);
+
+            sessionStorage.setItem("user_ciudadFac", data.ciudadFac);
+            sessionStorage.setItem("user_calleFac",data.calleFac);
+            sessionStorage.setItem("user_numeroFac",data.numeroFac);
+            sessionStorage.setItem("user_pisoFac",data.pisoFac);
+            sessionStorage.setItem("user_puertaFac",data.puertaFac);
+            sessionStorage.setItem("user_codPostalFac",data.codPostalFac);
+
             sessionStorage.setItem("user_rol", data.rol);
             window.location.reload();
         }
@@ -181,7 +222,7 @@ async function RecogerInformacion(id) {
     catch (err) {
         console.error(err);
     }
-}
+};
 
 // Eliminar el perfil
 
@@ -191,7 +232,7 @@ async function eliminarPerfil(id) {
     try {
         const options = {
             method: "DELETE",
-            Headers: {
+            headers: {
                 'Accept': 'application/json',
                 'Content-type': 'application/json'
             },
@@ -201,39 +242,61 @@ async function eliminarPerfil(id) {
 
         const respuesta = await fetch(`${url}/eliminarUsuario/${id}`, options)
 
-        console.log(resultado.result);
+        console.log(resultado);
 
     }
     catch (err) {
         console.log(err)
     }
-}
+};
+
+async function ActualizarDireccionFac(direccion){
+    try{
+        const options = {
+            method: "PUT",
+            headers: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(direccion)
+        };
+
+        const respuesta = await fetch(`${url}/usuario`, options)
+    }
+    catch(err){
+        console.error(err);
+    }
+};
+
+///////////////////////// Formularios /////////////////////////////////
 
 formCambiarUsername.addEventListener('submit', (event) => {
     event.preventDefault();
 
-    let username = formCambiarNombre.elements["username"].value;
+    let username = formCambiarUsername.elements["username"].value;
 
     let perfil = {
         id: sessionStorage.getItem('user_id'),
         username: username
     };
 
-    actualizarNombre(perfil);
-})
+    actualizarPerfil(perfil);
+});
 
-formCambiarNombreApellidos.addEventListener("click", (event) => {
+formCambiarNombreApellidos.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    let nombre = formCambiarUsername.elements[""].value;
-    let apellidos = formCambiarUsername.elements[""].value;
+    let nombre = formCambiarNombreApellidos.elements["nombre"].value;
+    let apellidos = formCambiarNombreApellidos.elements["apellidos"].value;
 
     let perfil = {
         id: sessionStorage.getItem('user_id'),
         nombre: nombre,
         apellidos: apellidos
     }
-})
+
+    actualizarPerfil(perfil);
+});
 
 formCambiarEmail.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -245,15 +308,13 @@ formCambiarEmail.addEventListener('submit', (event) => {
         email: email
     };
 
-    actualizarEmail(perfil);
-})
+    actualizarPerfil(perfil);
+});
 
 formContrasenya.addEventListener('submit', (event) => {
     event.preventDefault();
 
     if (confirm("¿Seguro que quieres actualizar la contraseña?")) {
-
-        let id = sessionStorage.getItem('user_id');
 
         let passwd = formContrasenya.elements["passwd"];
         let repPasswd = formContrasenya.elements["rePasswd"];
@@ -265,11 +326,11 @@ formContrasenya.addEventListener('submit', (event) => {
             repPasswd.classList.remove("is-invalid");
 
             let usuario = {
-                id: id,
+                id: sessionStorage.getItem('user_id'),
                 password: passwd.value
             }
 
-            actualizarContraseña(usuario);
+            actualizarPerfil(usuario);
         }
         else {
             passwd.classList.add("is-invalid");
@@ -278,7 +339,56 @@ formContrasenya.addEventListener('submit', (event) => {
             repPasswd.classList.remove("is-valid");
         }
     }
-})
+});
+
+formCambiarDireccionFac.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    let ciudad = formCambiarDireccionFac.elements["ciudadFac"];
+    let calle = formCambiarDireccionFac.elements["calleFac"];
+    let numero = parseInt(formCambiarDireccionFac.elements["numeroFac"]);
+    let piso = formCambiarDireccionFac.elements["pisoFac"];
+    let puerta = formCambiarDireccionFac.elements["puertaFac"];
+    let codPostal = formCambiarDireccionFac.elements["codPostalFac"];
+
+    let Direccion = {
+        id: sessionStorage.getItem('user_id'),
+        ciudadFac: ciudad.value,
+        calleFac: calle.value,
+        numeroFac: numero.value,
+        pisoFac: piso.value,
+        puertaFac: puerta.value,
+        codPostalFac: codPostal.value
+    };
+
+    actualizarPerfil(Direccion);
+});
+
+formCambiarDireccion.addEventListener("submit", (event) => {
+    event.preventDefault();
+    debugger;
+
+    let ciudad = formCambiarDireccion.elements["ciudad"];
+    let calle = formCambiarDireccion.elements["calle"];
+    let numero = parseInt(formCambiarDireccion.elements["numero"]);
+    let piso = formCambiarDireccion.elements["piso"];
+    let puerta = formCambiarDireccion.elements["puerta"];
+    let codPostal = formCambiarDireccion.elements["codPostal"];
+
+    let Direccion = {
+        id: sessionStorage.getItem('user_id'),
+        ciudad: ciudad.value,
+        calle: calle.value,
+        numero: numero.value,
+        piso: piso.value,
+        puerta: puerta.value,
+        codPostal: codPostal.value
+    };
+
+    actualizarPerfil(Direccion);
+});
+
+///////////////////////////// Eliminar Cuenta //////////////////////////////
 
 let btnEliminar = document.getElementById("eliminar");
 
@@ -288,8 +398,9 @@ btnEliminar.addEventListener('click', async () => {
 
     sessionStorage.clear();
     window.location.href = `${web}/index.php`;
+});
 
-})
+///////////////////////////// Menu ///////////////////////////////////////////
 
 function init() {
     cargarInformacion();
@@ -299,8 +410,9 @@ function init() {
 
     const secNombre = document.querySelector(".cambiarNombre");
     const secEmail = document.querySelector(".cambiarCorreoElectronico");
-    const secPass = document.querySelector(".cambiarContrasenya");
     const secDireccion = document.querySelector(".cambiarDireccion");
+
+    const secPass = document.querySelector(".cambiarContrasenya");
     const secEliminarCuenta = document.querySelector(".eliminarPerfil");
 
     // grupo opciones
@@ -351,7 +463,7 @@ function init() {
     document.getElementById("btnEliminarCuenta").addEventListener("click", () => {
         secEliminarCuenta.style.display = "block";
         secPass.style.display = "none";
-    })
-}
+    });
+};
 
 init();

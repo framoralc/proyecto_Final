@@ -13,5 +13,5 @@ class linea_pedidos extends Model
     
     public $timestamps = false;
 
-    protected $fillable = ['idPedido','idPlato'];
+    protected $fillable = ['idPedido','idPlato','cantidad','precio_unitario'];
 }

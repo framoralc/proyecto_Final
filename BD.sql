@@ -1,0 +1,100 @@
+CREATE TABLE IF NOT EXISTS "carrito" (
+	"id" SERIAL NOT NULL,
+	"cantidad" INTEGER NULL DEFAULT 0,
+	"idPlato" INTEGER NULL DEFAULT 0,
+	"idUsuario" INTEGER NULL DEFAULT 0,
+	PRIMARY KEY ("id"),
+	CONSTRAINT "FK_carrito_platos" FOREIGN KEY ("idPlato") REFERENCES "platos" ("id") ON UPDATE NO ACTION ON DELETE CASCADE,
+	CONSTRAINT "FK_carrito_users" FOREIGN KEY ("idUsuario") REFERENCES "users" ("id") ON UPDATE NO ACTION ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS "detalles_pedidos" (
+	"id" SERIAL NOT NULL,
+	"plato_id" INTEGER NULL DEFAULT NULL,
+	"pedido_id" INTEGER NULL DEFAULT NULL,
+	"cantidad" INTEGER NULL DEFAULT NULL,
+	"precio_unitario" NUMERIC(10,2) NULL DEFAULT NULL,
+	PRIMARY KEY ("id"),
+	CONSTRAINT "FKPedidosDetallesPedidos" FOREIGN KEY ("pedido_id") REFERENCES "pedidos" ("id") ON UPDATE NO ACTION ON DELETE CASCADE,
+	CONSTRAINT "FKPlatosDetallesPedidos" FOREIGN KEY ("plato_id") REFERENCES "platos" ("id") ON UPDATE NO ACTION ON DELETE NO ACTION
+);
+
+CREATE TABLE IF NOT EXISTS "ingredientes" (
+	"id" SERIAL NOT NULL,
+	"nombre" VARCHAR(100) NULL DEFAULT NULL,
+	"stock" INTEGER NULL DEFAULT NULL,
+	"unidad_medida" VARCHAR(20) NULL DEFAULT NULL,
+	PRIMARY KEY ("id")
+);
+
+CREATE TABLE IF NOT EXISTS "linea_pedidos" (
+	"id" SERIAL NOT NULL,
+	"idPedido" INTEGER NOT NULL DEFAULT 0,
+	"idPlato" INTEGER NOT NULL DEFAULT 0,
+	PRIMARY KEY ("id"),
+	CONSTRAINT "FK__pedidos" FOREIGN KEY ("idPedido") REFERENCES "pedidos" ("id") ON UPDATE NO ACTION ON DELETE NO ACTION,
+	CONSTRAINT "FK__platos" FOREIGN KEY ("idPlato") REFERENCES "platos" ("id") ON UPDATE NO ACTION ON DELETE NO ACTION
+);
+
+CREATE TABLE IF NOT EXISTS "migrations" (
+	"id" SERIAL NOT NULL,
+	"migration" VARCHAR(255) NOT NULL,
+	"batch" INTEGER NOT NULL,
+	PRIMARY KEY ("id")
+);
+
+CREATE TABLE IF NOT EXISTS "pedidos" (
+	"id" SERIAL NOT NULL,
+	"idUsuario" INTEGER NULL DEFAULT NULL,
+	"estado" VARCHAR(50) NULL DEFAULT NULL,
+	"total" NUMERIC(10,2) NULL DEFAULT NULL,
+	"fecha" TIMESTAMP NULL DEFAULT NULL,
+	PRIMARY KEY ("id"),
+	CONSTRAINT "FK_pedidos_users" FOREIGN KEY ("idUsuario") REFERENCES "users" ("id") ON UPDATE NO ACTION ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS "platos" (
+	"id" SERIAL NOT NULL,
+	"nombre" VARCHAR(100) NULL DEFAULT NULL,
+	"precio" NUMERIC(10,2) NULL DEFAULT NULL,
+	"disponible" BOOLEAN NULL DEFAULT NULL,
+	"descripcion" TEXT NULL DEFAULT NULL,
+	"categoria" VARCHAR(100) NULL DEFAULT NULL,
+	"imagen_url" VARCHAR(250) NULL DEFAULT NULL::character varying,
+	PRIMARY KEY ("id")
+);
+
+CREATE TABLE IF NOT EXISTS "plato_ingredientes" (
+	"plato_id" INTEGER NOT NULL,
+	"ingrediente_id" INTEGER NOT NULL,
+	"cantidad_necesaria" INTEGER NULL DEFAULT NULL,
+	PRIMARY KEY ("plato_id", "ingrediente_id"),
+	CONSTRAINT "plato_ingredientes_ingrediente_id_fkey" FOREIGN KEY ("ingrediente_id") REFERENCES "ingredientes" ("id") ON UPDATE NO ACTION ON DELETE NO ACTION,
+	CONSTRAINT "plato_ingredientes_plato_id_fkey" FOREIGN KEY ("plato_id") REFERENCES "platos" ("id") ON UPDATE NO ACTION ON DELETE NO ACTION
+);
+
+CREATE TABLE IF NOT EXISTS "users" (
+	"nombre" VARCHAR(100) NULL DEFAULT NULL,
+	"email" VARCHAR(100) NULL DEFAULT NULL,
+	"password" VARCHAR(255) NULL DEFAULT NULL,
+	"rol" VARCHAR(20) NULL DEFAULT NULL,
+	"direccion" VARCHAR(200) NULL DEFAULT NULL::character varying,
+	"id" SERIAL NOT NULL,
+	"apellidos" VARCHAR(255) NULL DEFAULT NULL,
+	"username" VARCHAR(100) NULL DEFAULT NULL,
+	"telefono" VARCHAR(20) NULL DEFAULT NULL,
+	"ciudad" VARCHAR(100) NULL DEFAULT NULL,
+	"calle" VARCHAR(100) NULL DEFAULT NULL,
+	"numero" INTEGER NULL DEFAULT NULL,
+	"piso" VARCHAR(10) NULL DEFAULT NULL,
+	"puerta" VARCHAR(10) NULL DEFAULT NULL,
+	"codPostal" VARCHAR(20) NULL DEFAULT NULL,
+	"ciudadFac" VARCHAR(100) NULL DEFAULT NULL::character varying,
+	"calleFac" VARCHAR(100) NULL DEFAULT NULL::character varying,
+	"numeroFac" INTEGER NULL DEFAULT NULL,
+	"pisoFac" VARCHAR(10) NULL DEFAULT NULL::character varying,
+	"puertaFac" VARCHAR(10) NULL DEFAULT NULL::character varying,
+	"codPostalFac" VARCHAR(20) NULL DEFAULT NULL::character varying,
+	"turno" VARCHAR(7) NULL DEFAULT NULL::character varying,
+	PRIMARY KEY ("id")
+);

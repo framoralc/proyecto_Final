@@ -35,12 +35,26 @@ async function iniciar(nombre, password) {
 
         sessionStorage.setItem('user_rol', data.rol)
         sessionStorage.setItem('user_name', data.usuario)
-        sessionStorage.setItem('user_direccion', data.direccion)
         sessionStorage.setItem('user_email', data.email)
         sessionStorage.setItem('user_id', data.id)
+
+        sessionStorage.setItem("user_ciudadEntrega", data.ciudad);
+        sessionStorage.setItem("user_calleEntrega", data.calle);
+        sessionStorage.setItem("user_numeroEntrega", data.numero);
+        sessionStorage.setItem("user_pisoEntrega", data.piso);
+        sessionStorage.setItem("user_puertaEntrega", data.puerta);
+        sessionStorage.setItem("user_codPostalEntrega", data.codPostal);
+        
+        sessionStorage.setItem("user_ciudadFac", data.ciudadFac);
+        sessionStorage.setItem("user_calleFac", data.calleFac);
+        sessionStorage.setItem("user_numeroFac", data.numeroFac);
+        sessionStorage.setItem("user_pisoFac", data.pisoFac);
+        sessionStorage.setItem("user_puertaFac", data.puertaFac);
+        sessionStorage.setItem("user_codPostalFac", data.codPostalFac);
+
         window.location.href = `${web}/index.php`;
 
-    } catch(err) {
+    } catch (err) {
         console.error(err)
     }
 }
@@ -52,7 +66,7 @@ formulario.addEventListener('submit', (event) => {
     let nombre = formulario.elements["nombre"];
     let password = formulario.elements["passw"];
 
-    if(nombre.value != null || password.value != null){
+    if (nombre.value != null || password.value != null) {
         iniciar(nombre.value, password.value);
     } else {
         nombre.classList.add("is-invalid");

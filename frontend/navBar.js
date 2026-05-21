@@ -53,9 +53,6 @@ function cargarNavBar() {
                     <li><a class='dropdown-item' href='#'>Pasta</a></li>
                 </ul>
             </li>
-            <li class='nav-item'>
-                <a class='nav-link' href='#'>Mis Pedidos</a>
-            </li>
             `;
             navIzq.innerHTML = `
             <a class='nav-link' href='/pedidos/VerMisPedidos.php'>Mis Pedidos</a>
