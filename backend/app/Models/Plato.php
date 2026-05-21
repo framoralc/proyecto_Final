@@ -10,7 +10,7 @@ class Plato extends Model
     use HasFactory;
     public $timestamps = false;
 
-    protected $fillable = ['nombre', 'descripcion', 'precio', 'imagen_url', 'disponible'];
+    protected $fillable = ['nombre', 'descripcion', 'categoria' , 'precio', 'imagen_url', 'disponible'];
 
     public function ingredientes()
     {

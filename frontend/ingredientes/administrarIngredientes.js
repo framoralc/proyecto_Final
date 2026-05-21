@@ -1,5 +1,5 @@
-const API = "http://127.0.0.1:8000/api/ingredientes";
-const POR_PAGINA = 8;
+const API_INGREDIENTES = "http://127.0.0.1:8000/api/ingredientes";
+const INGREDIENTES_POR_PAGINA = 8;
 
 let todosLosIngredientes = [];
 let paginaActual = 1;
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function cargarIngredientes() {
     try {
-        const respuesta = await fetch(API, { headers: { 'Accept': 'application/json' } });
+        const respuesta = await fetch(API_INGREDIENTES, { headers: { 'Accept': 'application/json' } });
         todosLosIngredientes = await respuesta.json();
         renderTabla();
         renderPaginacion();
@@ -39,31 +39,31 @@ async function cargarIngredientes() {
 
 function renderTabla() {
     const tbody = document.getElementById('tablaIngredientes');
-    const inicio = (paginaActual - 1) * POR_PAGINA;
-    const fin = inicio + POR_PAGINA;
-    const pagina = todosLosIngredientes.slice(inicio, fin);
+    const inicio = (paginaActual - 1) * INGREDIENTES_POR_PAGINA;
+    const fin = inicio + INGREDIENTES_POR_PAGINA;
+    const ingredientePagina = todosLosIngredientes.slice(inicio, fin);
 
-    if (pagina.length === 0) {
+    if (ingredientePagina.length === 0) {
         tbody.innerHTML = '<tr><td colspan="5" class="text-center">No hay ingredientes</td></tr>';
         return;
     }
 
-    tbody.innerHTML = pagina.map(ing => `
+    tbody.innerHTML = ingredientePagina.map(ingrediente => `
         <tr>
-            <td>${ing.id}</td>
-            <td>${ing.nombre}</td>
-            <td>${parseFloat(ing.stock_actual).toFixed(2)}</td>
-            <td>${ing.unidad_medida ?? '-'}</td>
+            <td>${ingrediente.id}</td>
+            <td>${ingrediente.nombre}</td>
+            <td>${ingrediente.stock_actual}</td>
+            <td>${ingrediente.unidad_medida || '-'}</td>
             <td>
-                <button class="btn btn-sm btn-warning me-1" onclick="abrirEditar(${ing.id})">Editar</button>
-                <button class="btn btn-sm btn-danger" onclick="borrarIngrediente(${ing.id})">Borrar</button>
+                <button class="btn btn-sm btn-warning me-1" onclick="abrirEditar(${ingrediente.id})">Editar</button>
+                <button class="btn btn-sm btn-danger" onclick="borrarIngrediente(${ingrediente.id})">Borrar</button>
             </td>
         </tr>
     `).join('');
 }
 
 function renderPaginacion() {
-    const totalPaginas = Math.ceil(todosLosIngredientes.length / POR_PAGINA);
+    const totalPaginas = Math.ceil(todosLosIngredientes.length / INGREDIENTES_POR_PAGINA);
     const ul = document.getElementById('paginacion');
     if (totalPaginas <= 1) { ul.innerHTML = ''; return; }
 
@@ -76,7 +76,7 @@ function renderPaginacion() {
 }
 
 window.cambiarPagina = function(pagina) {
-    const totalPaginas = Math.ceil(todosLosIngredientes.length / POR_PAGINA);
+    const totalPaginas = Math.ceil(todosLosIngredientes.length / INGREDIENTES_POR_PAGINA);
     if (pagina < 1 || pagina > totalPaginas) return;
     paginaActual = pagina;
     renderTabla();
@@ -107,7 +107,7 @@ async function guardarIngrediente(evento) {
     };
 
     const metodo = id ? 'PUT' : 'POST';
-    const url = id ? `${API}/${id}` : API;
+    const url = id ? `${API_INGREDIENTES}/${id}` : API_INGREDIENTES;
 
     try {
         const respuesta = await fetch(url, {
@@ -131,7 +131,7 @@ async function guardarIngrediente(evento) {
 window.borrarIngrediente = async function(id) {
     if (!confirm('¿Seguro que quieres borrar este ingrediente?')) return;
     try {
-        const respuesta = await fetch(`${API}/${id}`, { method: 'DELETE', headers: { 'Accept': 'application/json' } });
+        const respuesta = await fetch(`${API_INGREDIENTES}/${id}`, { method: 'DELETE', headers: { 'Accept': 'application/json' } });
         if (respuesta.ok) {
             cargarIngredientes();
         } else {

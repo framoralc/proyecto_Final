@@ -15,7 +15,7 @@ class PlatoController extends Controller
 
     public function crearPlato(Request $request)
     {
-        $plato = Plato::create($request->only(['nombre', 'descripcion', 'precio', 'imagen_url', 'disponible']));
+        $plato = Plato::create($request->only(['nombre', 'descripcion','categoria', 'precio', 'imagen_url', 'disponible']));
 
         if ($request->has('ingredientes')) {
             $sync = [];
