@@ -128,7 +128,7 @@ window.abrirEditar = function(id) {
     
     let nombreFoto = '';
     if (plato.imagen_url) {
-        nombreFoto = plato.imagen_url.replace('http://localhost/PROYECTO_FINAL/frontend/imagenes/', '');
+        nombreFoto = plato.imagen_url.replace('http://imagenes.test/', '');  
     }
     document.getElementById('imagenPlato').value = nombreFoto;
     
@@ -160,7 +160,7 @@ async function guardarPlato(evento) {
     descripcion: document.getElementById('descripcionPlato').value.trim(),
     precio: parseFloat(document.getElementById('precioPlato').value),
     disponible: document.getElementById('disponiblePlato').checked,
-    imagen_url: 'http://localhost/PROYECTO_FINAL/frontend/imagenes/' + document.getElementById('imagenPlato').value.trim(),
+    imagen_url: 'http://imagenes.test/' + document.getElementById('imagenPlato').value.trim(),
     ingredientes: ingredientes
     };
 

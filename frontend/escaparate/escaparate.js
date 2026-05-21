@@ -16,21 +16,21 @@ async function cargarPlatos() {
     }
 
     contenedor.innerHTML = disponibles.map(p => `
-        <div class="col-sm-6 col-md-4 col-lg-3">
-            <div class="card h-100">
-            <img src="../imagenes/${p.imagen_url || 'beemo.jpg'}"    
+    <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="card h-100">
+            <img src="${p.imagen_url || 'http://imagenes.test/hamburguesa.jpg'}" class="card-img-top" alt="${p.nombre}">
             <div class="card-body d-flex flex-column">
-                    <h5 class="card-title">${p.nombre}</h5>
-                    <p class="text-muted small">${p.categoria || ''}</p>
-                    <p class="card-text">${p.descripcion || ''}</p>
-                    <p class="fw-bold mt-auto">${parseFloat(p.precio).toFixed(2)} €</p>
-                    <button class="btn btn-success" onclick="añadirAlCarrito(${p.id}, '${p.nombre}', ${p.precio})">
-                        Añadir al carrito
-                    </button>
-                </div>
+                <h5 class="card-title">${p.nombre}</h5>
+                <p class="text-muted small">${p.categoria || ''}</p>
+                <p class="card-text">${p.descripcion || ''}</p>
+                <p class="fw-bold mt-auto">${parseFloat(p.precio).toFixed(2)} €</p>
+                <button class="btn btn-success" onclick="añadirAlCarrito(${p.id}, '${p.nombre}', ${p.precio})">
+                    Añadir al carrito
+                </button>
             </div>
         </div>
-    `).join('');
+    </div>
+`).join('');
 }
 
 function añadirAlCarrito(nombre) {
