@@ -1,6 +1,9 @@
 import config from "../../config/config.json" with { type: "json" };
 
 const url = config.apiURL;
+const web = config.URLWeb;
+
+let rol = sessionStorage.getItem("user_rol");
 
 async function ContadorUsuarios() {
 
@@ -27,7 +30,6 @@ async function ContadorUsuarios() {
         console.error(err);
     }
 }
-
 
 async function recogerDatos(config) {
 
@@ -79,7 +81,7 @@ async function TotalUsuarios() {
 
 }
 
-function CargarInformacionAlFormulario(usuario){
+function CargarInformacionAlFormulario(usuario) {
 
     let formEditRol = document.getElementById("formEditRol");
     let usuarioSeleccionado = document.getElementById("userText");
@@ -88,8 +90,6 @@ function CargarInformacionAlFormulario(usuario){
     usuarioSeleccionado.textContent = "Usuario: " + usuario.nombre;
 
 }
-
-// Sirve para crear una tabla
 
 async function mostrarLista(config) {
     debugger;
@@ -186,31 +186,33 @@ async function paginacion(limit, cantidadUsuariosTotales) {
     } while (count > -1);
 }
 
-
 function eliminarContenido(contenido) {
-
     contenido.innerHTML = "";
-
 }
 
 async function init() {
     debugger;
 
-    let cantidadUsuariosTotales = await ContadorUsuarios();
+    if (rol == "admin") {
+        let cantidadUsuariosTotales = await ContadorUsuarios();
 
-    mostrarTotalUsuarios(cantidadUsuariosTotales);
+        mostrarTotalUsuarios(cantidadUsuariosTotales);
 
-    console.log(cantidadUsuariosTotales);
+        console.log(cantidadUsuariosTotales);
 
-    let config = {
-        rol: ['user'],
-        limit: 10,
-        offset: 0
-    };
+        let config = {
+            rol: ['user'],
+            limit: 10,
+            offset: 0
+        };
 
-    mostrarLista(config);
+        mostrarLista(config);
 
-    paginacion(10, cantidadUsuariosTotales);
+        paginacion(10, cantidadUsuariosTotales);
+    }
+    else{
+        window.location.href = `${web}/index.php`;
+    }
 }
 
 function mostrarTotalUsuarios(cantidadUsuariosTotales) {

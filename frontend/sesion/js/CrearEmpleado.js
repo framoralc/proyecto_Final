@@ -5,6 +5,8 @@ const web = config.URLWeb;
 
 let formulario = document.querySelector("form");
 
+let rol = sessionStorage.getItem("user_rol");
+
 async function Registro(nombre, email, password, rol, direccion) {
     debugger;
     let usuario = {
@@ -17,7 +19,6 @@ async function Registro(nombre, email, password, rol, direccion) {
     }
 
     try {
-
         const options = {
             method: "POST",
             headers: {
@@ -34,21 +35,18 @@ async function Registro(nombre, email, password, rol, direccion) {
         if (!respuesta.ok) {
             throw new Error("No se ha podido enviar." + data.message)
         }
-        else{
+        else {
             window.location.href = `${web}/index.php`;
         }
-
     }
     catch (err) {
         console.error("error: " + err)
         let alert = formulario.getElementsByClassName("alert")[0];
-        if(alert){
+        if (alert) {
             alert.style.display = "block";
         }
     }
-
 }
-
 
 formulario.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -69,7 +67,7 @@ formulario.addEventListener('submit', (event) => {
 
         Registro(nombre.value, eMail.value, passwd.value, rol, direccion)
 
-        
+
     }
     else {
         passwd.classList.add("is-invalid");
@@ -78,3 +76,9 @@ formulario.addEventListener('submit', (event) => {
         repPasswd.classList.remove("is-valid");
     }
 })
+
+function init() {
+    if (rol != "admin") {
+        window.location.href = `${web}/index.php`;
+    }
+}

@@ -7,18 +7,13 @@ let listaCarrito = document.getElementById("listaCarrito");
 let btnCrearPedido = document.getElementById("btnCrearPedido");
 
 let precio = 0;
-
 let idUser;
 let carrito;
 
 async function init() {
-
     idUser = sessionStorage.getItem("user_id")
-
     carrito = await CargarCarrito(idUser);
-
     await CargarPlatos(carrito);
-
 }
 
 init();
@@ -49,6 +44,9 @@ async function CargarCarrito(idUser) {
 }
 
 async function CargarPlatos(carrito) {
+
+    listaCarrito.innerHTML = '';
+    precio = 0;
 
     const template = document.getElementById("ContentPlato");
 
@@ -118,12 +116,14 @@ function CalcularPrecio(precioPlato) {
 async function EliminarDelCarrito(id) {
 
     try {
-
         const options = {
             method: "DELETE"
-        }
+        };
 
-        await fetch(`${url}/carrito/${id}`, options)
+        await fetch(`${url}/carrito/${id}`, options);
+
+        carrito = await CargarCarrito(idUser);
+        await CargarPlatos(carrito);
     }
     catch (err) {
         console.error(err);
@@ -133,7 +133,6 @@ async function EliminarDelCarrito(id) {
 async function crearPedido() {
 
     try {
-
         const options = {
             method: "POST",
             headers: {

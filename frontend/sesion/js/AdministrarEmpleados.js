@@ -1,6 +1,9 @@
 import config from "../../config/config.json" with { type: "json" };
 
 const url = config.apiURL;
+const web = config.URLWeb;
+
+let rol = sessionStorage.getItem("user_rol");
 
 let lista = document.getElementById("lista");
 
@@ -76,7 +79,7 @@ async function TotalUsuarios() {
 
 }
 
-function CargarInformacionAlFormulario(usuario){
+function CargarInformacionAlFormulario(usuario) {
 
     let formEditRol = document.getElementById("formEditRol");
     let usuarioSeleccionado = document.getElementById("userText");
@@ -84,7 +87,7 @@ function CargarInformacionAlFormulario(usuario){
     formEditRol.elements["rol"].value = usuario.rol;
     usuarioSeleccionado.textContent = "Usuario: " + usuario.nombre;
 
-    
+
 }
 
 async function mostrarLista(config) {
@@ -154,7 +157,6 @@ async function paginacion(limit, cantidadUsuariosTotales) {
         pageButton.textContent = pagina;
         pageButton.id = offset;
         pageButton.addEventListener('click', (event) => {
-            debugger;
             event.preventDefault();
 
             let config = {
@@ -205,23 +207,27 @@ function eliminarContenido(contenido) {
 }
 
 async function init() {
-    debugger;
 
-    let cantidadUsuariosTotales = await ContadorUsuarios();
+    if (rol == "admin") {
+        let cantidadUsuariosTotales = await ContadorUsuarios();
 
-    let config = {
-        rol: ['admin', 'cocinero', 'repartidor'],
-        limit: 10,
-        offset: 0
-    };
+        let config = {
+            rol: ['admin', 'cocinero', 'repartidor'],
+            limit: 10,
+            offset: 0
+        };
 
-    mostrarTotalUsuarios(cantidadUsuariosTotales);
+        mostrarTotalUsuarios(cantidadUsuariosTotales);
 
-    console.log(cantidadUsuariosTotales);
+        console.log(cantidadUsuariosTotales);
 
-    mostrarLista(config);
+        mostrarLista(config);
 
-    paginacion(10, cantidadUsuariosTotales);
+        paginacion(10, cantidadUsuariosTotales);
+    }
+    else{
+        window.location.href = `${web}/index.php`;
+    }
 }
 
 init();
@@ -235,11 +241,11 @@ function eliminarTodo() {
     eliminarContenido(paginas);
 }
 
-function revelarRol(){
+function revelarRol() {
 
     let filtroRol = formFiltro.elements["rol"].value;
 
-    switch(filtroRol){
+    switch (filtroRol) {
         case "all":
             return ['admin', 'cocinero', 'repartidor']
         case "empleados":

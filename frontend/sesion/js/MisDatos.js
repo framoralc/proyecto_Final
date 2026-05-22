@@ -6,6 +6,8 @@ const web = config.URLWeb;
 let editableUser = false;
 let editableCam = false;
 
+let idUser = sessionStorage.getItem("user_id");
+
 // formularios para cambiar la información del perfil
 
 let formCambiarNombre = document.getElementById("formCambiarNombre");
@@ -47,7 +49,7 @@ function cargarInformacion() {
 
     nameInfo.textContent = sessionStorage.getItem("user_name");
     eMailInfo.textContent = sessionStorage.getItem("user_email");
-    
+
     infoCiudadEntrega.textContent = sessionStorage.getItem("user_ciudadEntrega");
     infoCalleEntrega.textContent = sessionStorage.getItem("user_calleEntrega");
     infoNumeroEntrega.textContent = sessionStorage.getItem("user_numeroEntrega");
@@ -66,7 +68,7 @@ function cargarInformacion() {
 // actualizar informcación del perfil
 
 async function actualizarPerfil(perfil) {
-    try{
+    try {
         debugger;
 
         console.log(perfil);
@@ -81,15 +83,15 @@ async function actualizarPerfil(perfil) {
 
         const response = await fetch(`${url}/usuario`, options)
 
-        if(!response.ok){
+        if (!response.ok) {
             const error = await response.json();
             throw new Error("No se ha podido actualizar el perfil. Detalles:" + error);
         }
-        else{
+        else {
             await RecogerInformacion(perfil.id);
         }
     }
-    catch(err){
+    catch (err) {
         console.error(err);
     }
 };
@@ -202,18 +204,18 @@ async function RecogerInformacion(id) {
             sessionStorage.setItem("user_email", data.email);
 
             sessionStorage.setItem("user_ciudadEntrega", data.ciudadEntrega);
-            sessionStorage.setItem("user_calleEntrega",data.calleEntrega);
-            sessionStorage.setItem("user_numeroEntrega",data.numeroEntrega);
-            sessionStorage.setItem("user_pisoEntrega",data.pisoEntrega);
-            sessionStorage.setItem("user_puertaEntrega",data.puertaEntrega);
-            sessionStorage.setItem("user_codPostalEntrega",data.codPostalEntrega);
+            sessionStorage.setItem("user_calleEntrega", data.calleEntrega);
+            sessionStorage.setItem("user_numeroEntrega", data.numeroEntrega);
+            sessionStorage.setItem("user_pisoEntrega", data.pisoEntrega);
+            sessionStorage.setItem("user_puertaEntrega", data.puertaEntrega);
+            sessionStorage.setItem("user_codPostalEntrega", data.codPostalEntrega);
 
             sessionStorage.setItem("user_ciudadFac", data.ciudadFac);
-            sessionStorage.setItem("user_calleFac",data.calleFac);
-            sessionStorage.setItem("user_numeroFac",data.numeroFac);
-            sessionStorage.setItem("user_pisoFac",data.pisoFac);
-            sessionStorage.setItem("user_puertaFac",data.puertaFac);
-            sessionStorage.setItem("user_codPostalFac",data.codPostalFac);
+            sessionStorage.setItem("user_calleFac", data.calleFac);
+            sessionStorage.setItem("user_numeroFac", data.numeroFac);
+            sessionStorage.setItem("user_pisoFac", data.pisoFac);
+            sessionStorage.setItem("user_puertaFac", data.puertaFac);
+            sessionStorage.setItem("user_codPostalFac", data.codPostalFac);
 
             sessionStorage.setItem("user_rol", data.rol);
             window.location.reload();
@@ -250,8 +252,8 @@ async function eliminarPerfil(id) {
     }
 };
 
-async function ActualizarDireccionFac(direccion){
-    try{
+async function ActualizarDireccionFac(direccion) {
+    try {
         const options = {
             method: "PUT",
             headers: {
@@ -263,7 +265,7 @@ async function ActualizarDireccionFac(direccion){
 
         const respuesta = await fetch(`${url}/usuario`, options)
     }
-    catch(err){
+    catch (err) {
         console.error(err);
     }
 };
@@ -403,67 +405,74 @@ btnEliminar.addEventListener('click', async () => {
 ///////////////////////////// Menu ///////////////////////////////////////////
 
 function init() {
-    cargarInformacion();
 
-    const menuPerfil = document.getElementById("menuPerfil");
-    const menuSeguridad = document.getElementById("menuSeguridad");
+    if (idUser != null) {
+        cargarInformacion();
 
-    const secNombre = document.querySelector(".cambiarNombre");
-    const secEmail = document.querySelector(".cambiarCorreoElectronico");
-    const secDireccion = document.querySelector(".cambiarDireccion");
+        const menuPerfil = document.getElementById("menuPerfil");
+        const menuSeguridad = document.getElementById("menuSeguridad");
 
-    const secPass = document.querySelector(".cambiarContrasenya");
-    const secEliminarCuenta = document.querySelector(".eliminarPerfil");
+        const secNombre = document.querySelector(".cambiarNombre");
+        const secEmail = document.querySelector(".cambiarCorreoElectronico");
+        const secDireccion = document.querySelector(".cambiarDireccion");
 
-    // grupo opciones
+        const secPass = document.querySelector(".cambiarContrasenya");
+        const secEliminarCuenta = document.querySelector(".eliminarPerfil");
 
-    document.getElementById("btnPerfil").addEventListener("click", () => {
-        menuPerfil.classList.remove("d-none");
-        menuSeguridad.classList.add("d-none");
-        secPass.style.display = "none";
-        secEliminarCuenta.style.display = "none";
-    });
+        // grupo opciones
 
-    document.getElementById("btnSeguridad").addEventListener("click",() => {
-        menuSeguridad.classList.remove("d-none");
-        menuPerfil.classList.add("d-none");
-        secNombre.style.display = "none";
-        secEmail.style.display = "none";
-        secDireccion.style.display = "none";
-    });
+        document.getElementById("btnPerfil").addEventListener("click", () => {
+            menuPerfil.classList.remove("d-none");
+            menuSeguridad.classList.add("d-none");
+            secPass.style.display = "none";
+            secEliminarCuenta.style.display = "none";
+        });
 
-    // grupo perfil
+        document.getElementById("btnSeguridad").addEventListener("click", () => {
+            menuSeguridad.classList.remove("d-none");
+            menuPerfil.classList.add("d-none");
+            secNombre.style.display = "none";
+            secEmail.style.display = "none";
+            secDireccion.style.display = "none";
+        });
 
-    document.getElementById("btnCambiarNombre").addEventListener("click", () => {
-        secNombre.style.display = "block";
-        secEmail.style.display = "none";
-        secDireccion.style.display = "none";
-    });
+        // grupo perfil
 
-    document.getElementById("btnCambiarEmail").addEventListener("click" ,() => {
-        secEmail.style.display = "block";
-        secNombre.style.display = "none";
-        secDireccion.style.display = "none";
-    });
+        document.getElementById("btnCambiarNombre").addEventListener("click", () => {
+            secNombre.style.display = "block";
+            secEmail.style.display = "none";
+            secDireccion.style.display = "none";
+        });
 
-    document.getElementById("btnCambiarDireccion").addEventListener("click", () => {
-        secNombre.style.display = "none";
-        secEmail.style.display = "none";
-        secDireccion.style.display = "block";
-        secPass.style.display = "none";
-    });
+        document.getElementById("btnCambiarEmail").addEventListener("click", () => {
+            secEmail.style.display = "block";
+            secNombre.style.display = "none";
+            secDireccion.style.display = "none";
+        });
 
-    // grupo seguridad
+        document.getElementById("btnCambiarDireccion").addEventListener("click", () => {
+            secNombre.style.display = "none";
+            secEmail.style.display = "none";
+            secDireccion.style.display = "block";
+            secPass.style.display = "none";
+        });
 
-    document.getElementById("btnCambiarPass").addEventListener("click",() => {
-        secPass.style.display = "block";
-        secEliminarCuenta.style.display = "none";
-    });
+        // grupo seguridad
 
-    document.getElementById("btnEliminarCuenta").addEventListener("click", () => {
-        secEliminarCuenta.style.display = "block";
-        secPass.style.display = "none";
-    });
+        document.getElementById("btnCambiarPass").addEventListener("click", () => {
+            secPass.style.display = "block";
+            secEliminarCuenta.style.display = "none";
+        });
+
+        document.getElementById("btnEliminarCuenta").addEventListener("click", () => {
+            secEliminarCuenta.style.display = "block";
+            secPass.style.display = "none";
+        });
+    }
+    else {
+
+    }
+
 };
 
 init();

@@ -37,6 +37,8 @@ async function iniciar(nombre, password) {
         sessionStorage.setItem('user_name', data.usuario)
         sessionStorage.setItem('user_email', data.email)
         sessionStorage.setItem('user_id', data.id)
+        console.log("guardando user_id:", data.id);
+
 
         sessionStorage.setItem("user_ciudadEntrega", data.ciudad);
         sessionStorage.setItem("user_calleEntrega", data.calle);
@@ -52,7 +54,7 @@ async function iniciar(nombre, password) {
         sessionStorage.setItem("user_puertaFac", data.puertaFac);
         sessionStorage.setItem("user_codPostalFac", data.codPostalFac);
 
-        window.location.href = `${web}/index.php`;
+        // window.location.href = `${web}/index.php`;
 
     } catch (err) {
         console.error(err)

@@ -5,14 +5,24 @@ const web = config.URLWeb;
 
 let idUser;
 
+let rol = sessionStorage.getItem("user_rol");
+
 async function init() {
+
     idUser = sessionStorage.getItem('user_id');
 
-    let pedidos = await recogerPedidos();
+    if (idUser != null) {
 
-    if (pedidos) {
-        cargarListas(pedidos);
+        let pedidos = await recogerPedidos();
+
+        if (pedidos) {
+            cargarListas(pedidos);
+        }
     }
+    else {
+        window.location.href = `${web}/index.php`;
+    }
+
 }
 
 async function recogerPedidos() {
@@ -99,6 +109,7 @@ function cargarListas(pedidos) {
 }
 
 async function abrirModalLineas(idPedido) {
+
     const lineas = await recogerLineasPedido(idPedido);
 
     const templateLinea = document.getElementById("ContentLineaPedido");
