@@ -174,14 +174,14 @@ class SesionController extends Controller
                 'numeroEntrega' => $usuario->numero,
                 'pisoEntrega' => $usuario->piso,
                 'puertaEntrega' => $usuario->puerta,
-                'codPostalEntrega' => $usuario->codpostal,
+                'codPostalEntrega' => $usuario->codPostal,
 
                 'ciudadFac' => $usuario->ciudadFac,
                 'calleFac' => $usuario->calleFac,
                 'numeroFac' => $usuario->numeroFac,
                 'pisoFac' => $usuario->pisoFac,
                 'puertaFac' => $usuario->puertaFac,
-                'codPostalFac' =>$usuario->codpostalFac,
+                'codPostalFac' => $usuario->codPostalFac,
                 'turno' =>$usuario->turno
             ], 200);
         } else {

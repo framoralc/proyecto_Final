@@ -34,4 +34,17 @@ class CarritoController extends Controller
             return response()->json('no se ha podido meter en el carrito', 403);
         }
     }
+
+    public function eliminarCarrito($id)
+{
+    try {
+        $item = carrito::find($id);
+        if (!$item) return response()->json('not found', 404);
+        
+        $item->delete();
+        return response()->json('eliminado', 200);
+    } catch (Exception $e) {
+        return response()->json('error', 500);
+    }
+}
 }

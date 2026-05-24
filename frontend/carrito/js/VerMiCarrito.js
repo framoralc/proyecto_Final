@@ -62,7 +62,7 @@ async function CargarPlatos(carrito) {
         contentPlato.querySelector(".cantidadPlato").textContent = elementoCarrito.cantidad;
 
         contentPlato.querySelector("button").addEventListener("click", () => {
-            EliminarDelCarrito(elementoCarrito.idPlato);
+            EliminarDelCarrito(elementoCarrito.id);
         });
 
         listaCarrito.append(contentPlato);
@@ -152,13 +152,13 @@ async function crearPedido() {
 
 btnCrearPedido.addEventListener('click', async () => {
 
-    if(!direccion || direccion === "null"){
-        let sinDireccion = document.getElementById("sinDireccion");
+    let sinDireccion = document.getElementById("sinDireccion");
 
+    if (!direccion || direccion === "null") {
         sinDireccion.classList.add("d-block");
         sinDireccion.classList.remove("d-none");
     }
-    else{
+    else {
         sinDireccion.classList.add("d-none");
         sinDireccion.classList.remove("d-block");
 
