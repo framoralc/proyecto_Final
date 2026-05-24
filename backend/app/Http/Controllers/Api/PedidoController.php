@@ -75,4 +75,17 @@ class PedidoController extends Controller{
         $totalPedidos = Pedido::where('estado', '!=', 'realizado')->count();
         return response()->json(['count' => $totalPedidos], 200);
     }
+
+    public function actualizarEstado(Request $request, $id){
+    try{
+        $pedido = Pedido::find($id);
+        if(!$pedido) return response()->json('Pedido no encontrado', 404);
+        $pedido->estado = $request->estado;
+        $pedido->save();
+        return response()->json('Estado actualizado', 200);
+    }
+    catch(Exception $err){
+        return response()->json('Error: ' . $err->getMessage(), 500);
+    }
+}
 }

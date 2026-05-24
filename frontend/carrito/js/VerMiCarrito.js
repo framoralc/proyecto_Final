@@ -33,8 +33,6 @@ async function CargarCarrito(idUser) {
 
         const result = await response.json();
 
-        console.log(result)
-
         return result;
     }
     catch (err) {
@@ -51,8 +49,6 @@ async function CargarPlatos(carrito) {
     const template = document.getElementById("ContentPlato");
 
     for (const elementoCarrito of carrito) {
-
-        console.log(elementoCarrito);
 
         const plato = await CargarPlato(elementoCarrito.idPlato);
 
@@ -74,8 +70,6 @@ async function CargarPlatos(carrito) {
 
 async function CargarPlato(plato) {
 
-    console.log(plato)
-
     try {
 
         const options = {
@@ -89,8 +83,6 @@ async function CargarPlato(plato) {
         const response = await fetch(`${url}/platos/${plato}`, options);
 
         const result = await response.json();
-
-        console.log(result);
 
         return result;
     }
@@ -149,7 +141,6 @@ async function crearPedido() {
 
         const response = await fetch(`${url}/pedido`, options);
         const data = await response.json();
-        console.log(data);
     }
     catch (err) {
         console.error(err);

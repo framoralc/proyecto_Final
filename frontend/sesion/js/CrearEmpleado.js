@@ -7,15 +7,13 @@ let formulario = document.querySelector("form");
 
 let rol = sessionStorage.getItem("user_rol");
 
-async function Registro(nombre, email, password, rol, direccion) {
-    debugger;
+async function Registro(nombre, email, password, rol) {
     let usuario = {
 
         nombre: nombre,
         email: email,
         password: password,
-        rol: rol,
-        direccion: direccion
+        rol: rol
     }
 
     try {
@@ -51,6 +49,7 @@ async function Registro(nombre, email, password, rol, direccion) {
 formulario.addEventListener('submit', (event) => {
     event.preventDefault();
 
+    let username = formulario.elements["username"];
     let nombre = formulario.elements["name"];
     let eMail = formulario.elements["eMail"];
     let passwd = formulario.elements["passwd"];
@@ -63,11 +62,7 @@ formulario.addEventListener('submit', (event) => {
         passwd.classList.remove("is-invalid");
         repPasswd.classList.remove("is-invalid");
 
-        let direccion = null;
-
-        Registro(nombre.value, eMail.value, passwd.value, rol, direccion)
-
-
+        Registro(username.value, nombre.value, eMail.value, passwd.value, rol)
     }
     else {
         passwd.classList.add("is-invalid");

@@ -17,13 +17,13 @@ async function ContadorUsuarios() {
             }
         }
 
-        const respuesta = await fetch(`${url}/contarUsuarios`, options);
+        const respuesta = await fetch(`${url}/contarUsuarios/${"usuario"}`, options);
 
         const resultado = await respuesta.json();
 
         console.log(resultado.count)
 
-        return resultado.count;
+        return resultado.count.usuarios;
 
     }
     catch (err) {
@@ -75,10 +75,7 @@ async function TotalUsuarios() {
 
     let usuariosTotal = await ContadorUsuarios();
 
-    console.log(usuariosTotal);
-
     return usuariosTotal.usuarios;
-
 }
 
 function CargarInformacionAlFormulario(usuario) {
@@ -92,7 +89,6 @@ function CargarInformacionAlFormulario(usuario) {
 }
 
 async function mostrarLista(config) {
-    debugger;
 
     let datosUsuarios = await recogerDatos(config);
     let tablaUsuarios = document.getElementById("informacionUsuarios");
@@ -115,12 +111,10 @@ async function mostrarLista(config) {
         let usuarioRol = tablaUsuario.querySelector("#rol");
         usuarioRol.textContent = usuario.rol;
 
-        let usuarioDireccion = tablaUsuario.querySelector("#direccion");
-        usuarioDireccion.textContent = usuario.direccion;
-
         let btnDelete = tablaUsuario.querySelector("#eliminar");
         btnDelete.addEventListener('click', async function () {
             await deleteUsuario(usuario.id);
+            mostrarLista({ rol: ['user'], limit: 10, offset: 0 });
         })
 
         let btnEditar = tablaUsuario.querySelector("#editar");
@@ -133,13 +127,9 @@ async function mostrarLista(config) {
     });
 }
 
-// Sirve para crear los botones para ir a otras páginas
-
 let formFiltro = document.getElementById("formFiltro");
 
 async function paginacion(limit, cantidadUsuariosTotales) {
-
-    debugger;
 
     let paginas = document.getElementById("paginas");
     let filtroLimite = formFiltro.elements["limit"].value;
@@ -159,7 +149,6 @@ async function paginacion(limit, cantidadUsuariosTotales) {
         pageButton.textContent = pagina;
         pageButton.id = offset;
         pageButton.addEventListener('click', (event) => {
-            debugger;
             event.preventDefault();
 
             let config = {
@@ -191,7 +180,6 @@ function eliminarContenido(contenido) {
 }
 
 async function init() {
-    debugger;
 
     if (rol == "admin") {
         let cantidadUsuariosTotales = await ContadorUsuarios();

@@ -87,7 +87,6 @@ async function recogerPlato(idPlato) {
 }
 
 function cargarListas(pedidos) {
-    debugger;
 
     const template = document.getElementById("ContentPedido");
     const tbody = document.getElementById("listaPedidos");
@@ -110,31 +109,23 @@ function cargarListas(pedidos) {
 
 async function abrirModalLineas(idPedido) {
 
-    const lineas = await recogerLineasPedido(idPedido);
+    const lineaPedido = await recogerLineasPedido(idPedido);
 
     const templateLinea = document.getElementById("ContentLineaPedido");
-    const tbodyLineas = document.getElementById("listaLineasPedido");
+    const tbody = document.getElementById("listaLineasPedido");
 
-    tbodyLineas.innerHTML = '';
+    tbody.innerHTML = '';
 
-    if (lineas && lineas.length > 0) {
-        for (const linea of lineas) {
-            const contentLinea = templateLinea.content.cloneNode(true);
+    for (const linea of lineaPedido) {
+        const content = templateLinea.content.cloneNode(true);
 
-            console.log(linea)
+        const plato = await recogerPlato(linea.idPlato);
 
-            const plato = await recogerPlato(linea.idPlato);
+        content.querySelector('.nombrePlato').textContent = plato.nombre;
+        content.querySelector('.cantidadPlato').textContent = linea.cantidad;
 
-            console.log(plato)
-
-            contentLinea.querySelector('.nombrePlato').textContent = plato.nombre;
-            contentLinea.querySelector('.cantidadPlato').textContent = linea.cantidad;
-
-            tbodyLineas.appendChild(contentLinea);
-        };
-    } else {
-        tbodyLineas.innerHTML = '<tr><td colspan="2" class="text-center">No hay productos en este pedido.</td></tr>';
-    }
+        tbody.appendChild(content);
+    };
 
     document.getElementById('modalLineaPedidoLabel').textContent = `Detalle del pedido #${idPedido}`;
 

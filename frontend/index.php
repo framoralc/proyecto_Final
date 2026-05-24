@@ -27,7 +27,7 @@
                             </header>
                             <hr>
                             <section class="row">
-                                <a class='link-offset-2 link-underline link-underline-opacity-0' href='/sesion/registrarse.php'>Crear Usuario</a>
+                                <a class='link-offset-2 link-underline link-underline-opacity-0' href='/sesion/registrarse.php'>Registrar Usuario</a>
                                 <a class='link-offset-2 link-underline link-underline-opacity-0' href='/sesion/AdministrarUsuarios.php'>Administrar Usuarios</a>
                             </section>
                         </section>
@@ -41,7 +41,7 @@
                             </header>
                             <hr>
                             <section class="row">
-                                <a class="link-offset-2 link-underline link-underline-opacity-0" href='/sesion/CrearEmpleado.php'>Crear Empleado</a>
+                                <a class="link-offset-2 link-underline link-underline-opacity-0" href='/sesion/CrearEmpleado.php'>Registrar Empleado</a>
                                 <a class='link-offset-2 link-underline link-underline-opacity-0' href='/sesion/AdministrarEmpleados.php'>Administrar Empleados</a>
                             </section>
                         </section>

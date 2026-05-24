@@ -9,7 +9,7 @@
     include("../bootstrap.php");
     ?>
     <link rel="stylesheet" href="../style/style.css">
-    <!-- <link rel="stylesheet" href="./style/VerMisPedidos.css"> -->
+    <link rel="stylesheet" href="./style/VerMisPedidos.css">
 </head>
 
 <body>
@@ -60,7 +60,6 @@
     </tr>
 </template>
 
-<!-- Modal para ver las líneas del pedido -->
 <section class="modal fade" id="modalLineaPedido" tabindex="-1" aria-labelledby="modalLineaPedidoLabel" aria-hidden="true">
     <section class="modal-dialog">
         <section class="modal-content">

@@ -25,7 +25,7 @@
                         <h2>Información del perfil</h2>
                         <p>Nombre: <span id="NameInfo"></span></p>
                         <p>Correo Electronico: <span id="EmailInfo"></span></p>
-                        <section class="d-flex">
+                        <section class="d-flex gap-5">
                             <section>
                                 <p>Dirección de entrega</p>
                                 <p>Ciudad: <span id="infoCiudadEntrega"></span></p>

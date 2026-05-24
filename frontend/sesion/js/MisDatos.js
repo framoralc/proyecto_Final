@@ -69,9 +69,6 @@ function cargarInformacion() {
 
 async function actualizarPerfil(perfil) {
     try {
-        debugger;
-
-        console.log(perfil);
         const options = {
             method: "PUT",
             headers: {
@@ -97,7 +94,6 @@ async function actualizarPerfil(perfil) {
 };
 
 async function actualizarNombre(perfil) {
-    debugger;
     try {
 
         const options = {
@@ -153,11 +149,9 @@ async function actualizarEmail(perfil) {
 };
 
 async function actualizarContraseña(perfil) {
-    debugger;
-
     try {
         const options = {
-            method: "POST",
+            method: "PUT",
             headers: {
                 'Content-type': 'application/json',
                 'Accept': 'application/json'
@@ -182,7 +176,6 @@ async function actualizarContraseña(perfil) {
 };
 
 async function RecogerInformacion(id) {
-    debugger;
     try {
         const options = {
             method: "GET",
@@ -229,8 +222,6 @@ async function RecogerInformacion(id) {
 // Eliminar el perfil
 
 async function eliminarPerfil(id) {
-    debugger;
-
     try {
         const options = {
             method: "DELETE",
@@ -240,15 +231,11 @@ async function eliminarPerfil(id) {
             },
         }
 
-        console.log(options);
-
         const respuesta = await fetch(`${url}/eliminarUsuario/${id}`, options)
-
-        console.log(resultado);
 
     }
     catch (err) {
-        console.log(err)
+        console.error(err)
     }
 };
 
@@ -368,7 +355,6 @@ formCambiarDireccionFac.addEventListener("submit", (event) => {
 
 formCambiarDireccion.addEventListener("submit", (event) => {
     event.preventDefault();
-    debugger;
 
     let ciudad = formCambiarDireccion.elements["ciudad"];
     let calle = formCambiarDireccion.elements["calle"];

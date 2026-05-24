@@ -7,6 +7,8 @@ let rol = sessionStorage.getItem("user_rol");
 
 let lista = document.getElementById("lista");
 
+let formEditRol = document.getElementById("formEditRol");
+
 async function ContadorUsuarios() {
 
     try {
@@ -15,13 +17,13 @@ async function ContadorUsuarios() {
             method: "GET"
         }
 
-        const respuesta = await fetch(`${url}/contarEmpleados`, options);
+        const respuesta = await fetch(`${url}/contarUsuarios/${"empleado"}`, options);
 
         const resultado = await respuesta.json();
 
         console.log(resultado.count)
 
-        return resultado.count;
+        return resultado.count.empleados;
 
     }
     catch (err) {
@@ -81,17 +83,34 @@ async function TotalUsuarios() {
 
 function CargarInformacionAlFormulario(usuario) {
 
-    let formEditRol = document.getElementById("formEditRol");
     let usuarioSeleccionado = document.getElementById("userText");
 
+    formEditRol.elements["id"].value = usuario.id;
     formEditRol.elements["rol"].value = usuario.rol;
+    formEditRol.elements["turno"].value = usuario.turno
     usuarioSeleccionado.textContent = "Usuario: " + usuario.nombre;
-
 
 }
 
+formEditRol.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    let id = formEditRol.elements["id"].value;
+    let rol = formEditRol.elements["rol"].value;
+    let turno = formEditRol.elements["turno"].value;
+
+    const options = {
+        method: "PUT",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, rol, turno })
+    };
+
+    await fetch(`${url}/usuario`, options);
+
+    window.location.href = `${web}/sesion/AdministrarEmpleados.php`;
+});
+
 async function mostrarLista(config) {
-    debugger;
 
     let datosUsuarios = await recogerDatos(config);
     let tablaUsuarios = document.getElementById("informacionUsuarios");
@@ -114,15 +133,13 @@ async function mostrarLista(config) {
         let usuarioRol = tablaUsuario.querySelector("#rol");
         usuarioRol.textContent = usuario.rol;
 
-        let usuarioDireccion = tablaUsuario.querySelector("#direccion");
-        usuarioDireccion.textContent = usuario.direccion;
-
         let usuarioTurno = tablaUsuario.querySelector("#turno");
         usuarioTurno.textContent = usuario.turno;
 
         let btnDelete = tablaUsuario.querySelector("#eliminar");
         btnDelete.addEventListener('click', async function () {
             await deleteUsuario(usuario.id);
+            mostrarLista({ rol: ['admin', 'cocinero', 'repartidor'], limit: 10, offset: 0 });
         })
 
         let btnEditar = tablaUsuario.querySelector("#editar");
@@ -225,7 +242,7 @@ async function init() {
 
         paginacion(10, cantidadUsuariosTotales);
     }
-    else{
+    else {
         window.location.href = `${web}/index.php`;
     }
 }
