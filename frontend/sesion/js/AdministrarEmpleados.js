@@ -1,4 +1,13 @@
+import config from "../../config/config.json" with { type: "json" };
+
+const url = config.apiURL;
+const web = config.URLWeb;
+
+let rol = sessionStorage.getItem("user_rol");
+
 let lista = document.getElementById("lista");
+
+let formEditRol = document.getElementById("formEditRol");
 
 async function ContadorUsuarios() {
 
@@ -8,13 +17,13 @@ async function ContadorUsuarios() {
             method: "GET"
         }
 
-        const respuesta = await fetch('http://127.0.0.1:8000/api/contarEmpleados', options);
+        const respuesta = await fetch(`${url}/contarUsuarios/${"empleado"}`, options);
 
         const resultado = await respuesta.json();
 
         console.log(resultado.count)
 
-        return resultado.count;
+        return resultado.count.empleados;
 
     }
     catch (err) {
@@ -35,7 +44,7 @@ async function recogerDatos(config) {
             body: JSON.stringify(config)
         };
 
-        const respuesta = await fetch('http://127.0.0.1:8000/api/mostrarUsuarios', options)
+        const respuesta = await fetch(`${url}/mostrarUsuarios`, options)
 
         const resultado = await respuesta.json();
 
@@ -59,7 +68,7 @@ async function deleteUsuario(id) {
         }
     };
 
-    await fetch(`http://127.0.0.1:8000/api/eliminarUsuario/${id}`, options);
+    await fetch(`${url}/eliminarUsuario/${id}`, options);
 }
 
 async function TotalUsuarios() {
@@ -72,19 +81,36 @@ async function TotalUsuarios() {
 
 }
 
-function CargarInformacionAlFormulario(usuario){
+function CargarInformacionAlFormulario(usuario) {
 
-    let formEditRol = document.getElementById("formEditRol");
     let usuarioSeleccionado = document.getElementById("userText");
 
+    formEditRol.elements["id"].value = usuario.id;
     formEditRol.elements["rol"].value = usuario.rol;
+    formEditRol.elements["turno"].value = usuario.turno
     usuarioSeleccionado.textContent = "Usuario: " + usuario.nombre;
 
-    
 }
 
+formEditRol.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    let id = formEditRol.elements["id"].value;
+    let rol = formEditRol.elements["rol"].value;
+    let turno = formEditRol.elements["turno"].value;
+
+    const options = {
+        method: "PUT",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, rol, turno })
+    };
+
+    await fetch(`${url}/usuario`, options);
+
+    window.location.href = `${web}/sesion/AdministrarEmpleados.php`;
+});
+
 async function mostrarLista(config) {
-    debugger;
 
     let datosUsuarios = await recogerDatos(config);
     let tablaUsuarios = document.getElementById("informacionUsuarios");
@@ -107,12 +133,13 @@ async function mostrarLista(config) {
         let usuarioRol = tablaUsuario.querySelector("#rol");
         usuarioRol.textContent = usuario.rol;
 
-        let usuarioDireccion = tablaUsuario.querySelector("#direccion");
-        usuarioDireccion.textContent = usuario.direccion;
+        let usuarioTurno = tablaUsuario.querySelector("#turno");
+        usuarioTurno.textContent = usuario.turno;
 
         let btnDelete = tablaUsuario.querySelector("#eliminar");
         btnDelete.addEventListener('click', async function () {
             await deleteUsuario(usuario.id);
+            mostrarLista({ rol: ['admin', 'cocinero', 'repartidor'], limit: 10, offset: 0 });
         })
 
         let btnEditar = tablaUsuario.querySelector("#editar");
@@ -147,7 +174,6 @@ async function paginacion(limit, cantidadUsuariosTotales) {
         pageButton.textContent = pagina;
         pageButton.id = offset;
         pageButton.addEventListener('click', (event) => {
-            debugger;
             event.preventDefault();
 
             let config = {
@@ -198,23 +224,27 @@ function eliminarContenido(contenido) {
 }
 
 async function init() {
-    debugger;
 
-    let cantidadUsuariosTotales = await ContadorUsuarios();
+    if (rol == "admin") {
+        let cantidadUsuariosTotales = await ContadorUsuarios();
 
-    let config = {
-        rol: ['admin', 'cocinero', 'repartidor'],
-        limit: 10,
-        offset: 0
-    };
+        let config = {
+            rol: ['admin', 'cocinero', 'repartidor'],
+            limit: 10,
+            offset: 0
+        };
 
-    mostrarTotalUsuarios(cantidadUsuariosTotales);
+        mostrarTotalUsuarios(cantidadUsuariosTotales);
 
-    console.log(cantidadUsuariosTotales);
+        console.log(cantidadUsuariosTotales);
 
-    mostrarLista(config);
+        mostrarLista(config);
 
-    paginacion(10, cantidadUsuariosTotales);
+        paginacion(10, cantidadUsuariosTotales);
+    }
+    else {
+        window.location.href = `${web}/index.php`;
+    }
 }
 
 init();
@@ -228,11 +258,11 @@ function eliminarTodo() {
     eliminarContenido(paginas);
 }
 
-function revelarRol(){
+function revelarRol() {
 
     let filtroRol = formFiltro.elements["rol"].value;
 
-    switch(filtroRol){
+    switch (filtroRol) {
         case "all":
             return ['admin', 'cocinero', 'repartidor']
         case "empleados":

@@ -5,19 +5,18 @@ const web = config.URLWeb;
 
 let formulario = document.querySelector("form");
 
-async function Registro(nombre, email, password, rol, direccion) {
-    debugger;
+let rol = sessionStorage.getItem("user_rol");
+
+async function Registro(nombre, email, password, rol) {
     let usuario = {
 
         nombre: nombre,
         email: email,
         password: password,
-        rol: rol,
-        direccion: direccion
+        rol: rol
     }
 
     try {
-
         const options = {
             method: "POST",
             headers: {
@@ -34,29 +33,28 @@ async function Registro(nombre, email, password, rol, direccion) {
         if (!respuesta.ok) {
             throw new Error("No se ha podido enviar." + data.message)
         }
-        else{
+        else {
             window.location.href = `${web}/index.php`;
         }
-
     }
     catch (err) {
         console.error("error: " + err)
         let alert = formulario.getElementsByClassName("alert")[0];
-        if(alert){
+        if (alert) {
             alert.style.display = "block";
         }
     }
-
 }
-
 
 formulario.addEventListener('submit', (event) => {
     event.preventDefault();
 
+    let username = formulario.elements["username"];
     let nombre = formulario.elements["name"];
     let eMail = formulario.elements["eMail"];
     let passwd = formulario.elements["passwd"];
     let repPasswd = formulario.elements["repPasswd"];
+    let rol = formulario.elements["selectedRol"];
 
     if (passwd.value == repPasswd.value) {
         passwd.classList.add("is-valid");
@@ -64,13 +62,7 @@ formulario.addEventListener('submit', (event) => {
         passwd.classList.remove("is-invalid");
         repPasswd.classList.remove("is-invalid");
 
-        let rol = "user";
-
-        let direccion = null;
-
-        Registro(nombre.value, eMail.value, passwd.value, rol, direccion)
-
-        
+        Registro(username.value, nombre.value, eMail.value, passwd.value, rol)
     }
     else {
         passwd.classList.add("is-invalid");
@@ -79,3 +71,9 @@ formulario.addEventListener('submit', (event) => {
         repPasswd.classList.remove("is-valid");
     }
 })
+
+function init() {
+    if (rol != "admin") {
+        window.location.href = `${web}/index.php`;
+    }
+}

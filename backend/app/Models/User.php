@@ -15,6 +15,6 @@ protected $table = 'public.users';
     protected $fillable = [
         'username','nombre','apellidos','email','password','rol','direccion','telefono',
         'ciudad','calle','numero','piso','puerta','codPostal',
-        'ciudadFac','calleFac','numeroFac','pisoFac','puertaFac','codPostalFac'
+        'ciudadFac','calleFac','numeroFac','pisoFac','puertaFac','codPostalFac','turno'
     ];
 }
