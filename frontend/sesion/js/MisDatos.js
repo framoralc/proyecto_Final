@@ -335,7 +335,7 @@ formCambiarDireccionFac.addEventListener("submit", (event) => {
 
     let ciudad = formCambiarDireccionFac.elements["ciudadFac"];
     let calle = formCambiarDireccionFac.elements["calleFac"];
-    let numero = parseInt(formCambiarDireccionFac.elements["numeroFac"]);
+    let numero = formCambiarDireccionFac.elements["numeroFac"];
     let piso = formCambiarDireccionFac.elements["pisoFac"];
     let puerta = formCambiarDireccionFac.elements["puertaFac"];
     let codPostal = formCambiarDireccionFac.elements["codPostalFac"];
@@ -358,7 +358,7 @@ formCambiarDireccion.addEventListener("submit", (event) => {
 
     let ciudad = formCambiarDireccion.elements["ciudad"];
     let calle = formCambiarDireccion.elements["calle"];
-    let numero = parseInt(formCambiarDireccion.elements["numero"]);
+    let numero = formCambiarDireccion.elements["numero"];
     let piso = formCambiarDireccion.elements["piso"];
     let puerta = formCambiarDireccion.elements["puerta"];
     let codPostal = formCambiarDireccion.elements["codPostal"];
