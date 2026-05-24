@@ -5,10 +5,10 @@ const web = config.URLWeb;
 
 let formulario = document.querySelector("form");
 
-async function iniciar(nombre, password) {
+async function iniciar(username, password) {
 
     let usuario = {
-        nombre: nombre,
+        username: username,
         password: password
     }
 
@@ -59,13 +59,13 @@ formulario.addEventListener('submit', (event) => {
 
     event.preventDefault();
 
-    let nombre = formulario.elements["nombre"];
+    let username = formulario.elements["username"];
     let password = formulario.elements["passw"];
 
-    if (nombre.value != null || password.value != null) {
-        iniciar(nombre.value, password.value);
+    if (username.value != null || password.value != null) {
+        iniciar(username.value, password.value);
     } else {
-        nombre.classList.add("is-invalid");
+        username.classList.add("is-invalid");
         password.classList.add("is-invalid");
     }
 })

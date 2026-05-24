@@ -21,8 +21,16 @@
                     <h3>Registrarse</h3>
                     <form class="w-100 d-flex flex-column align-items-center">
                         <section class="form-floating mb-3 w-25">
+                            <input class="form-control" type="text" name="username" id="username" placeholder="Nombre de usuario">
+                            <label for="username">Nombre de usuario</label>
+                        </section>
+                        <section class="form-floating mb-3 w-25">
                             <input class="form-control" type="text" name="name" id="name" placeholder="name">
                             <label for="name">Nombre</label>
+                        </section>
+                        <section class="form-floating mb-3 w-25">
+                            <input class="form-control" type="text" name="apellidos" id="apellidos" placeholder="apellidos">
+                            <label for="name">Apellidos</label>
                         </section>
                         <section class="form-floating mb-3 w-25">
                             <input class="form-control" type="email" name="eMail" id="eMail" placeholder="email@example.com">

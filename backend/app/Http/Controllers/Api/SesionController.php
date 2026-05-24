@@ -16,12 +16,17 @@ class SesionController extends Controller
     public function registrarUsuario(Request $request)
     {
 
-        if (User::where('nombre', $request->nombre)->first()) {
-
+        if (User::where('username', $request->username)->first()) {
             return response()->json("El usuario ya existe", 409);
-        } else {
+        } 
+        else if(User::where('email', $request->email)->first()){
+            return response()->json("El email ya esta en uso", 409);
+        }
+        else {
             $usuario = User::create([
+                "username" => $request->username,
                 'nombre' => $request->nombre,
+                "apellidos" => $request->apellidos,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
                 'rol' => $request->rol
@@ -34,7 +39,7 @@ class SesionController extends Controller
     public function iniciarSesion(Request $request)
     {
 
-        $usuario = User::where('nombre', $request->nombre)->first();
+        $usuario = User::where('username', $request->username)->first();
 
         if (!$usuario) {
             return response()->json(["No existe el usuario"], 404);
@@ -45,8 +50,9 @@ class SesionController extends Controller
                 "mensaje" => "Acceso correcto",
                 "id" => $usuario->id,
                 "usuario" => $usuario->nombre,
+                "apellidos" => $usuario->apellidos,
                 "rol" => $usuario->rol,
-                "nombre" => $usuario->nombre,
+                "username" => $usuario->username,
                 "email" => $usuario->email,
 
                 "ciudadEntrega" => $usuario->ciudad,

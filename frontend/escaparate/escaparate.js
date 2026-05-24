@@ -1,11 +1,15 @@
 const API = "http://127.0.0.1:8000/api/platos";
 const categoria = new URLSearchParams(window.location.search).get('categoria');
 
+let userID = sessionStorage.getItem("user_id");
+
 async function cargarPlatos() {
     const r = await fetch(API, { headers: { 'Accept': 'application/json' } });
     const platos = await r.json();
 
     const contenedor = document.getElementById('contenedorPlatos');
+
+    let noTieneCuenta = userID === null || userID === undefined;
 
     let disponibles = platos.filter(p => p.disponible);
     if (categoria) disponibles = disponibles.filter(p => p.categoria === categoria);
@@ -24,8 +28,15 @@ async function cargarPlatos() {
                 <p class="text-muted small">${p.categoria || ''}</p>
                 <p class="card-text">${p.descripcion || ''}</p>
                 <p class="fw-bold mt-auto">${parseFloat(p.precio).toFixed(2)} €</p>
-                <button class="btn btn-success" onclick="añadirAlCarrito(${p.id}, '${p.nombre}', ${p.precio})">
-                    Añadir al carrito
+                <form id=formCantidad>
+                    <section class="form-floating">
+                        <input type="number" class="form-control" id="cantidad" name="cantidad" placeholder="cantidad">
+                        <label for="cantidad" class="form-label">Cantidad:</label>
+                    </section>
+                </form>
+                <br>
+                <button ${noTieneCuenta ? 'disabled' : ''} class="btn btn-success" onclick="añadirAlCarrito(${p.id})">
+                Añadir al carrito
                 </button>
             </div>
         </div>
@@ -33,8 +44,12 @@ async function cargarPlatos() {
 `).join('');
 }
 
-function añadirAlCarrito(nombre) {
-    alert(`"${nombre}" añadido al carrito`);
+async function añadirAlCarrito(id) {
+    let formCantidad = document.getElementById("formCantidad");
+
+    let cantidad = formCantidad.elements["cantidad"].value;
+
+    alert(`"${id}" añadido al carrito ${cantidad}, ${userID}`);
 }
 
 cargarPlatos();

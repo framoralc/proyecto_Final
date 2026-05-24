@@ -8,12 +8,15 @@ let btnCrearPedido = document.getElementById("btnCrearPedido");
 
 let precio = 0;
 let idUser;
+let direccion;
 let carrito;
 
 async function init() {
     idUser = sessionStorage.getItem("user_id")
     carrito = await CargarCarrito(idUser);
     await CargarPlatos(carrito);
+
+    direccion = sessionStorage.getItem("user_puertaEntrega");
 }
 
 init();
@@ -149,6 +152,16 @@ async function crearPedido() {
 
 btnCrearPedido.addEventListener('click', async () => {
 
-    await crearPedido();
+    if(!direccion || direccion === "null"){
+        let sinDireccion = document.getElementById("sinDireccion");
 
+        sinDireccion.classList.add("d-block");
+        sinDireccion.classList.remove("d-none");
+    }
+    else{
+        sinDireccion.classList.add("d-none");
+        sinDireccion.classList.remove("d-block");
+
+        await crearPedido();
+    }
 })

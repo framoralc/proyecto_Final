@@ -29,7 +29,7 @@
                             </tr>
                         </thead>
                         <tbody id="listaCarrito">
-                            
+
                         </tbody>
                     </table>
                 </section>
@@ -38,6 +38,9 @@
                 <section class="card" style="width: 20vw;">
                     <section class="card-body">
                         <p id="precioTotal">Total:</p>
+                        <section class="alert alert-danger d-none" role="alert" id="sinDireccion">
+                            No tienes una dirección en el perfil
+                        </section>
                         <button id="btnCrearPedido" class="btn btn-primary">Hacer el pedido</button>
                     </section>
                 </section>
@@ -55,7 +58,7 @@
         <td class="nombrePlato"></td>
         <td class="precioPlato"></td>
         <td class="cantidadPlato"></td>
-        <td class="align-content-center"> 
+        <td class="align-content-center">
             <button class="btn btn-danger">eliminar del carrito</button>
         </td>
     </tr>

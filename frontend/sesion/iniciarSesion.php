@@ -18,8 +18,8 @@
             <form class="w-100 d-flex flex-column align-items-center" id="inicio">
 
                 <section class="form-floating mb-3 w-25">
-                    <input class="form-control" type="text" name="nombre" id="nombre" placeholder="nombre">
-                    <label for="nombre">Nombre</label>
+                    <input class="form-control" type="text" name="username" id="username" placeholder="nombre de Usuario">
+                    <label for="username">Nombre de usuario</label>
                 </section>
                 <section class="form-floating mb-3 w-25">
                     <input class="form-control" type="password" name="passw" id="passw" placeholder="password">
