@@ -16,7 +16,7 @@
         </div>
     </div>
 
-    <script src="./escaparate.js"></script>
+    <script type="module" src="./escaparate.js"></script>
     <script type="module" src="../navBar.js"></script>
 </body>
 </html>

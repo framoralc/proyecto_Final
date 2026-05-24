@@ -1,15 +1,18 @@
+import config from "../../config/config.json" with { type: "json" };
+
+const url = config.apiURL;
+const web = config.URLWeb;
+
 let formulario = document.querySelector("form");
 
-async function iniciar(nombre, password) {
+async function iniciar(username, password) {
 
     let usuario = {
-        nombre: nombre,
+        username: username,
         password: password
     }
 
     try {
-        debugger;
-
         const options = {
             method: "POST",
             headers: {
@@ -19,7 +22,7 @@ async function iniciar(nombre, password) {
             body: JSON.stringify(usuario)
         }
 
-        const respuesta = await fetch("http://127.0.0.1:8000/api/iniciarSesion", options)
+        const respuesta = await fetch(`${url}/iniciarSesion`, options)
         const data = await respuesta.json()
 
         if (!respuesta.ok) {
@@ -28,11 +31,26 @@ async function iniciar(nombre, password) {
 
         sessionStorage.setItem('user_rol', data.rol)
         sessionStorage.setItem('user_name', data.usuario)
-        sessionStorage.setItem('user_direccion', data.direccion)
         sessionStorage.setItem('user_email', data.email)
-        window.location.href = "http://localhost/index.php"
+        sessionStorage.setItem('user_id', data.id)
 
-    } catch(err) {
+        sessionStorage.setItem("user_ciudadEntrega", data.ciudadEntrega ?? "");
+        sessionStorage.setItem("user_calleEntrega", data.calleEntrega ?? "");
+        sessionStorage.setItem("user_numeroEntrega", data.numeroEntrega ?? "");
+        sessionStorage.setItem("user_pisoEntrega", data.pisoEntrega ?? "");
+        sessionStorage.setItem("user_puertaEntrega", data.puertaEntrega ?? "");
+        sessionStorage.setItem("user_codPostalEntrega", data.codPostalEntrega ?? "");
+        
+        sessionStorage.setItem("user_ciudadFac", data.ciudadFac ?? "");
+        sessionStorage.setItem("user_calleFac", data.calleFac ?? "");
+        sessionStorage.setItem("user_numeroFac", data.numeroFac ?? "");
+        sessionStorage.setItem("user_pisoFac", data.pisoFac ?? "");
+        sessionStorage.setItem("user_puertaFac", data.puertaFac ?? "");
+        sessionStorage.setItem("user_codPostalFac", data.codPostalFac ?? "");
+
+        window.location.href = `${web}/index.php`;
+
+    } catch (err) {
         console.error(err)
     }
 }
@@ -41,13 +59,13 @@ formulario.addEventListener('submit', (event) => {
 
     event.preventDefault();
 
-    let nombre = formulario.elements["nombre"];
+    let username = formulario.elements["username"];
     let password = formulario.elements["passw"];
 
-    if(nombre.value != null || password.value != null){
-        iniciar(nombre.value, password.value);
+    if (username.value != null || password.value != null) {
+        iniciar(username.value, password.value);
     } else {
-        nombre.classList.add("is-invalid");
+        username.classList.add("is-invalid");
         password.classList.add("is-invalid");
     }
 })

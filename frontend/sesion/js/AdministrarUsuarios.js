@@ -1,3 +1,10 @@
+import config from "../../config/config.json" with { type: "json" };
+
+const url = config.apiURL;
+const web = config.URLWeb;
+
+let rol = sessionStorage.getItem("user_rol");
+
 async function ContadorUsuarios() {
 
     try {
@@ -10,20 +17,19 @@ async function ContadorUsuarios() {
             }
         }
 
-        const respuesta = await fetch('http://127.0.0.1:8000/api/contarUsuarios', options);
+        const respuesta = await fetch(`${url}/contarUsuarios/${"usuario"}`, options);
 
         const resultado = await respuesta.json();
 
         console.log(resultado.count)
 
-        return resultado.count;
+        return resultado.count.usuarios;
 
     }
     catch (err) {
         console.error(err);
     }
 }
-
 
 async function recogerDatos(config) {
 
@@ -38,7 +44,7 @@ async function recogerDatos(config) {
             body: JSON.stringify(config)
         };
 
-        const respuesta = await fetch('http://127.0.0.1:8000/api/mostrarUsuarios', options)
+        const respuesta = await fetch(`${url}/mostrarUsuarios`, options)
 
         const resultado = await respuesta.json();
 
@@ -62,20 +68,17 @@ async function deleteUsuario(id) {
         }
     };
 
-    await fetch(`http://127.0.0.1:8000/api/eliminarUsuario/${id}`, options);
+    await fetch(`${url}/eliminarUsuario/${id}`, options);
 }
 
 async function TotalUsuarios() {
 
     let usuariosTotal = await ContadorUsuarios();
 
-    console.log(usuariosTotal);
-
     return usuariosTotal.usuarios;
-
 }
 
-function CargarInformacionAlFormulario(usuario){
+function CargarInformacionAlFormulario(usuario) {
 
     let formEditRol = document.getElementById("formEditRol");
     let usuarioSeleccionado = document.getElementById("userText");
@@ -85,10 +88,7 @@ function CargarInformacionAlFormulario(usuario){
 
 }
 
-// Sirve para crear una tabla
-
 async function mostrarLista(config) {
-    debugger;
 
     let datosUsuarios = await recogerDatos(config);
     let tablaUsuarios = document.getElementById("informacionUsuarios");
@@ -111,12 +111,10 @@ async function mostrarLista(config) {
         let usuarioRol = tablaUsuario.querySelector("#rol");
         usuarioRol.textContent = usuario.rol;
 
-        let usuarioDireccion = tablaUsuario.querySelector("#direccion");
-        usuarioDireccion.textContent = usuario.direccion;
-
         let btnDelete = tablaUsuario.querySelector("#eliminar");
         btnDelete.addEventListener('click', async function () {
             await deleteUsuario(usuario.id);
+            mostrarLista({ rol: ['user'], limit: 10, offset: 0 });
         })
 
         let btnEditar = tablaUsuario.querySelector("#editar");
@@ -129,13 +127,9 @@ async function mostrarLista(config) {
     });
 }
 
-// Sirve para crear los botones para ir a otras páginas
-
 let formFiltro = document.getElementById("formFiltro");
 
 async function paginacion(limit, cantidadUsuariosTotales) {
-
-    debugger;
 
     let paginas = document.getElementById("paginas");
     let filtroLimite = formFiltro.elements["limit"].value;
@@ -155,7 +149,6 @@ async function paginacion(limit, cantidadUsuariosTotales) {
         pageButton.textContent = pagina;
         pageButton.id = offset;
         pageButton.addEventListener('click', (event) => {
-            debugger;
             event.preventDefault();
 
             let config = {
@@ -182,31 +175,32 @@ async function paginacion(limit, cantidadUsuariosTotales) {
     } while (count > -1);
 }
 
-
 function eliminarContenido(contenido) {
-
     contenido.innerHTML = "";
-
 }
 
 async function init() {
-    debugger;
 
-    let cantidadUsuariosTotales = await ContadorUsuarios();
+    if (rol == "admin") {
+        let cantidadUsuariosTotales = await ContadorUsuarios();
 
-    mostrarTotalUsuarios(cantidadUsuariosTotales);
+        mostrarTotalUsuarios(cantidadUsuariosTotales);
 
-    console.log(cantidadUsuariosTotales);
+        console.log(cantidadUsuariosTotales);
 
-    let config = {
-        rol: ['user'],
-        limit: 10,
-        offset: 0
-    };
+        let config = {
+            rol: ['user'],
+            limit: 10,
+            offset: 0
+        };
 
-    mostrarLista(config);
+        mostrarLista(config);
 
-    paginacion(10, cantidadUsuariosTotales);
+        paginacion(10, cantidadUsuariosTotales);
+    }
+    else{
+        window.location.href = `${web}/index.php`;
+    }
 }
 
 function mostrarTotalUsuarios(cantidadUsuariosTotales) {

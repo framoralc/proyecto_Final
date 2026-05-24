@@ -5,14 +5,15 @@ const web = config.URLWeb;
 
 let formulario = document.querySelector("form");
 
-async function Registro(username, nombre, apellidos, email, password) {
+let rol = sessionStorage.getItem("user_rol");
+
+async function Registro(nombre, email, password, rol) {
     let usuario = {
-        username: username,
+
         nombre: nombre,
-        apellidos: apellidos,
         email: email,
         password: password,
-        rol: "user"
+        rol: rol
     }
 
     try {
@@ -26,42 +27,34 @@ async function Registro(username, nombre, apellidos, email, password) {
         }
 
         const respuesta = await fetch(`${url}/registrarUsuario`, options)
-<<<<<<< HEAD
-=======
 
->>>>>>> 6e7ac54919010e8dd163ff10225ade6a59bfba07
         const data = await respuesta.json();
 
         if (!respuesta.ok) {
             throw new Error("No se ha podido enviar." + data.message)
-        } else {
-            window.location.href = `${web}/index.php`;
         }
-<<<<<<< HEAD
-    } catch (err) {
-=======
-        else{
+        else {
             window.location.href = `${web}/index.php`;
         }
     }
     catch (err) {
->>>>>>> 6e7ac54919010e8dd163ff10225ade6a59bfba07
         console.error("error: " + err)
-        let alerta = formulario.getElementsByClassName("alert")[0];
-        if (alerta) alerta.style.display = "block";
+        let alert = formulario.getElementsByClassName("alert")[0];
+        if (alert) {
+            alert.style.display = "block";
+        }
     }
 }
 
-<<<<<<< HEAD
 formulario.addEventListener('submit', (event) => {
     event.preventDefault();
 
     let username = formulario.elements["username"];
     let nombre = formulario.elements["name"];
-    let apellidos = formulario.elements["apellidos"];
     let eMail = formulario.elements["eMail"];
     let passwd = formulario.elements["passwd"];
     let repPasswd = formulario.elements["repPasswd"];
+    let rol = formulario.elements["selectedRol"];
 
     if (passwd.value == repPasswd.value) {
         passwd.classList.add("is-valid");
@@ -69,39 +62,7 @@ formulario.addEventListener('submit', (event) => {
         passwd.classList.remove("is-invalid");
         repPasswd.classList.remove("is-invalid");
 
-        Registro(username.value, nombre.value, apellidos.value, eMail.value, passwd.value)
-    } else {
-        passwd.classList.add("is-invalid");
-        repPasswd.classList.add("is-invalid");
-        passwd.classList.remove("is-valid");
-        repPasswd.classList.remove("is-valid");
-    }
-})
-
-
-=======
->>>>>>> 6e7ac54919010e8dd163ff10225ade6a59bfba07
-formulario.addEventListener('submit', (event) => {
-    event.preventDefault();
-
-    let nombre = formulario.elements["name"];
-    let eMail = formulario.elements["eMail"];
-    let passwd = formulario.elements["passwd"];
-    let repPasswd = formulario.elements["repPasswd"];
-
-    if (passwd.value == repPasswd.value) {
-        passwd.classList.add("is-valid");
-        repPasswd.classList.add("is-valid");
-        passwd.classList.remove("is-invalid");
-        repPasswd.classList.remove("is-invalid");
-
-        let rol = "user";
-
-        let direccion = null;
-
-        Registro(nombre.value, eMail.value, passwd.value, rol, direccion)
-
-        
+        Registro(username.value, nombre.value, eMail.value, passwd.value, rol)
     }
     else {
         passwd.classList.add("is-invalid");
@@ -110,3 +71,9 @@ formulario.addEventListener('submit', (event) => {
         repPasswd.classList.remove("is-valid");
     }
 })
+
+function init() {
+    if (rol != "admin") {
+        window.location.href = `${web}/index.php`;
+    }
+}

@@ -43,16 +43,7 @@ function cargarNavBar() {
     switch (rol) {
         case "user":
             navDer.innerHTML = `
-            <li class='nav-item dropdown'>
-                <a class='nav-link dropdown-toggle' href='#' role='button' data-bs-toggle='dropdown' aria-expanded='false'>
-                    Carta
-                </a>
-                <ul class='dropdown-menu'>
-                    </ul>
-            </li>
-            <li class='nav-item'>
-                <a class='nav-link' href='${url}pedidos/VerMisPedidos.php'>Mis Pedidos</a>
-            </li>
+            <a class='nav-link' href='${url}escaparate/escaparate.php'>Carta</a>
             `;
             navIzq.innerHTML = `
             <a class='nav-link' href='${url}pedidos/VerMisPedidos.php'>Mis Pedidos</a>
@@ -62,20 +53,6 @@ function cargarNavBar() {
             `;
             break;
         case "admin":
-            navDer.innerHTML = `
-            <li class='nav-item'>
-                <a class='nav-link' href='#'>Administrar Empleados</a>
-            </li>
-            <li class='nav-item'>
-                <a class='nav-link' href='${url}platos/administrarPlatos.php'>Administrar Platos</a>
-            </li>
-            <li class='nav-item'>
-                <a class='nav-link' href='${url}ingredientes/administrarIngredientes.php'>Administrar Ingredientes</a>
-            </li>
-            <li class='nav-item'>
-                <a class='nav-link' href='#'>Administrar Horario De los Empleados</a>
-            </li>
-            `;
             navIzq.innerHTML = `
             <a class='nav-link' href='${url}pedidos/VerMisPedidos.php'>Mis Pedidos</a>
             <a class='nav-link' href='${url}carrito/VerMiCarrito.php'>Carrito</a>
@@ -84,28 +61,12 @@ function cargarNavBar() {
             `;
             break;
         case "repartidor":
-            navDer.innerHTML = `
-            <li class='nav-item'>
-                <a class='nav-link' href='#'>Pedidos</a>
-            </li>
-            `;
             navIzq.innerHTML = `
             <a class='nav-link' href='${url}sesion/MisDatos.php'>Mis Datos</a>
             <button class='nav-link' id="cerrar">Cerrar Sesión</button>
             `;
             break;
         case "cocinero":
-            navDer.innerHTML = `
-            <li class='nav-item'>
-                <a class='nav-link' href='${url}platos/administrarPlatos.php'>Administrar Platos</a>
-            </li>
-            <li class='nav-item'>
-                <a class='nav-link' href='${url}ingredientes/administrarIngredientes.php'>Administrar Ingredientes</a>
-            </li>
-            <li class='nav-item'>
-                <a class='nav-link' href='${url}platos/pedidos.php'>Pedidos</a>
-            </li>
-            `;
             navIzq.innerHTML = `
             <a class='nav-link' href='${url}sesion/MisDatos.php'>Mis Datos</a>
             <button class='nav-link' id="cerrar">Cerrar Sesión</button>
@@ -113,13 +74,7 @@ function cargarNavBar() {
             break;
         default:
             navDer.innerHTML = `
-            <li class='nav-item dropdown'>
-                <a class='nav-link dropdown-toggle' href='#' role='button' data-bs-toggle='dropdown' aria-expanded='false'>
-                    Carta
-                </a>
-                <ul class='dropdown-menu'>
-                    </ul>
-            </li>
+            <a class='nav-link' href='${url}escaparate/escaparate.php'>Carta</a>
             `;
             navIzq.innerHTML = `
             <a class='nav-link' href='${url}sesion/registrarse.php'>Registrarse</a>

@@ -1,3 +1,8 @@
+import config from "../config/config.json" with { type: "json" };
+
+const url = config.apiURL;
+const web = config.URLWeb;
+
 const API_PLATOS = "http://127.0.0.1:8000/api/platos";
 const API_INGREDIENTES = "http://127.0.0.1:8000/api/ingredientes";
 const PLATOS_POR_PAGINA = 5;
@@ -10,7 +15,7 @@ let modalPlato;
 document.addEventListener('DOMContentLoaded', async () => {
     const rol = sessionStorage.getItem('user_rol');
     if (rol !== 'admin' && rol !== 'cocinero') {
-        window.location.href = "http://localhost/PROYECTO_FINAL/frontend/index.php";
+        window.location.href = `${web}/index.php`;
         return;
     }
 

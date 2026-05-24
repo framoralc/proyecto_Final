@@ -1,20 +1,22 @@
+import config from "../../config/config.json" with { type: "json" };
+
+const url = config.apiURL;
+
 let listaCarrito = document.getElementById("listaCarrito");
 
 let btnCrearPedido = document.getElementById("btnCrearPedido");
 
 let precio = 0;
-
 let idUser;
+let direccion;
 let carrito;
 
 async function init() {
-
     idUser = sessionStorage.getItem("user_id")
-
     carrito = await CargarCarrito(idUser);
-
     await CargarPlatos(carrito);
 
+    direccion = sessionStorage.getItem("user_puertaEntrega");
 }
 
 init();
@@ -30,54 +32,46 @@ async function CargarCarrito(idUser) {
             }
         }
 
-        const response = await fetch(`http://127.0.0.1:8000/api/recogerCarrito/${idUser}`, options)
+        const response = await fetch(`${url}/recogerCarrito/${idUser}`, options)
 
         const result = await response.json();
 
-        console.log(result[0])
-
-        return result[0];
+        return result;
     }
     catch (err) {
         console.error(err);
+        return [];
     }
 }
 
 async function CargarPlatos(carrito) {
 
-    let cardPlato = document.createElement("ul");
-    cardPlato.classList.add("list-group");
-    cardPlato.classList.add("list-group-flush");
+    listaCarrito.innerHTML = '';
+    precio = 0;
+
+    const template = document.getElementById("ContentPlato");
 
     for (const elementoCarrito of carrito) {
 
-        console.log(elementoCarrito.idPlato)
+        const plato = await CargarPlato(elementoCarrito.idPlato);
 
-        let plato = await CargarPlato(elementoCarrito.idPlato)
-        console.log(plato);
+        const contentPlato = template.content.cloneNode(true);
 
-        let cardContentPlato = document.createElement("li");
-        cardContentPlato.classList.add("list-group-item");
-        cardContentPlato.classList.add("d-flex");
+        contentPlato.querySelector(".nombrePlato").textContent = plato.nombre;
+        contentPlato.querySelector(".precioPlato").textContent = plato.precio + "€";
+        contentPlato.querySelector(".cantidadPlato").textContent = elementoCarrito.cantidad;
 
-        let contentPlato = document.createElement("p");
-        contentPlato.textContent = plato.nombre + " " + plato.precio;
+        contentPlato.querySelector("button").addEventListener("click", () => {
+            EliminarDelCarrito(elementoCarrito.idPlato);
+        });
 
-        let opcionesPlato = document.createElement("section");
+        listaCarrito.append(contentPlato);
 
-        cardContentPlato.append(contentPlato);
-        cardContentPlato.append(opcionesPlato);
-
-        cardPlato.append(cardContentPlato);
-        listaCarrito.append(cardPlato);
-
-        CalcularPrecio(plato.precio)
+        CalcularPrecio(plato.precio);
     }
 }
 
 async function CargarPlato(plato) {
-
-    console.log(plato)
 
     try {
 
@@ -89,58 +83,85 @@ async function CargarPlato(plato) {
             }
         }
 
-        const response = await fetch(`http://127.0.0.1:8000/api/cargarPlato/${plato}`, options);
+        const response = await fetch(`${url}/platos/${plato}`, options);
 
         const result = await response.json();
-
-        console.log(result);
 
         return result;
     }
     catch (err) {
         console.error(err);
+        return null;
     }
 
 }
 
 function CalcularPrecio(precioPlato) {
 
-    precio += precioPlato;
+    precio += parseFloat(precioPlato);
 
     let precioTotal = document.getElementById("precioTotal");
 
     precioTotal.innerHTML = "";
 
-    precioTotal.textContent = "Total: " + precio;
+    precioTotal.textContent = "Total: " + precio + "€";
 
 }
 
-async function ObtenerRepartidor() {
+async function EliminarDelCarrito(id) {
 
     try {
         const options = {
-            method: "GET",
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
-        }
+            method: "DELETE"
+        };
 
-        const response = await fetch('http://127.0.0.1:8000/api/seleccionarRepartidor', options)
+        await fetch(`${url}/carrito/${id}`, options);
 
-        const result = await response.json();
-
-        return result;
+        carrito = await CargarCarrito(idUser);
+        await CargarPlatos(carrito);
     }
     catch (err) {
-        console.error(err)
+        console.error(err);
     }
 }
 
-// btnCrearPedido.addEventListener('click', () => {
+async function crearPedido() {
 
-//     let repartidor = await ObtenerRepartidor();
+    try {
+        const options = {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                idUsuario: idUser,
+                estado: "pendiente",
+                total: precio,
+                carrito: carrito
+            })
+        }
 
-    
+        const response = await fetch(`${url}/pedido`, options);
+        const data = await response.json();
+    }
+    catch (err) {
+        console.error(err);
+    }
+}
 
-// })
+btnCrearPedido.addEventListener('click', async () => {
+
+    if(!direccion || direccion === "null"){
+        let sinDireccion = document.getElementById("sinDireccion");
+
+        sinDireccion.classList.add("d-block");
+        sinDireccion.classList.remove("d-none");
+    }
+    else{
+        sinDireccion.classList.add("d-none");
+        sinDireccion.classList.remove("d-block");
+
+        await crearPedido();
+    }
+})
