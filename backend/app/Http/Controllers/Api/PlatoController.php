@@ -40,7 +40,7 @@ class PlatoController extends Controller
         $plato = Plato::find($id);
         if (!$plato) return response()->json(['error' => 'No encontrado'], 404);
 
-        $plato->update($request->only(['nombre', 'descripcion', 'precio', 'imagen_url', 'disponible']));
+        $plato->update($request->only(['nombre', 'descripcion', 'categoria', 'precio', 'imagen_url', 'disponible']));
 
         if ($request->has('ingredientes')) {
             $sync = [];
