@@ -1,10 +1,14 @@
-const API = "http://127.0.0.1:8000/api/platos";
+import config from "../config/config.json" with { type: "json" };
+
+const url = config.apiURL;
+const web = config.URLWeb;
+
 const categoria = new URLSearchParams(window.location.search).get('categoria');
 
 let userID = sessionStorage.getItem("user_id");
 
 async function cargarPlatos() {
-    const r = await fetch(API, { headers: { 'Accept': 'application/json' } });
+    const r = await fetch(`${url}/platos`, { headers: { 'Accept': 'application/json' } });
     const platos = await r.json();
 
     const contenedor = document.getElementById('contenedorPlatos');
@@ -28,14 +32,12 @@ async function cargarPlatos() {
                 <p class="text-muted small">${p.categoria || ''}</p>
                 <p class="card-text">${p.descripcion || ''}</p>
                 <p class="fw-bold mt-auto">${parseFloat(p.precio).toFixed(2)} €</p>
-                <form id=formCantidad>
-                    <section class="form-floating">
-                        <input type="number" class="form-control" id="cantidad" name="cantidad" placeholder="cantidad">
-                        <label for="cantidad" class="form-label">Cantidad:</label>
-                    </section>
-                </form>
+                <div class="form-floating">
+                    <input type="number" class="form-control" id="cantidad-${p.id}" name="cantidad" placeholder="cantidad" min="1">
+                    <label for="cantidad-${p.id}" class="form-label">Cantidad:</label>
+                </div>
                 <br>
-                <button ${noTieneCuenta ? 'disabled' : ''} class="btn btn-success" onclick="añadirAlCarrito(${p.id})">
+                <button ${noTieneCuenta ? 'disabled' : ''} class="btn btn-success" onclick="añadirAlCarrito(${p.id}, document.getElementById('cantidad-${p.id}'))">
                 Añadir al carrito
                 </button>
             </div>
@@ -44,12 +46,44 @@ async function cargarPlatos() {
 `).join('');
 }
 
-async function añadirAlCarrito(id) {
+async function añadirAlCarrito(id, inputCantidad) {
     let formCantidad = document.getElementById("formCantidad");
 
-    let cantidad = formCantidad.elements["cantidad"].value;
+    const cantidad = inputCantidad.value;
 
-    alert(`"${id}" añadido al carrito ${cantidad}, ${userID}`);
+    console.log(cantidad);
+
+    if (!cantidad || cantidad < 1) {
+        alert("Por favor, introduce una cantidad válida.");
+        return;
+    }
+
+    try {
+        const options = {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                    idUsuario: userID,
+                    cantidad: cantidad,
+                    idPlato: id
+                })
+        }
+
+        const response = await fetch(`${url}/carrito`, options);
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error("Error al añadir al carrito: " + JSON.stringify(error));
+        }
+    }
+    catch (err) {
+        console.error(err);
+    }
 }
+
+window.añadirAlCarrito = añadirAlCarrito;
 
 cargarPlatos();

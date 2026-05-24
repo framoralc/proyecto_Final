@@ -98,7 +98,7 @@ async function CargarPlato(plato) {
 
 function CalcularPrecio(precioPlato) {
 
-    precio += precioPlato;
+    precio += parseFloat(precioPlato);
 
     let precioTotal = document.getElementById("precioTotal");
 

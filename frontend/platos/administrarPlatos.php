@@ -66,6 +66,7 @@
                                         <th>Precio</th>
                                         <th>Disponible</th>
                                         <th>Acciones</th>
+                                        <th>Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tablaPlatos">
@@ -133,10 +134,16 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
     <script type="module" src="../navBar.js"></script>
     <script type="module" src="../dashboard.js"></script>
-    <script src="./administrarPlatos.js"></script>
+    <script type="module" src="./administrarPlatos.js"></script>
 </body>
 
 </html>

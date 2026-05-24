@@ -40,6 +40,8 @@ Route::post('/mostrarUsuarios', [SesionController::class, 'mostrarUsuarios']);
 Route::get('/seleccionarRepartidor', [SesionController::class, 'obtenerRepartidor']);
 // Recoger información Carrito
 
+Route::post('/carrito', [CarritoController::class, 'crearCarrito']);
+
 Route::get('/recogerCarrito/{idUsuario}', [CarritoController::class, 'getCarritosUsuario']);
 
 Route::delete('/carrito/{id}', [CarritoController::class, 'eliminarCarrito']);

@@ -16,7 +16,22 @@ class CarritoController extends Controller
 
             return response()->json($totalCarrito, 200);
         } catch (Exception) {
-            return response()->json('error not found', 404);
+            return response()->json('no se ha encontrado', 404);
+        }
+    }
+
+    public function crearCarrito(Request $request)
+    {
+        try {
+            Carrito::create([
+                'cantidad' => $request->cantidad,
+                'idPlato' => $request->idPlato,
+                'idUsuario' => $request->idUsuario
+            ]);
+
+            return response()->json('producto metido correctamente', 201);
+        } catch (Exception) {
+            return response()->json('no se ha podido meter en el carrito', 403);
         }
     }
 }

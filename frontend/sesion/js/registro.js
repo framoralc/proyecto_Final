@@ -17,7 +17,6 @@ async function Registro(nombre, email, password, rol, direccion) {
     }
 
     try {
-
         const options = {
             method: "POST",
             headers: {
@@ -37,7 +36,6 @@ async function Registro(nombre, email, password, rol, direccion) {
         else{
             window.location.href = `${web}/index.php`;
         }
-
     }
     catch (err) {
         console.error("error: " + err)
@@ -46,9 +44,7 @@ async function Registro(nombre, email, password, rol, direccion) {
             alert.style.display = "block";
         }
     }
-
 }
-
 
 formulario.addEventListener('submit', (event) => {
     event.preventDefault();
