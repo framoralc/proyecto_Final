@@ -81,18 +81,16 @@
     </section>
 
     <template id="tablaUsuario">
-        <tr>
-            <td id="id"></td>
-            <td id="nombre"></td>
-            <td class="w-25" id="email"></td>
-            <td id="rol"></td>
-            <td class="opciones">
-                <button class="btn btn-danger" id="eliminar">Eliminar</button>
-            </td>
-        </tr>
-        <tr class="collapse"></tr>
-    </template>
-
+    <tr>
+        <td id="id"></td>
+        <td id="nombre"></td>
+        <td class="w-25" id="email"></td>
+        <td id="rol"></td>
+        <td class="opciones">
+            <button class="btn btn-danger" id="eliminar">Eliminar</button>
+        </td>
+    </tr>
+</template>
     <script type="module" src="./js/AdministrarUsuarios.js"></script>
     <script type="module" src="../navBar.js"></script>
     <script type="module" src="../dashboard.js"></script>

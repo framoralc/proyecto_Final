@@ -117,11 +117,7 @@ async function mostrarLista(config) {
             mostrarLista({ rol: ['user'], limit: 10, offset: 0 });
         })
 
-        let btnEditar = tablaUsuario.querySelector("#editar");
-        btnEditar.id = "edit" + usuario.id;
-        btnEditar.addEventListener('click', () => {
-            CargarInformacionAlFormulario(usuario);
-        })
+    
 
         tablaUsuarios.append(tablaUsuario);
     });

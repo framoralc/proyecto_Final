@@ -26,7 +26,7 @@ async function cargarPlatos() {
     contenedor.innerHTML = disponibles.map(p => `
     <div class="col-sm-6 col-md-4 col-lg-3">
         <div class="card h-100">
-            <img src="${p.imagen_url || 'http://imagenes.test/hamburguesa.jpg'}" class="card-img-top" alt="${p.nombre}">
+            <img src="${p.imagen_url}" class="card-img-top" alt="${p.nombre}">
             <div class="card-body d-flex flex-column">
                 <h5 class="card-title">${p.nombre}</h5>
                 <p class="text-muted small">${p.categoria || ''}</p>
