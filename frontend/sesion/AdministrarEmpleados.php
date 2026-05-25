@@ -51,14 +51,13 @@
                             <input type="text" name="id" hidden>
                             <select class="form-select" aria-label="Rol" name="rol">
                                 <option value="admin">admin</option>
-                                <option value="cocinero">cocinero</option>
-                                <option value="repartidor">repartidor</option>
-                            </select>
+                                <option value="user">user</option>
+                                </select>
                             <select class="form-select mt-2" name="turno">
                                 <option value="mañana">Mañana</option>
                                 <option value="tarde">Tarde</option>
                             </select>
-                            <button class="btn btn-primary" type="submit">Enviar</button>
+                            <button class="btn btn-primary mt-2" type="submit">Enviar</button>
                         </form>
                     </section>
                 </section>

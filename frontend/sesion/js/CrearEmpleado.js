@@ -7,13 +7,14 @@ let formulario = document.querySelector("form");
 
 let rol = sessionStorage.getItem("user_rol");
 
-async function Registro(nombre, email, password, rol) {
+async function Registro(username, nombre, apellidos, email, password, rol) {
     let usuario = {
-
+        username: username,
         nombre: nombre,
+        apellidos: apellidos,
         email: email,
         password: password,
-        rol: rol
+        rol: rol.value
     }
 
     try {
@@ -26,19 +27,16 @@ async function Registro(nombre, email, password, rol) {
             body: JSON.stringify(usuario)
         }
 
-        const respuesta = await fetch(`${url}/registrarUsuario`, options)
-
+        const respuesta = await fetch(`${url}/registrarUsuario`, options);
         const data = await respuesta.json();
 
         if (!respuesta.ok) {
-            throw new Error("No se ha podido enviar." + data.message)
+            throw new Error("No se ha podido enviar." + data.message);
+        } else {
+            window.location.href = `${web}/sesion/AdministrarEmpleados.php`;
         }
-        else {
-            window.location.href = `${web}/index.php`;
-        }
-    }
-    catch (err) {
-        console.error("error: " + err)
+    } catch (err) {
+        console.error("error: " + err);
         let alert = formulario.getElementsByClassName("alert")[0];
         if (alert) {
             alert.style.display = "block";
@@ -51,6 +49,7 @@ formulario.addEventListener('submit', (event) => {
 
     let username = formulario.elements["username"];
     let nombre = formulario.elements["name"];
+    let apellidos = formulario.elements["apellidos"];
     let eMail = formulario.elements["eMail"];
     let passwd = formulario.elements["passwd"];
     let repPasswd = formulario.elements["repPasswd"];
@@ -62,18 +61,19 @@ formulario.addEventListener('submit', (event) => {
         passwd.classList.remove("is-invalid");
         repPasswd.classList.remove("is-invalid");
 
-        Registro(username.value, nombre.value, eMail.value, passwd.value, rol)
-    }
-    else {
+        Registro(username.value, nombre.value, apellidos.value, eMail.value, passwd.value, rol);
+    } else {
         passwd.classList.add("is-invalid");
         repPasswd.classList.add("is-invalid");
         passwd.classList.remove("is-valid");
         repPasswd.classList.remove("is-valid");
     }
-})
+});
 
 function init() {
     if (rol != "admin") {
         window.location.href = `${web}/index.php`;
     }
 }
+
+init();

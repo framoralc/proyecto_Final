@@ -51,7 +51,7 @@
                             </div>
                         </div>
                         <div class="form-floating mb-3 w-25">
-                            <select class="form-select" id="selectedRol" aria-label="Default select example">
+                            <select class="form-select" id="selectedRol" name="selectedRol" aria-label="Default select example">
                                 <option value="admin" selected>Administrador</option>
                                 <option value="repartidor">repartidor</option>
                                 <option value="cocinero">cocinero</option>
