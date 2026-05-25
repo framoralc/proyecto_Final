@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Plato extends Model
 {
     use HasFactory;
+
+    protected $table = 'public.platos';
+
     public $timestamps = false;
 
     protected $fillable = ['nombre', 'descripcion', 'categoria' , 'precio', 'imagen_url', 'disponible'];
@@ -16,7 +19,7 @@ class Plato extends Model
     {
         return $this->belongsToMany(
             Ingrediente::class,
-            'plato_ingredientes',
+            'public.plato_ingredientes',
             'plato_id',
             'ingrediente_id'
         )->withPivot('cantidad_necesaria');

@@ -26,10 +26,6 @@ async function Registro(username, nombre, apellidos, email, password) {
         }
 
         const respuesta = await fetch(`${url}/registrarUsuario`, options)
-<<<<<<< HEAD
-=======
-
->>>>>>> 6e7ac54919010e8dd163ff10225ade6a59bfba07
         const data = await respuesta.json();
 
         if (!respuesta.ok) {
@@ -37,22 +33,13 @@ async function Registro(username, nombre, apellidos, email, password) {
         } else {
             window.location.href = `${web}/index.php`;
         }
-<<<<<<< HEAD
     } catch (err) {
-=======
-        else{
-            window.location.href = `${web}/index.php`;
-        }
-    }
-    catch (err) {
->>>>>>> 6e7ac54919010e8dd163ff10225ade6a59bfba07
         console.error("error: " + err)
         let alerta = formulario.getElementsByClassName("alert")[0];
         if (alerta) alerta.style.display = "block";
     }
 }
 
-<<<<<<< HEAD
 formulario.addEventListener('submit', (event) => {
     event.preventDefault();
 
@@ -79,8 +66,6 @@ formulario.addEventListener('submit', (event) => {
 })
 
 
-=======
->>>>>>> 6e7ac54919010e8dd163ff10225ade6a59bfba07
 formulario.addEventListener('submit', (event) => {
     event.preventDefault();
 

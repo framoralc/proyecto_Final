@@ -8,7 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Ingrediente extends Model
 {
     use HasFactory;
+
+
     public $timestamps = false;
 
+    
     protected $fillable = ['nombre', 'stock_actual', 'unidad_medida'];
 }

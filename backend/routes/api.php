@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\api\CarritoController;
-use App\Http\Controllers\api\PedidoController;
+use App\Http\Controllers\Api\CarritoController;
+use App\Http\Controllers\Api\PedidoController;
 use App\Http\Controllers\Api\SesionController;
 use App\Http\Controllers\Api\PlatoController;
-use App\Http\Controllers\Api\IngredienteController; // Importamos el nuevo controlador
+use App\Http\Controllers\Api\IngredienteController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

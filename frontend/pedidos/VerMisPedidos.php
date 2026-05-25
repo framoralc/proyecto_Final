@@ -9,7 +9,6 @@
     include("../bootstrap.php");
     ?>
     <link rel="stylesheet" href="../style/style.css">
-    <link rel="stylesheet" href="./style/VerMisPedidos.css">
 </head>
 
 <body>

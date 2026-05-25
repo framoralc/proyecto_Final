@@ -30,6 +30,7 @@
                         <th>Precio</th>
                         <th>Disponible</th>
                         <th>Acciones</th>
+                        <th>opciones</th>
                     </tr>
                 </thead>
                 <tbody id="tablaPlatos">
@@ -66,7 +67,6 @@
                                         <th>Precio</th>
                                         <th>Disponible</th>
                                         <th>Acciones</th>
-                                        <th>Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tablaPlatos">
