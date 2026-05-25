@@ -16,10 +16,64 @@
     <nav class="navbar navbar-expand-lg bg-body-tertiary" id="navBar"></nav>
     <section class="dashboard">
         <aside id="dashboard" class="menuVert"></aside>
-        <section>
-            <div id="controles">
-                <section class="collapse" id="collapseFiltro">
-                    <div class="card card-body">
+        <section class="d-flex flex-column align-items-center w-100">
+            <section class="table-responsive-sm m-2 w-100">
+                <section class="d-flex column-gap-5 justify-content-center align-items-start" id="lista">
+                    <section>
+                        <section class="d-flex gap-3 mb-3">
+                            <p id="count"></p>
+                            <button class="btn btn-primary" id="btnFiltros" data-bs-toggle="modal" data-bs-target="#modalFiltro">Mostrar Filtros</button>
+                        </section>
+                        <table class="table table-hover table-striped table-bordered">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th scope="col">id</th>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">eMail</th>
+                                    <th scope="col">Rol</th>
+                                    <th scope="col">Turno</th>
+                                    <th scope="col">opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-group-divider" id="informacionUsuarios">
+
+                            </tbody>
+                        </table>
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination" id="paginas">
+                            </ul>
+                        </nav>
+                    </section>
+                    <section>
+                        <h3>Cambiar rol</h3>
+                        <p id="userText">Usuario: </p>
+                        <form id="formEditRol">
+                            <input type="text" name="id" hidden>
+                            <select class="form-select" aria-label="Rol" name="rol">
+                                <option value="admin">admin</option>
+                                <option value="cocinero">cocinero</option>
+                                <option value="repartidor">repartidor</option>
+                            </select>
+                            <select class="form-select mt-2" name="turno">
+                                <option value="mañana">Mañana</option>
+                                <option value="tarde">Tarde</option>
+                            </select>
+                            <button class="btn btn-primary" type="submit">Enviar</button>
+                        </form>
+                    </section>
+                </section>
+            </section>
+        </section>
+
+        <section class="modal fade" id="modalFiltro" tabindex="-1" aria-hidden="true">
+            <section class="modal-dialog">
+                <section class="modal-content">
+                    <section class="modal-header">
+                        <h5 class="modal-title" id="tituloModal">Filtros</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </section>
+                    <section class="modal-body">
+                        <section id="alertaModal" class="alert d-none"></section>
                         <form id="formFiltro">
                             <section class="form-control w-25">
                                 <label class="form-label" for="limit">limite de las paginas</label>
@@ -41,50 +95,6 @@
                             </section>
                             <button class="btn btn-primary" type="submit">Filtrar</button>
                         </form>
-                    </div>
-                </section>
-            </div>
-            <section class="table-responsive-sm m-2 gap-3">
-                <section class="d-flex gap-3">
-                    <p id="count"></p>
-                    <button class="btn btn-primary" id="btnFiltros" data-bs-toggle="collapse" data-bs-target="#collapseFiltro" aria-expanded="false" aria-controls="collapseFiltro">Mostrar Filtros</button>
-                </section>
-                <section class="d-flex column-gap-3 justify-content-lg-center" id="lista">
-                    <section>
-                        <table class="table table-hover table-bordered">
-                            <thead>
-                                <tr>
-                                    <th scope="col">id</th>
-                                    <th scope="col">Nombre</th>
-                                    <th scope="col">eMail</th>
-                                    <th scope="col">Rol</th>
-                                    <th scope="col">Dirección</th>
-                                    <th scope="col">opciones</th>
-                                </tr>
-                            </thead>
-                            <tbody class="table-group-divider" id="informacionUsuarios">
-
-                            </tbody>
-                        </table>
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination" id="paginas">
-                                <!-- <li class="page-item"><button class="page-link" href="#">Previous</button></li> -->
-
-                                <!-- <li class="page-item"><button class="page-link" href="#">Next</button></li> -->
-                            </ul>
-                        </nav>
-                    </section>
-                    <section>
-                        <h3>Cambiar rol</h3>
-                        <p id="userText">Usuario: </p>
-                        <form id="formEditRol">
-                            <select class="form-select" aria-label="Rol" name="rol">
-                                <option value="admin">admin</option>
-                                <option value="cocinero">cocinero</option>
-                                <option value="repartidor">repartidor</option>
-                            </select>
-                            <button class="btn btn-primary" type="submit">Enviar</button>
-                        </form>
                     </section>
                 </section>
             </section>
@@ -97,7 +107,7 @@
             <td id="nombre"></td>
             <td class="w-25" id="email"></td>
             <td id="rol"></td>
-            <td id="direccion"></td>
+            <td id="turno"></td>
             <td class="opciones">
                 <button class="btn btn-warning" id="editar">Editar</button>
                 <button class="btn btn-danger" id="eliminar">Eliminar</button>

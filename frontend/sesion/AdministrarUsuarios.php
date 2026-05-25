@@ -16,41 +16,22 @@
     <nav class="navbar navbar-expand-lg bg-body-tertiary" id="navBar"></nav>
     <section class="dashboard">
         <aside id="dashboard" class="menuVert"></aside>
-        <section>
+        <section class="d-flex flex-column align-items-center w-100">
             <section>
-                <div id="controles">
-                    <section class="collapse" id="collapseFiltro">
-                        <div class="card card-body">
-                            <form id="formFiltro">
-                                <section class="form-control w-25">
-                                    <label class="form-label" for="limit">limite de las paginas</label>
-                                    <select class="form-select" name="limit">
-                                        <option value="10" selected>10</option>
-                                        <option value="20">20</option>
-                                        <option value="30">30</option>
-                                        <option value="max">max</option>
-                                    </select>
-                                </section>
-                                <button class="btn btn-primary" type="submit">Filtrar</button>
-                            </form>
-                        </div>
-                    </section>
-                </div>
-                <section class="table-responsive-sm m-2 gap-3">
-                    <section class="d-flex gap-3">
-                        <p id="count"></p>
-                        <button class="btn btn-primary" id="btnFiltros" data-bs-toggle="collapse" data-bs-target="#collapseFiltro" aria-expanded="false" aria-controls="collapseFiltro">Mostrar Filtros</button>
-                    </section>
-                    <section class="d-flex column-gap-3 justify-content-lg-center" id="lista">
+                <section class="table-responsive-sm m-2 gap-3 w-100">
+                    <section class="d-flex justify-content-center" id="lista">
                         <section>
-                            <table class="table table-hover table-bordered">
-                                <thead>
+                            <section class="d-flex gap-3">
+                                <p id="count"></p>
+                                <button class="btn btn-primary" id="btnFiltros" data-bs-toggle="modal" data-bs-target="#modalFiltro">Mostrar Filtros</button>
+                            </section>
+                            <table class="table table-hover table-striped table-bordered">
+                                <thead class="table-dark">
                                     <tr>
                                         <th scope="col">id</th>
                                         <th scope="col">Nombre</th>
                                         <th scope="col">eMail</th>
                                         <th scope="col">Rol</th>
-                                        <th scope="col">Dirección</th>
                                         <th scope="col">opciones</th>
                                     </tr>
                                 </thead>
@@ -70,6 +51,33 @@
                 </section>
             </section>
         </section>
+
+        <section class="modal fade" id="modalFiltro" tabindex="-1" aria-hidden="true">
+            <section class="modal-dialog">
+                <section class="modal-content">
+                    <section class="modal-header">
+                        <h5 class="modal-title" id="tituloModal">Filtros</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </section>
+                    <section class="modal-body">
+                        <section id="alertaModal" class="alert d-none"></section>
+                        <form id="formFiltro">
+                            <section class="form-control w-25">
+                                <label class="form-label" for="limit">limite de las paginas</label>
+                                <select class="form-select" name="limit">
+                                    <option value="10" selected>10</option>
+                                    <option value="20">20</option>
+                                    <option value="30">30</option>
+                                    <option value="max">max</option>
+                                </select>
+                            </section>
+                            <button class="btn btn-primary" type="submit">Filtrar</button>
+                        </form>
+                    </section>
+                </section>
+            </section>
+        </section>
+
     </section>
 
     <template id="tablaUsuario">
@@ -78,7 +86,6 @@
             <td id="nombre"></td>
             <td class="w-25" id="email"></td>
             <td id="rol"></td>
-            <td id="direccion"></td>
             <td class="opciones">
                 <button class="btn btn-warning" id="editar">Editar</button>
                 <button class="btn btn-danger" id="eliminar">Eliminar</button>

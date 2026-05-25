@@ -12,6 +12,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->text('descripcion')->nullable();
+            $table->string('categoria')->nullable();  
             $table->decimal('precio', 8, 2);
             $table->string('imagen_url')->nullable();
             $table->boolean('disponible')->default(true);

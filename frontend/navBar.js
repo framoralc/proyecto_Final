@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     nav.innerHTML = `
         <div class="container-fluid">
-            <a class="navbar-brand" href="/index.php">Flashfood</a>
+            <a class="navbar-brand" href="${url}index.php">Flashfood</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -43,98 +43,61 @@ function cargarNavBar() {
     switch (rol) {
         case "user":
             navDer.innerHTML = `
-            <li class='nav-item dropdown'>
-                <a class='nav-link dropdown-toggle' href='#' role='button' data-bs-toggle='dropdown' aria-expanded='false'>
-                    Carta
-                </a>
-                <ul class='dropdown-menu'>
-                    <li><a class='dropdown-item' href='#'>Marisco</a></li>
-                    <li><a class='dropdown-item' href='#'></a></li>
-                    <li><a class='dropdown-item' href='#'>Pasta</a></li>
-                </ul>
-            </li>
-            <li class='nav-item'>
-                <a class='nav-link' href='#'>Mis Pedidos</a>
-            </li>
+            <a class='nav-link' href='${url}escaparate/escaparate.php'>Carta</a>
             `;
             navIzq.innerHTML = `
-            <a class='nav-link' href='/pedidos/VerMisPedidos.php'>Mis Pedidos</a>
-            <a class='nav-link' href='/carrito/VerMiCarrito.php'>Carrito</a>
-            <a class='nav-link' href='/sesion/MisDatos.php'>Mis Datos</a>
+            <a class='nav-link' href='${url}pedidos/VerMisPedidos.php'>Mis Pedidos</a>
+            <a class='nav-link' href='${url}carrito/VerMiCarrito.php'>Carrito</a>
+            <a class='nav-link' href='${url}sesion/MisDatos.php'>Mis Datos</a>
             <button class='nav-link' id="cerrar">Cerrar Sesión</button>
             `;
             break;
         case "admin":
-            navDer.innerHTML = `
-            <li class='nav-item'>
-                <a class='nav-link' href='#'>Administrar Empleados</a>
-            </li>
-            <li class='nav-item'>
-                <a class='nav-link' href='${url}platos/administrarPlatos.php'>Administrar Platos</a>
-            </li>
-            <li class='nav-item'>
-                <a class='nav-link' href='${url}ingredientes/administrarIngredientes.php'>Administrar Ingredientes</a>
-            </li>
-            <li class='nav-item'>
-                <a class='nav-link' href='#'>Administrar Horario De los Empleados</a>
-            </li>
-            `;
             navIzq.innerHTML = `
-            <a class='nav-link' href='/pedidos/VerMisPedidos.php'>Mis Pedidos</a>
-            <a class='nav-link' href='/carrito/VerMiCarrito.php'>Carrito</a>
-            <a class='nav-link' href='/sesion/MisDatos.php'>Mis Datos</a>
+            <a class='nav-link' href='${url}pedidos/VerMisPedidos.php'>Mis Pedidos</a>
+            <a class='nav-link' href='${url}carrito/VerMiCarrito.php'>Carrito</a>
+            <a class='nav-link' href='${url}sesion/MisDatos.php'>Mis Datos</a>
             <button class='nav-link' id="cerrar">Cerrar Sesión</button>
             `;
             break;
         case "repartidor":
-            navDer.innerHTML = `
-            <li class='nav-item'>
-                <a class='nav-link' href='#'>Pedidos</a>
-            </li>
-            `;
             navIzq.innerHTML = `
-            <a class='nav-link' href='/sesion/MisDatos.php'>Mis Datos</a>
+            <a class='nav-link' href='${url}sesion/MisDatos.php'>Mis Datos</a>
             <button class='nav-link' id="cerrar">Cerrar Sesión</button>
             `;
             break;
         case "cocinero":
-            navDer.innerHTML = `
-            <li class='nav-item'>
-                <a class='nav-link' href='${url}platos/administrarPlatos.php'>Administrar Platos</a>
-            </li>
-            <li class='nav-item'>
-                <a class='nav-link' href='${url}ingredientes/administrarIngredientes.php'>Administrar Ingredientes</a>
-            </li>
-            <li class='nav-item'>
-                <a class='nav-link' href='platos/pedidos'>Pedidos</a>
-            </li>
-            `;
             navIzq.innerHTML = `
-            <a class='nav-link' href='/sesion/MisDatos.php'>Mis Datos</a>
+            <a class='nav-link' href='${url}sesion/MisDatos.php'>Mis Datos</a>
             <button class='nav-link' id="cerrar">Cerrar Sesión</button>
             `;
             break;
         default:
             navDer.innerHTML = `
-            <li class='nav-item dropdown'>
-                <a class='nav-link dropdown-toggle' href='#' role='button' data-bs-toggle='dropdown' aria-expanded='false'>
-                    Carta
-                </a>
-                <ul class='dropdown-menu'>
-                    <li><a class='dropdown-item' href='#'>Marisco</a></li>
-                    <li><a class='dropdown-item' href='#'></a></li>
-                    <li><a class='dropdown-item' href='#'>Pasta</a></li>
-                </ul>
-            </li>
+            <a class='nav-link' href='${url}escaparate/escaparate.php'>Carta</a>
             `;
             navIzq.innerHTML = `
-            <a class='nav-link' href='/sesion/registrarse.php'>Registrarse</a>
-            <a class='nav-link' href='/sesion/iniciarSesion.php'>Iniciar Sesion</a>
+            <a class='nav-link' href='${url}sesion/registrarse.php'>Registrarse</a>
+            <a class='nav-link' href='${url}sesion/iniciarSesion.php'>Iniciar Sesion</a>
             `;
     }
-
+    
+    cargarCategorias();
 };
 
+async function cargarCategorias() {
+    const r = await fetch("http://127.0.0.1:8000/api/platos");
+    const platos = await r.json();
+
+    const categorias = [...new Set(platos.map(p => p.categoria).filter(c => c))];
+    const menus = document.querySelectorAll(".dropdown-menu");
+
+    menus.forEach(menu => {
+        menu.innerHTML = categorias.map(c => `
+            <li><a class="dropdown-item" href="${url}escaparate/escaparate.php?categoria=${c}">${c}</a></li>
+        `).join('');
+    });
+}
 function cerrarSesion() {
     sessionStorage.clear();
     window.location.href = url + "index.php";

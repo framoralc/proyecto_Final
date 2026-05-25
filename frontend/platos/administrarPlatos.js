@@ -1,3 +1,8 @@
+import config from "../../config/config.json" with { type: "json" };
+
+const url = config.apiURL;
+const web = config.URLWeb;
+
 const API_PLATOS = "http://127.0.0.1:8000/api/platos";
 const API_INGREDIENTES = "http://127.0.0.1:8000/api/ingredientes";
 const PLATOS_POR_PAGINA = 5;
@@ -10,13 +15,12 @@ let modalPlato;
 document.addEventListener('DOMContentLoaded', async () => {
     const rol = sessionStorage.getItem('user_rol');
     if (rol !== 'admin' && rol !== 'cocinero') {
-        window.location.href = "http://localhost/PROYECTO_FINAL/frontend/index.php";
+        window.location.href = `${web}/index.php`;
         return;
     }
 
     modalPlato = new bootstrap.Modal(document.getElementById('modalPlato'));
 
-    // Cargar ingredientes disponibles una sola vez
     const respIng = await fetch(API_INGREDIENTES, { headers: { 'Accept': 'application/json' } });
     todosLosIngredientes = await respIng.json();
 
@@ -52,7 +56,7 @@ function renderTabla() {
     const platosPagina = todosLosPlatos.slice(inicio, fin);
 
     if (platosPagina.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="6" class="text-center">No hay platos</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="7" class="text-center">No hay platos</td></tr>';
         return;
     }
 
@@ -60,6 +64,7 @@ function renderTabla() {
         <tr>
             <td>${plato.id}</td>
             <td>${plato.nombre}</td>
+            <td>${plato.categoria}</td>
             <td>${plato.descripcion || '-'}</td>
             <td>${parseFloat(plato.precio).toFixed(2)} €</td>
             <td><span class="badge ${plato.disponible ? 'bg-success' : 'bg-danger'}">${plato.disponible ? 'Sí' : 'No'}</span></td>
@@ -92,8 +97,6 @@ window.cambiarPagina = function(pagina) {
     renderPaginacion();
 }
 
-// Renderiza los checkboxes de ingredientes en el modal
-// ingActuales = array de ingredientes que ya tiene el plato (con pivot.cantidad_necesaria)
 function renderIngredientesModal(ingActuales) {
     const contenedor = document.getElementById('listaIngredientesModal');
 
@@ -123,9 +126,17 @@ window.abrirEditar = function(id) {
 
     document.getElementById('platoId').value = plato.id;
     document.getElementById('nombrePlato').value = plato.nombre;
+    document.getElementById('categoriaPlato').value = plato.categoria || '';
     document.getElementById('descripcionPlato').value = plato.descripcion || '';
     document.getElementById('precioPlato').value = plato.precio;
     document.getElementById('disponiblePlato').checked = plato.disponible;
+    
+    let nombreFoto = '';
+    if (plato.imagen_url) {
+        nombreFoto = plato.imagen_url.replace('http://imagenes.test/', '');  
+    }
+    document.getElementById('imagenPlato').value = nombreFoto;
+    
     document.getElementById('tituloModal').innerText = 'Editar Plato';
 
     renderIngredientesModal(plato.ingredientes || []);
@@ -138,7 +149,6 @@ async function guardarPlato(evento) {
 
     const id = document.getElementById('platoId').value;
 
-    // Recoger ingredientes marcados
     const ingredientes = [];
     document.querySelectorAll('.ing-check:checked').forEach(checkbox => {
         const ingId = parseInt(checkbox.value);
@@ -146,12 +156,17 @@ async function guardarPlato(evento) {
         ingredientes.push({ id: ingId, cantidad_necesaria: cantidad });
     });
 
+    let textoImagen = document.getElementById('imagenPlato').value.trim();
+    let rutaFinal = textoImagen ? 'http://localhost/PROYECTO_FINAL/frontend/imagenes/' + textoImagen : null;
+
     const datos = {
-        nombre: document.getElementById('nombrePlato').value.trim(),
-        descripcion: document.getElementById('descripcionPlato').value.trim(),
-        precio: parseFloat(document.getElementById('precioPlato').value),
-        disponible: document.getElementById('disponiblePlato').checked,
-        ingredientes: ingredientes
+    nombre: document.getElementById('nombrePlato').value.trim(),
+    categoria: document.getElementById('categoriaPlato').value,
+    descripcion: document.getElementById('descripcionPlato').value.trim(),
+    precio: parseFloat(document.getElementById('precioPlato').value),
+    disponible: document.getElementById('disponiblePlato').checked,
+    imagen_url: 'http://imagenes.test/' + document.getElementById('imagenPlato').value.trim(),
+    ingredientes: ingredientes
     };
 
     const metodo = id ? 'PUT' : 'POST';
