@@ -87,7 +87,6 @@
             <td class="w-25" id="email"></td>
             <td id="rol"></td>
             <td class="opciones">
-                <button class="btn btn-warning" id="editar">Editar</button>
                 <button class="btn btn-danger" id="eliminar">Eliminar</button>
             </td>
         </tr>
