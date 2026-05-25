@@ -12,10 +12,15 @@ let direccion;
 let carrito;
 
 async function init() {
-    idUser = sessionStorage.getItem("user_id")
+    idUser = sessionStorage.getItem("user_id");
+    
+    if (!idUser) {
+        window.location.href = `${web}/index.php`;
+        return;
+    }
+    
     carrito = await CargarCarrito(idUser);
     await CargarPlatos(carrito);
-
     direccion = sessionStorage.getItem("user_puertaEntrega");
 }
 

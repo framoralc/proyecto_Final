@@ -3,69 +3,37 @@ import config from "../../config/config.json" with { type: "json" };
 const url = config.apiURL;
 const web = config.URLWeb;
 
-let editableUser = false;
-let editableCam = false;
-
 let idUser = sessionStorage.getItem("user_id");
-
-// formularios para cambiar la información del perfil
 
 let formCambiarNombre = document.getElementById("formCambiarNombre");
 let formCambiarEmail = document.getElementById("formCambiarEmail");
 let formCambiarDireccion = document.getElementById("formCambiarDireccion");
 let formCambiarDireccionFac = document.getElementById("formCambiarDireccionFac");
-
-// Secciones de los formularios
-
 let cambiarNombre = document.getElementById("cambiarNombre");
 let cambiarCorreoElectronico = document.getElementById("cambiarCorreoElectronico");
 let cambiarDireccion = document.getElementById("cambiarDireccion");
 let cambiarContrasenya = document.getElementById("cambiarContrasenya");
-
 let formContrasenya = document.getElementById("formCambiarCont");
-
 let userError = document.getElementById("userError");
 
-// funciones
-
 function cargarInformacion() {
+    document.getElementById("NameInfo").textContent = sessionStorage.getItem("user_name");
+    document.getElementById("EmailInfo").textContent = sessionStorage.getItem("user_email");
 
-    let nameInfo = document.getElementById("NameInfo");
-    let eMailInfo = document.getElementById("EmailInfo");
+    document.getElementById("infoCiudadEntrega").textContent = sessionStorage.getItem("user_ciudadEntrega");
+    document.getElementById("infoCalleEntrega").textContent = sessionStorage.getItem("user_calleEntrega");
+    document.getElementById("infoNumeroEntrega").textContent = sessionStorage.getItem("user_numeroEntrega");
+    document.getElementById("infoPisoEntrega").textContent = sessionStorage.getItem("user_pisoEntrega");
+    document.getElementById("infoPuertaEntrega").textContent = sessionStorage.getItem("user_puertaEntrega");
+    document.getElementById("infoCodPostalEntrega").textContent = sessionStorage.getItem("user_codPostalEntrega");
 
-    let infoCiudadEntrega = document.getElementById("infoCiudadEntrega");
-    let infoCalleEntrega = document.getElementById("infoCalleEntrega");
-    let infoNumeroEntrega = document.getElementById("infoNumeroEntrega");
-    let infoPisoEntrega = document.getElementById("infoPisoEntrega");
-    let infoPuertaEntrega = document.getElementById("infoPuertaEntrega");
-    let infoCodPostalEntrega = document.getElementById("infoCodPostalEntrega");
-
-    let infoCiudadFac = document.getElementById("infoCiudadFac");
-    let infoCalleFac = document.getElementById("infoCalleFac");
-    let infoNumeroFac = document.getElementById("infoNumeroFac");
-    let infoPisoFac = document.getElementById("infoPisoFac");
-    let infoPuertaFac = document.getElementById("infoPuertaFac");
-    let infoCodPostalFac = document.getElementById("infoCodPostalFac");
-
-    nameInfo.textContent = sessionStorage.getItem("user_name");
-    eMailInfo.textContent = sessionStorage.getItem("user_email");
-
-    infoCiudadEntrega.textContent = sessionStorage.getItem("user_ciudadEntrega");
-    infoCalleEntrega.textContent = sessionStorage.getItem("user_calleEntrega");
-    infoNumeroEntrega.textContent = sessionStorage.getItem("user_numeroEntrega");
-    infoPisoEntrega.textContent = sessionStorage.getItem("user_pisoEntrega");
-    infoPuertaEntrega.textContent = sessionStorage.getItem("user_puertaEntrega")
-    infoCodPostalEntrega.textContent = sessionStorage.getItem("user_codPostalEntrega");
-
-    infoCiudadFac.textContent = sessionStorage.getItem("user_ciudadFac");
-    infoCalleFac.textContent = sessionStorage.getItem("user_calleFac");
-    infoNumeroFac.textContent = sessionStorage.getItem("user_numeroFac");
-    infoPisoFac.textContent = sessionStorage.getItem("user_pisoFac");
-    infoPuertaFac.textContent = sessionStorage.getItem("user_puertaFac");
-    infoCodPostalFac.textContent = sessionStorage.getItem("user_codPostalFac");
-};
-
-// actualizar informcación del perfil
+    document.getElementById("infoCiudadFac").textContent = sessionStorage.getItem("user_ciudadFac");
+    document.getElementById("infoCalleFac").textContent = sessionStorage.getItem("user_calleFac");
+    document.getElementById("infoNumeroFac").textContent = sessionStorage.getItem("user_numeroFac");
+    document.getElementById("infoPisoFac").textContent = sessionStorage.getItem("user_pisoFac");
+    document.getElementById("infoPuertaFac").textContent = sessionStorage.getItem("user_puertaFac");
+    document.getElementById("infoCodPostalFac").textContent = sessionStorage.getItem("user_codPostalFac");
+}
 
 async function actualizarPerfil(perfil) {
     try {
@@ -73,107 +41,23 @@ async function actualizarPerfil(perfil) {
             method: "PUT",
             headers: {
                 'Content-type': 'application/json',
-                'accept': 'application/json'
+                'Accept': 'application/json'
             },
             body: JSON.stringify(perfil)
         };
 
-        const response = await fetch(`${url}/usuario`, options)
+        const response = await fetch(`${url}/usuario`, options);
 
         if (!response.ok) {
             const error = await response.json();
             throw new Error("No se ha podido actualizar el perfil. Detalles:" + error);
-        }
-        else {
+        } else {
             await RecogerInformacion(perfil.id);
         }
-    }
-    catch (err) {
+    } catch (err) {
         console.error(err);
     }
-};
-
-async function actualizarNombre(perfil) {
-    try {
-
-        const options = {
-            method: "PUT",
-            headers: {
-                'Content-type': 'application/json',
-                'accept': 'application/json'
-            },
-            body: JSON.stringify(perfil)
-        }
-
-        const response = await fetch(`${url}/usuario`, options)
-
-        if (!response.ok) {
-            const error = await response.json();
-            throw new Error("No se ha podido enviar." + error)
-        }
-        else {
-            await RecogerInformacion(perfil.id);
-        }
-
-    }
-    catch (err) {
-        console.error(err);
-    }
-};
-
-async function actualizarEmail(perfil) {
-
-    try {
-        const options = {
-            method: "PUT",
-            headers: {
-                'Content-type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(perfil)
-        };
-
-        const respuesta = await fetch(`${url}/usuario`, options);
-
-        if (!respuesta.ok) {
-            const error = await respuesta.json();
-            throw new Error("No se ha podido enviar" + error)
-        }
-        else {
-            await RecogerInformacion(perfil.id)
-        }
-    }
-    catch (err) {
-        console.error(err);
-    }
-};
-
-async function actualizarContraseña(perfil) {
-    try {
-        const options = {
-            method: "PUT",
-            headers: {
-                'Content-type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(perfil)
-        }
-
-        const respuesta = await fetch(`${url}/actualizarPassword`, options);
-
-        if (!respuesta.ok) {
-            const error = await respuesta.json();
-            throw new Error("No se ha podido enviar." + error)
-        }
-        else {
-            window.location.href = `${web}/index.php`;
-        }
-
-    }
-    catch (err) {
-        console.error(err);
-    }
-};
+}
 
 async function RecogerInformacion(id) {
     try {
@@ -186,13 +70,11 @@ async function RecogerInformacion(id) {
         };
 
         const respuesta = await fetch(`${url}/recogerInformacion/${id}`, options);
-
         const data = await respuesta.json();
 
         if (!respuesta.ok) {
-            throw new Error("No se ha podido enviar." + data.message)
-        }
-        else {
+            throw new Error("No se ha podido enviar." + data.message);
+        } else {
             sessionStorage.setItem("user_name", data.nombre);
             sessionStorage.setItem("user_email", data.email);
 
@@ -213,13 +95,10 @@ async function RecogerInformacion(id) {
             sessionStorage.setItem("user_rol", data.rol);
             window.location.reload();
         }
-    }
-    catch (err) {
+    } catch (err) {
         console.error(err);
     }
-};
-
-// Eliminar el perfil
+}
 
 async function eliminarPerfil(id) {
     try {
@@ -228,100 +107,54 @@ async function eliminarPerfil(id) {
             headers: {
                 'Accept': 'application/json',
                 'Content-type': 'application/json'
-            },
-        }
-
-        const respuesta = await fetch(`${url}/eliminarUsuario/${id}`, options)
-
-    }
-    catch (err) {
-        console.error(err)
-    }
-};
-
-async function ActualizarDireccionFac(direccion) {
-    try {
-        const options = {
-            method: "PUT",
-            headers: {
-                'Accept': 'application/json',
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify(direccion)
+            }
         };
-
-        const respuesta = await fetch(`${url}/usuario`, options)
-    }
-    catch (err) {
+        await fetch(`${url}/eliminarUsuario/${id}`, options);
+    } catch (err) {
         console.error(err);
     }
-};
-
-///////////////////////// Formularios /////////////////////////////////
+}
 
 formCambiarUsername.addEventListener('submit', (event) => {
     event.preventDefault();
-
-    let username = formCambiarUsername.elements["username"].value;
-
     let perfil = {
         id: sessionStorage.getItem('user_id'),
-        username: username
+        username: formCambiarUsername.elements["username"].value
     };
-
     actualizarPerfil(perfil);
 });
 
 formCambiarNombreApellidos.addEventListener("submit", (event) => {
     event.preventDefault();
-
-    let nombre = formCambiarNombreApellidos.elements["nombre"].value;
-    let apellidos = formCambiarNombreApellidos.elements["apellidos"].value;
-
     let perfil = {
         id: sessionStorage.getItem('user_id'),
-        nombre: nombre,
-        apellidos: apellidos
-    }
-
+        nombre: formCambiarNombreApellidos.elements["nombre"].value,
+        apellidos: formCambiarNombreApellidos.elements["apellidos"].value
+    };
     actualizarPerfil(perfil);
 });
 
 formCambiarEmail.addEventListener('submit', (event) => {
     event.preventDefault();
-
-    let email = formCambiarEmail.elements["eMail"].value;
-
     let perfil = {
         id: sessionStorage.getItem('user_id'),
-        email: email
+        email: formCambiarEmail.elements["eMail"].value
     };
-
     actualizarPerfil(perfil);
 });
 
 formContrasenya.addEventListener('submit', (event) => {
     event.preventDefault();
-
     if (confirm("¿Seguro que quieres actualizar la contraseña?")) {
-
         let passwd = formContrasenya.elements["passwd"];
         let repPasswd = formContrasenya.elements["rePasswd"];
-
         if (passwd.value == repPasswd.value) {
             passwd.classList.add("is-valid");
             repPasswd.classList.add("is-valid");
             passwd.classList.remove("is-invalid");
             repPasswd.classList.remove("is-invalid");
-
-            let usuario = {
-                id: sessionStorage.getItem('user_id'),
-                password: passwd.value
-            }
-
-            actualizarPerfil(usuario);
-        }
-        else {
+            actualizarPerfil({ id: sessionStorage.getItem('user_id'), password: passwd.value });
+        } else {
             passwd.classList.add("is-invalid");
             repPasswd.classList.add("is-invalid");
             passwd.classList.remove("is-valid");
@@ -330,82 +163,52 @@ formContrasenya.addEventListener('submit', (event) => {
     }
 });
 
-formCambiarDireccionFac.addEventListener("submit", (event) => {
-    event.preventDefault();
-
-    let ciudad = formCambiarDireccionFac.elements["ciudadFac"];
-    let calle = formCambiarDireccionFac.elements["calleFac"];
-    let numero = formCambiarDireccionFac.elements["numeroFac"];
-    let piso = formCambiarDireccionFac.elements["pisoFac"];
-    let puerta = formCambiarDireccionFac.elements["puertaFac"];
-    let codPostal = formCambiarDireccionFac.elements["codPostalFac"];
-
-    let Direccion = {
-        id: sessionStorage.getItem('user_id'),
-        ciudadFac: ciudad.value,
-        calleFac: calle.value,
-        numeroFac: numero.value,
-        pisoFac: piso.value,
-        puertaFac: puerta.value,
-        codPostalFac: codPostal.value
-    };
-
-    actualizarPerfil(Direccion);
-});
-
 formCambiarDireccion.addEventListener("submit", (event) => {
     event.preventDefault();
-
-    let ciudad = formCambiarDireccion.elements["ciudad"];
-    let calle = formCambiarDireccion.elements["calle"];
-    let numero = formCambiarDireccion.elements["numero"];
-    let piso = formCambiarDireccion.elements["piso"];
-    let puerta = formCambiarDireccion.elements["puerta"];
-    let codPostal = formCambiarDireccion.elements["codPostal"];
-
     let Direccion = {
         id: sessionStorage.getItem('user_id'),
-        ciudad: ciudad.value,
-        calle: calle.value,
-        numero: numero.value,
-        piso: piso.value,
-        puerta: puerta.value,
-        codPostal: codPostal.value
+        ciudad: formCambiarDireccion.elements["ciudad"].value,
+        calle: formCambiarDireccion.elements["calle"].value,
+        numero: formCambiarDireccion.elements["numero"].value,
+        piso: formCambiarDireccion.elements["piso"].value,
+        puerta: formCambiarDireccion.elements["puerta"].value,
+        codpostal: formCambiarDireccion.elements["codPostal"].value
     };
-
     actualizarPerfil(Direccion);
 });
 
-///////////////////////////// Eliminar Cuenta //////////////////////////////
+formCambiarDireccionFac.addEventListener("submit", (event) => {
+    event.preventDefault();
+    let Direccion = {
+        id: sessionStorage.getItem('user_id'),
+        ciudadFac: formCambiarDireccionFac.elements["ciudadFac"].value,
+        calleFac: formCambiarDireccionFac.elements["calleFac"].value,
+        numeroFac: formCambiarDireccionFac.elements["numeroFac"].value,
+        pisoFac: formCambiarDireccionFac.elements["pisoFac"].value,
+        puertaFac: formCambiarDireccionFac.elements["puertaFac"].value,
+        codpostalFac: formCambiarDireccionFac.elements["codPostalFac"].value
+    };
+    actualizarPerfil(Direccion);
+});
 
 let btnEliminar = document.getElementById("eliminar");
-
 btnEliminar.addEventListener('click', async () => {
-
     await eliminarPerfil(sessionStorage.getItem('user_id'));
-
     sessionStorage.clear();
     window.location.href = `${web}/index.php`;
 });
 
-///////////////////////////// Menu ///////////////////////////////////////////
-
 function init() {
-
     if (idUser != null) {
         cargarInformacion();
 
         const menuPerfil = document.getElementById("menuPerfil");
         const menuSeguridad = document.getElementById("menuSeguridad");
-
         const secNombre = document.querySelector(".cambiarNombre");
         const secEmail = document.querySelector(".cambiarCorreoElectronico");
         const secDireccion = document.querySelector(".cambiarDireccion");
-
         const secPass = document.querySelector(".cambiarContrasenya");
         const secEliminarCuenta = document.querySelector(".eliminarPerfil");
-
-        // grupo opciones
 
         document.getElementById("btnPerfil").addEventListener("click", () => {
             menuPerfil.classList.remove("d-none");
@@ -421,8 +224,6 @@ function init() {
             secEmail.style.display = "none";
             secDireccion.style.display = "none";
         });
-
-        // grupo perfil
 
         document.getElementById("btnCambiarNombre").addEventListener("click", () => {
             secNombre.style.display = "block";
@@ -443,8 +244,6 @@ function init() {
             secPass.style.display = "none";
         });
 
-        // grupo seguridad
-
         document.getElementById("btnCambiarPass").addEventListener("click", () => {
             secPass.style.display = "block";
             secEliminarCuenta.style.display = "none";
@@ -455,10 +254,6 @@ function init() {
             secPass.style.display = "none";
         });
     }
-    else {
-
-    }
-
-};
+}
 
 init();

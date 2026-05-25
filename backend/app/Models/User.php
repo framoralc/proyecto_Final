@@ -12,9 +12,9 @@ class User extends Authenticatable
 protected $table = 'public.users';
     public $timestamps = false;
 
-    protected $fillable = [
-        'username','nombre','apellidos','email','password','rol','direccion','telefono',
-        'ciudad','calle','numero','piso','puerta','codPostal',
-        'ciudadFac','calleFac','numeroFac','pisoFac','puertaFac','codPostalFac','turno'
-    ];
+   protected $fillable = [
+    'username','nombre','apellidos','email','password','rol','direccion','telefono',
+    'ciudad','calle','numero','piso','puerta','codpostal',
+    'ciudadFac','calleFac','numeroFac','pisoFac','puertaFac','codpostalFac','turno'
+];
 }
