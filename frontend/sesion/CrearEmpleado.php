@@ -68,7 +68,7 @@
         </section>
     </section>
 
-    <script type="module" src="./js/registro.js"></script>
+    <script type="module" src="./js/CrearEmpleado.js"></script>
     <script type="module" src="../navBar.js"></script>
     <script type="module" src="../dashboard.js"></script>
 </body>

@@ -52,7 +52,9 @@
                             <select class="form-select" aria-label="Rol" name="rol">
                                 <option value="admin">admin</option>
                                 <option value="user">user</option>
-                                </select>
+                                <option value="cocinero">cocineros</option>
+                                <option value="repartidor">repartidores</option>
+                            </select>
                             <select class="form-select mt-2" name="turno">
                                 <option value="mañana">Mañana</option>
                                 <option value="tarde">Tarde</option>

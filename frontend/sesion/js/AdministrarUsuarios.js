@@ -149,7 +149,8 @@ async function paginacion(limit, cantidadUsuariosTotales) {
 
             let config = {
                 limit: filtroLimite,
-                offset: pageButton.id
+                offset: pageButton.id,
+                rol: ['user']
             };
 
             let tablaUsuarios = document.getElementById("informacionUsuarios");

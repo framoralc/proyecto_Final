@@ -5,7 +5,7 @@ const web = config.URLWeb;
 
 let formulario = document.querySelector("form");
 
-let rol = sessionStorage.getItem("user_rol");
+let rolUsuario = sessionStorage.getItem("user_rol");
 
 async function Registro(username, nombre, apellidos, email, password, rol) {
     let usuario = {
@@ -14,7 +14,7 @@ async function Registro(username, nombre, apellidos, email, password, rol) {
         apellidos: apellidos,
         email: email,
         password: password,
-        rol: rol.value
+        rol: rol
     }
 
     try {
@@ -61,7 +61,7 @@ formulario.addEventListener('submit', (event) => {
         passwd.classList.remove("is-invalid");
         repPasswd.classList.remove("is-invalid");
 
-        Registro(username.value, nombre.value, apellidos.value, eMail.value, passwd.value, rol);
+        Registro(username.value, nombre.value, apellidos.value, eMail.value, passwd.value, rol.value);
     } else {
         passwd.classList.add("is-invalid");
         repPasswd.classList.add("is-invalid");
@@ -71,7 +71,7 @@ formulario.addEventListener('submit', (event) => {
 });
 
 function init() {
-    if (rol != "admin") {
+    if (rolUsuario != "admin") {
         window.location.href = `${web}/index.php`;
     }
 }
